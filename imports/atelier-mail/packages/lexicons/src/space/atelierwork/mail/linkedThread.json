@@ -1,0 +1,38 @@
+{
+  "lexicon": 1,
+  "id": "space.atelierwork.mail.linkedThread",
+  "revision": 1,
+  "description": "Private cross-app metadata linking a mail thread to another Atelier resource without storing mail content.",
+  "metadata": {
+    "atelierStorage": "private-kv",
+    "privacy": "Stored in Atelier KV; eligible for future Permissioned Data migration."
+  },
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["threadUri", "targetUri", "createdAt"],
+        "properties": {
+          "threadUri": {
+            "type": "string",
+            "description": "atelier://mail/thread/<id>"
+          },
+          "targetUri": {
+            "type": "string",
+            "description": "atelier://workspace/*, atelier://tasks/*, or another Atelier URI."
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

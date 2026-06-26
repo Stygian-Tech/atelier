@@ -1,0 +1,254 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: #fffaf7;
+  --foreground: #242120;
+  --card: #ffffff;
+  --card-foreground: #242120;
+  --popover: #ffffff;
+  --popover-foreground: #242120;
+  --primary: #ff6542;
+  --primary-foreground: #ffffff;
+  --secondary: #e8fbff;
+  --secondary-foreground: #18333a;
+  --muted: #f4eeeb;
+  --muted-foreground: #716966;
+  --accent: #fff0a8;
+  --accent-foreground: #342a05;
+  --destructive: #d94b4b;
+  --destructive-foreground: #ffffff;
+  --border: #eadeda;
+  --input: #eadeda;
+  --ring: #1fb8ca;
+  --sidebar: #fffdfb;
+  --sidebar-foreground: #2d2927;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #080706;
+  --foreground: #f6eee9;
+  --card: #0d0b0a;
+  --card-foreground: #f6eee9;
+  --popover: #100d0c;
+  --popover-foreground: #f6eee9;
+  --primary: #ff7656;
+  --primary-foreground: #1d120d;
+  --secondary: #102f34;
+  --secondary-foreground: #d9fbff;
+  --muted: #181412;
+  --muted-foreground: #a89b95;
+  --accent: #3d2f0c;
+  --accent-foreground: #fff2b6;
+  --destructive: #ff6b6b;
+  --destructive-foreground: #210b0b;
+  --border: #271f1b;
+  --input: #271f1b;
+  --ring: #2ed3e6;
+  --sidebar: #090807;
+  --sidebar-foreground: #f2e9e3;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  min-height: 100%;
+  background: var(--background);
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  background:
+    linear-gradient(135deg, rgba(255, 240, 168, 0.48), transparent 26rem) 0 0 / 38rem 38rem no-repeat,
+    linear-gradient(145deg, rgba(198, 244, 255, 0.46), transparent 24rem) 100% 0 / 34rem 34rem no-repeat,
+    linear-gradient(180deg, #fffaf7 0%, #fffdfb 52%, #f7fbfb 100%);
+  color: var(--foreground);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+}
+
+.dark body {
+  background:
+    linear-gradient(135deg, rgba(255, 118, 86, 0.08), transparent 24rem) 0 0 / 36rem 36rem no-repeat,
+    linear-gradient(145deg, rgba(46, 211, 230, 0.05), transparent 23rem) 100% 0 / 34rem 34rem no-repeat,
+    linear-gradient(180deg, #080706 0%, #0b0908 54%, #060504 100%);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mail-card-surface {
+  background-color: var(--card);
+}
+
+.mail-row-surface {
+  background-color: var(--card);
+}
+
+.mail-row-surface:hover {
+  background-color: color-mix(in srgb, var(--primary) 10%, var(--card));
+}
+
+.mail-row-unread {
+  background-color: color-mix(in srgb, var(--primary) 10%, var(--card));
+  box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+.mail-row-selected {
+  background-color: color-mix(in srgb, var(--primary) 15%, var(--card));
+  box-shadow:
+    inset 0.125rem 0 0 var(--primary),
+    inset 0 0 0 0.0625rem color-mix(in srgb, var(--primary) 24%, transparent);
+}
+
+.mail-sidebar-row {
+  font-size: 0.8125rem !important;
+  line-height: 1rem !important;
+}
+
+.mail-sidebar-account {
+  font-size: 0.8125rem !important;
+  line-height: 1rem !important;
+}
+
+.mail-sidebar-meta {
+  font-size: 0.6875rem !important;
+  line-height: 0.875rem !important;
+}
+
+.mail-sidebar-section-label {
+  font-size: 0.625rem !important;
+  line-height: 0.8125rem !important;
+}
+
+.mail-sidebar-count {
+  font-size: 0.6875rem !important;
+  line-height: 1 !important;
+}
+
+.mail-search-input {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+.mail-search-shortcut {
+  font-size: 0.5625rem !important;
+  line-height: 1 !important;
+}
+
+.mail-composer {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.mail-composer-title {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+.mail-composer-field {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+.mail-composer-message {
+  min-height: 8.5rem !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.25rem !important;
+}
+
+.mail-composer-meta {
+  font-size: 0.6875rem !important;
+  line-height: 0.875rem !important;
+}
+
+.dark main,
+.dark .mail-row-surface {
+  color: var(--foreground);
+}
+
+.dark .text-muted-foreground {
+  color: var(--muted-foreground) !important;
+}
+
+.dark .mail-card-surface,
+.dark .mail-row-surface {
+  background-color: #0d0b0a;
+  color: #f6eee9;
+}
+
+.dark .mail-row-surface:hover,
+.dark .mail-row-unread {
+  background-color: #1c100d;
+}
+
+.dark .mail-row-selected {
+  background-color: #28140e;
+}
+
+::selection {
+  background: #bdf4ff;
+  color: #142226;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .atelier-shimmer {
+    background-size: 220% 100%;
+    animation: atelier-shimmer 7s ease-in-out infinite;
+  }
+
+  @keyframes atelier-shimmer {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+}

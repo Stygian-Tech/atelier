@@ -1,0 +1,31 @@
+{
+  "name": "atelier-mail",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "bun@1.3.14",
+  "workspaces": [
+    "apps/*",
+    "packages/lexicons"
+  ],
+  "scripts": {
+    "build": "bun run --filter './apps/web' build",
+    "build:api": "env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift build --product AtelierAPI",
+    "dev": "bun run --filter './apps/web' dev",
+    "lint": "bun run --filter './apps/web' lint",
+    "start:api": "env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift run AtelierAPI",
+    "summary:api": "env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift run AtelierAPI --summary",
+    "test": "bun run --filter './apps/web' test && bun run --filter './packages/lexicons' test",
+    "test:api": "env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test",
+    "typecheck": "bun run --filter './apps/web' typecheck && bun run --filter './packages/lexicons' typecheck",
+    "verify": "bun run typecheck && bun run lint && bun run test && bun run build",
+    "verify:all": "bun run verify && bun run test:api && bun run build:api"
+  },
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ],
+  "ignoreScripts": [
+    "sharp",
+    "unrs-resolver"
+  ]
+}

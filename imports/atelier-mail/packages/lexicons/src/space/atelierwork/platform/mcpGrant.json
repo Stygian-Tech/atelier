@@ -1,0 +1,39 @@
+{
+  "lexicon": 1,
+  "id": "space.atelierwork.platform.mcpGrant",
+  "revision": 1,
+  "description": "Private MCP tool grant for an agent or MCP client.",
+  "metadata": {
+    "atelierStorage": "private-kv",
+    "privacy": "Agent grants are sensitive authorization metadata and remain private."
+  },
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["clientId", "scopes", "createdAt"],
+        "properties": {
+          "clientId": {
+            "type": "string"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "datetime"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}
