@@ -1,0 +1,25 @@
+{
+  "lexicon": 1,
+  "id": "space.atelierwork.workspace.pointer",
+  "revision": 1,
+  "description": "Private pointer to an Atelier Workspace resource used for cross-app linking.",
+  "metadata": {
+    "atelierStorage": "private-kv",
+    "privacy": "Workspace pointers are private until the Permissioned Data model is finalized."
+  },
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["workspaceUri", "resourceUri", "createdAt"],
+        "properties": {
+          "workspaceUri": { "type": "string" },
+          "resourceUri": { "type": "string" },
+          "createdAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    }
+  }
+}

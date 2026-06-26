@@ -1,0 +1,72 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: services/api/Dockerfile
+    environment:
+      ATELIER_ENV: ${ATELIER_ENV:-development}
+      ATELIER_PUBLIC_URL: ${ATELIER_PUBLIC_URL:-http://localhost:3000}
+      ATELIER_API_HOST: 0.0.0.0
+      ATELIER_API_PORT: 8080
+      ATELIER_DB_URL: ${ATELIER_DB_URL:-postgres://atelier:atelier@postgres:5432/atelier_mail}
+      ATELIER_KV_BACKEND: ${ATELIER_KV_BACKEND:-postgres}
+      ATELIER_GMAIL_CLIENT_ID: ${ATELIER_GMAIL_CLIENT_ID:-}
+      ATELIER_GMAIL_CLIENT_SECRET: ${ATELIER_GMAIL_CLIENT_SECRET:-}
+      ATELIER_GMAIL_PUBSUB_AUDIENCE: ${ATELIER_GMAIL_PUBSUB_AUDIENCE:-}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/health >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    environment:
+      ATELIER_ENV: ${ATELIER_ENV:-development}
+      ATELIER_PUBLIC_URL: ${ATELIER_PUBLIC_URL:-http://localhost:3000}
+      NEXT_PUBLIC_ATELIER_API_URL: ${NEXT_PUBLIC_ATELIER_API_URL:-http://localhost:8080}
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: atelier
+      POSTGRES_PASSWORD: atelier
+      POSTGRES_DB: atelier_mail
+    ports:
+      - "5432:5432"
+    volumes:
+      - atelier-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atelier -d atelier_mail"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:RELEASE.2026-06-13T00-11-22Z
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: atelier
+      MINIO_ROOT_PASSWORD: ateliermail
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - atelier-minio:/data
+
+volumes:
+  atelier-postgres:
+  atelier-minio:

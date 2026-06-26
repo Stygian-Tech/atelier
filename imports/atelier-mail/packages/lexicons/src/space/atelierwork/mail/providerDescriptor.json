@@ -1,0 +1,38 @@
+{
+  "lexicon": 1,
+  "id": "space.atelierwork.mail.providerDescriptor",
+  "revision": 1,
+  "description": "Private descriptor for a connected mail provider account. This record never stores provider secrets or mail content.",
+  "metadata": {
+    "atelierStorage": "private-kv",
+    "privacy": "Stored in Atelier KV until ATProto Permissioned Data is finalized."
+  },
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["provider", "displayName", "accountUri", "createdAt"],
+        "properties": {
+          "provider": {
+            "type": "string",
+            "knownValues": ["gmail", "jmap", "imap"]
+          },
+          "displayName": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "accountUri": {
+            "type": "string",
+            "description": "Internal URI such as atelier://mail/account/<id>."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

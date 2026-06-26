@@ -1,0 +1,37 @@
+{
+  "lexicon": 1,
+  "id": "space.atelierwork.platform.preference",
+  "revision": 1,
+  "description": "Private schema-versioned user preference record for Atelier apps.",
+  "metadata": {
+    "atelierStorage": "private-kv",
+    "privacy": "Preferences are private by default and stored in Atelier KV."
+  },
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["app", "key", "value", "updatedAt"],
+        "properties": {
+          "app": {
+            "type": "string",
+            "knownValues": ["mail", "workspace", "tasks", "calendar", "drive", "platform"]
+          },
+          "key": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "value": {
+            "type": "unknown"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}

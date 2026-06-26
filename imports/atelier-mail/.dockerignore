@@ -1,0 +1,12 @@
+.build
+.next
+.turbo
+.git
+node_modules
+apps/web/.next
+apps/web/node_modules
+packages/lexicons/node_modules
+*.log
+.env
+.env.*
+!.env.example
