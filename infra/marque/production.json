@@ -6,7 +6,8 @@
   "apply": false,
   "requiresExplicitProductionApproval": true,
   "productionApprovalGrantedOn": "2026-08-31",
-  "reviewStatus": "railway-targets-captured-production-approved-awaiting-marque-zone-review",
+  "productionDnsAppliedOn": "2026-08-31",
+  "reviewStatus": "production-dns-applied-railway-tls-pending",
   "ttlSeconds": 300,
   "requirements": [
     "Retain this file as a non-executable review artifact even after Production activation",
