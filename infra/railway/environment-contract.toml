@@ -248,7 +248,7 @@ classification = "operational-gate"
 required = false
 services = ["production-release"]
 development = "0"
-production = "0"
+production = "1"
 
 [[variable]]
 name = "ATELIER_ANCHOR_PERSISTENCE_MODE"

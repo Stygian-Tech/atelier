@@ -65,15 +65,21 @@ def validate_environment_contract() -> None:
             fail(f"{path.relative_to(ROOT)} contract drift: missing={missing}, extra={extra}")
 
     contract_by_name = {item["name"]: item for item in declarations}
-    for gate in (
-        "ATELIER_ANCHOR_READY",
-        "ATELIER_PRODUCTION_ACTIVATION_APPROVED",
-    ):
+    for gate in ("ATELIER_ANCHOR_READY",):
         declaration = contract_by_name.get(gate)
         if declaration is None:
             fail(f"environment contract is missing fail-closed gate {gate}")
         if declaration.get("development") != "0" or declaration.get("production") != "0":
             fail(f"{gate} must default to 0 in Development and Production")
+
+    activation_gate = contract_by_name.get("ATELIER_PRODUCTION_ACTIVATION_APPROVED")
+    if activation_gate is None:
+        fail("environment contract is missing Production activation release guard")
+    if activation_gate.get("development") != "0" or activation_gate.get("production") != "1":
+        fail(
+            "ATELIER_PRODUCTION_ACTIVATION_APPROVED must remain 0 in Development "
+            "and record the explicit 2026-08-30 Production approval as 1"
+        )
 
 
 def validate_service_contracts() -> None:
