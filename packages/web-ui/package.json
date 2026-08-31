@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "lint": "tsc --noEmit",
-    "test": "bun test --pass-with-no-tests",
+    "test": "env ATELIER_ENV=local NEXT_PUBLIC_HOME_URL=http://localhost:3000 NEXT_PUBLIC_NOTES_URL=http://localhost:3001 NEXT_PUBLIC_MAIL_URL=http://localhost:3002 NEXT_PUBLIC_CALENDAR_URL=http://localhost:3003 NEXT_PUBLIC_TASKS_URL=http://localhost:3004 bun test --pass-with-no-tests",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

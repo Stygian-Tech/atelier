@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Atelier</title>
+  <desc id="description">Open tools for thoughtful work</desc>
+  <rect width="1200" height="630" fill="#fffaf7"/>
+  <circle cx="1040" cy="110" r="220" fill="#9fe4e2" opacity=".65"/>
+  <circle cx="180" cy="590" r="260" fill="#fff0a8" opacity=".78"/>
+  <rect x="88" y="82" width="1024" height="466" rx="40" fill="#fff" stroke="#eadfd8" stroke-width="3"/>
+  <rect x="142" y="138" width="90" height="90" rx="26" fill="#ff6542"/>
+  <text x="187" y="204" text-anchor="middle" font-size="70" font-style="italic" font-family="Georgia, serif" fill="#fff">A</text>
+  <text x="262" y="204" font-size="60" font-family="Georgia, serif" font-weight="700" fill="#292523">Atelier</text>
+  <text x="142" y="330" font-size="74" font-family="Georgia, serif" fill="#292523">Your work, in your hands.</text>
+  <text x="142" y="410" font-size="30" font-family="system-ui, sans-serif" fill="#726964">Open tools for thoughtful work · Foundation preview</text>
+  <text x="142" y="478" font-size="25" font-family="ui-monospace, monospace" fill="#ff6542">atelier.diy</text>
+</svg>

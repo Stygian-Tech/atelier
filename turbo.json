@@ -4,6 +4,26 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "env": [
+        "ATELIER_ENV",
+        "ATELIER_PUBLIC_ORIGIN",
+        "ATELIER_API_ORIGIN",
+        "ATELIER_MCP_ORIGIN",
+        "ATELIER_MARKETING_ORIGIN",
+        "ATELIER_DOCS_ORIGIN",
+        "ATELIER_STATUS_ORIGIN",
+        "ATELIER_HOME_ORIGIN",
+        "ATELIER_NOTES_ORIGIN",
+        "ATELIER_MAIL_ORIGIN",
+        "ATELIER_CALENDAR_ORIGIN",
+        "ATELIER_TASKS_ORIGIN",
+        "NEXT_PUBLIC_APP_ENV",
+        "NEXT_PUBLIC_HOME_URL",
+        "NEXT_PUBLIC_NOTES_URL",
+        "NEXT_PUBLIC_MAIL_URL",
+        "NEXT_PUBLIC_CALENDAR_URL",
+        "NEXT_PUBLIC_TASKS_URL"
+      ],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "@stygian/atelier-design-system#build": {
