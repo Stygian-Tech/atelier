@@ -88,6 +88,31 @@ function literalVariables(serviceNode: ServiceNode): Record<string, string> {
 }
 
 describe("Railway public-surface plan", () => {
+  test("keeps only Railpack's required provenance manifests in the build context", async () => {
+    const entries = (await Bun.file(".dockerignore").text())
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0 && !line.startsWith("#"));
+    const expectedExceptions = [
+      "!imports/atelier-mail/",
+      "!imports/atelier-mail/bun.lock",
+      "!imports/atelier-mail/bunfig.toml",
+      "!imports/atelier-mail/package.json",
+      "!imports/atelier-mail/packages/",
+      "!imports/atelier-mail/packages/lexicons/",
+      "!imports/atelier-mail/packages/lexicons/package.json",
+    ];
+
+    expect(entries).toContain("imports/**");
+    expect(entries).not.toContain("imports");
+    expect(entries.filter((entry) => entry.startsWith("!imports/"))).toEqual(
+      expectedExceptions,
+    );
+    for (const exception of expectedExceptions) {
+      expect(entries.indexOf(exception)).toBeGreaterThan(entries.indexOf("imports/**"));
+    }
+  });
+
   test("contains exactly the eight deployable surfaces", async () => {
     expect(PUBLIC_SURFACE_NAMES).toEqual(EXPECTED_SURFACES);
     const services = await render("development");
