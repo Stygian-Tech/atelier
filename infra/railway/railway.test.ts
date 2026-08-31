@@ -249,6 +249,7 @@ describe("Railway public-surface plan", () => {
       apply: boolean;
       environment: string;
       productionApprovalGrantedOn: string;
+      productionDnsAppliedOn: string;
       provider: string;
       records: MarqueRecord[];
       requiresExplicitProductionApproval: boolean;
@@ -271,10 +272,10 @@ describe("Railway public-surface plan", () => {
       apply: false,
       environment: "production",
       productionApprovalGrantedOn: "2026-08-31",
+      productionDnsAppliedOn: "2026-08-31",
       provider: "marque",
       requiresExplicitProductionApproval: true,
-      reviewStatus:
-        "railway-targets-captured-production-approved-awaiting-marque-zone-review",
+      reviewStatus: "production-dns-applied-railway-tls-pending",
       ttlSeconds: 300,
       zone: "atelier.diy",
     });

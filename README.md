@@ -51,8 +51,10 @@ Feature branches merge into protected `dev`. Railway Development deploys from
 `dev`. Production deploys, provider callback cutovers, and Marque production
 DNS changes require explicit approval and never follow automatically from a
 Development success. The eight-surface foundation-preview Production rollout
-was explicitly authorized on 2026-08-31; that approval does not cover the
-unfinished API, MCP, sync, data, or provider-callback services.
+was explicitly authorized, deployed, and activated in Marque on 2026-08-31;
+certificate verification remains an independent Railway gate. That approval
+does not cover the unfinished API, MCP, sync, data, or provider-callback
+services.
 
 ## License
 
