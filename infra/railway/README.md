@@ -1,20 +1,25 @@
 # Railway deployment contract
 
 Atelier uses one Railway project with persistent Development and Production
-environments. These files are source-controlled service templates; they do not
-create a project, attach secrets, activate domains, or promote Production.
+environments. The supported Railway configuration is
+[`/.railway/railway.ts`](../../.railway/railway.ts). It does not create a
+project, attach secrets, change Marque DNS, or apply itself.
 
-For each Railway service, set its config-as-code path to the absolute repository
-path, for example `/infra/railway/services/notes-sync-anchor.toml`. Keep the
-repository root as the build root because the Bun, Swift, and Rust workspaces
-share packages. Watch paths prevent unrelated deployments.
+Railway's per-service `railway.toml` / `railway.json` Config-as-Code system is
+deprecated, cannot be enabled for new services, and has a hard cutoff on
+2026-12-01. Never set a Railway Config File path for an Atelier service. The
+TOML files in `infra/railway/services` remain offline implementation contracts
+for the complete target catalog while the TypeScript IaC file is the deployable
+project/environment definition.
 
 ## Services
 
-The catalog contains Home, Notes, Mail, Calendar, Tasks, marketing, docs,
-status, API, worker, Mail sync, Calendar sync, Notes sync anchor, MCP backplane,
-Postgres, and Redis. Postgres and Redis should use Railway's managed templates;
-they therefore have no source build config here.
+The target catalog contains Home, Notes, Mail, Calendar, Tasks, marketing,
+docs, status, API, worker, Mail sync, Calendar sync, Notes sync anchor, MCP
+backplane, Postgres, and Redis. The current IaC plan intentionally provisions
+only the eight deployable public surfaces. Postgres and Redis will use
+Railway's managed templates later and therefore have no source build config
+here.
 
 Every source-backed service has a buildable path. Worker, Mail sync, Calendar
 sync, API, MCP backplane, and the Notes sync anchor still fail readiness when
@@ -22,6 +27,10 @@ their required database adapters, authenticated executors, or live transport
 loops are absent. Do not deploy a service merely because its container builds;
 provision Development only after its documented readiness dependencies and
 credential approval exist.
+
+See [/.railway/README.md](../../.railway/README.md) for the pinned plan/apply
+workflow, resource ceilings, source branches, domain inspection, and rollout
+order.
 
 ## Environment gates
 

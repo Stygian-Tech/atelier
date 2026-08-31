@@ -40,6 +40,7 @@ import { accounts, threads as initialThreads } from "./sampleData";
 import type { ComposerDraft, MailThread } from "./types";
 
 type ColorMode = "light" | "dark";
+type MobilePane = "list" | "reader";
 
 const THEME_STORAGE_KEY = "atelier-mail-theme";
 const SIDEBAR_WIDTH_STORAGE_KEY = "atelier-mail-sidebar-width-rem";
@@ -87,6 +88,53 @@ function readStoredRemWidth(key: string, fallback: number, min: number, max: num
   }
 }
 
+function readStoredSidebarWidth() {
+  return readStoredRemWidth(
+    SIDEBAR_WIDTH_STORAGE_KEY,
+    SIDEBAR_WIDTH.default,
+    SIDEBAR_WIDTH.min,
+    SIDEBAR_WIDTH.max
+  );
+}
+
+function readStoredThreadWidth() {
+  return readStoredRemWidth(
+    THREAD_WIDTH_STORAGE_KEY,
+    THREAD_WIDTH.default,
+    THREAD_WIDTH.min,
+    THREAD_WIDTH.max
+  );
+}
+
+function subscribeToBrowserPreferences(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  return () => window.removeEventListener("storage", onStoreChange);
+}
+
+function emptySubscription() {
+  return () => {};
+}
+
+function browserPreferencesReady() {
+  return true;
+}
+
+function serverPreferencesPending() {
+  return false;
+}
+
+function serverTheme(): ColorMode {
+  return "light";
+}
+
+function serverSidebarWidth() {
+  return SIDEBAR_WIDTH.default;
+}
+
+function serverThreadWidth() {
+  return THREAD_WIDTH.default;
+}
+
 function rootRemPx() {
   if (typeof window === "undefined") return 16;
   return Number.parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 16;
@@ -94,19 +142,36 @@ function rootRemPx() {
 
 export function MailWorkspace({ appEnv }: { appEnv: AppEnv }) {
   const [threads, setThreads] = React.useState(initialThreads);
-  const [theme, setTheme] = React.useState<ColorMode>(() => readInitialTheme());
-  const [sidebarWidthRem, setSidebarWidthRem] = React.useState(() =>
-    readStoredRemWidth(SIDEBAR_WIDTH_STORAGE_KEY, SIDEBAR_WIDTH.default, SIDEBAR_WIDTH.min, SIDEBAR_WIDTH.max)
+  const storedTheme = React.useSyncExternalStore(subscribeToBrowserPreferences, readInitialTheme, serverTheme);
+  const storedSidebarWidth = React.useSyncExternalStore(
+    subscribeToBrowserPreferences,
+    readStoredSidebarWidth,
+    serverSidebarWidth
   );
-  const [threadWidthRem, setThreadWidthRem] = React.useState(() =>
-    readStoredRemWidth(THREAD_WIDTH_STORAGE_KEY, THREAD_WIDTH.default, THREAD_WIDTH.min, THREAD_WIDTH.max)
+  const storedThreadWidth = React.useSyncExternalStore(
+    subscribeToBrowserPreferences,
+    readStoredThreadWidth,
+    serverThreadWidth
   );
+  const preferencesHydrated = React.useSyncExternalStore(
+    emptySubscription,
+    browserPreferencesReady,
+    serverPreferencesPending
+  );
+  const [themeOverride, setThemeOverride] = React.useState<ColorMode | null>(null);
+  const [sidebarWidthOverride, setSidebarWidthOverride] = React.useState<number | null>(null);
+  const [threadWidthOverride, setThreadWidthOverride] = React.useState<number | null>(null);
+  const theme = themeOverride ?? storedTheme;
+  const sidebarWidthRem = sidebarWidthOverride ?? storedSidebarWidth;
+  const threadWidthRem = threadWidthOverride ?? storedThreadWidth;
   const [selectedMailbox, setSelectedMailbox] = React.useState("inbox");
   const [selectedAccount, setSelectedAccount] = React.useState<string>("all");
   const [selectedThreadId, setSelectedThreadId] = React.useState(initialThreads[0]?.id ?? "");
   const [query, setQuery] = React.useState("");
   const [composeOpen, setComposeOpen] = React.useState(true);
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const [mobilePane, setMobilePane] = React.useState<MobilePane>("list");
+  const [previewActionMessage, setPreviewActionMessage] = React.useState("");
 
   const [draft, setDraft] = React.useState<ComposerDraft>(() => emptyDraft(initialThreads[0]));
 
@@ -132,37 +197,45 @@ export function MailWorkspace({ appEnv }: { appEnv: AppEnv }) {
   const showDebugChrome = shouldShowDebugChrome(appEnv);
 
   React.useEffect(() => {
+    if (!preferencesHydrated) return;
+
     document.documentElement.classList.toggle("dark", theme === "dark");
     document.documentElement.dataset.theme = theme;
+    if (themeOverride === null) return;
+
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {
       // Ignore private browsing or storage-disabled environments.
     }
-  }, [theme]);
+  }, [preferencesHydrated, theme, themeOverride]);
 
   React.useEffect(() => {
+    if (!preferencesHydrated || sidebarWidthOverride === null) return;
+
     try {
       window.localStorage.setItem(SIDEBAR_WIDTH_STORAGE_KEY, sidebarWidthRem.toFixed(3));
     } catch {
       // Ignore private browsing or storage-disabled environments.
     }
-  }, [sidebarWidthRem]);
+  }, [preferencesHydrated, sidebarWidthOverride, sidebarWidthRem]);
 
   React.useEffect(() => {
+    if (!preferencesHydrated || threadWidthOverride === null) return;
+
     try {
       window.localStorage.setItem(THREAD_WIDTH_STORAGE_KEY, threadWidthRem.toFixed(3));
     } catch {
       // Ignore private browsing or storage-disabled environments.
     }
-  }, [threadWidthRem]);
+  }, [preferencesHydrated, threadWidthOverride, threadWidthRem]);
 
   function startColumnResize(
     event: React.PointerEvent,
     initialWidthRem: number,
     minWidthRem: number,
     maxWidthRem: number,
-    onResize: React.Dispatch<React.SetStateAction<number>>
+    onResize: (widthRem: number) => void
   ) {
     event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -184,21 +257,13 @@ export function MailWorkspace({ appEnv }: { appEnv: AppEnv }) {
     window.addEventListener("pointerup", handlePointerUp, { once: true });
   }
 
-  function markSelectedRead() {
-    if (!selectedThread) return;
-    setThreads((current) =>
-      current.map((thread) =>
-        thread.id === selectedThread.id ? { ...thread, unread: false } : thread
-      )
-    );
-  }
-
-  function toggleStar(threadId: string) {
+  function togglePreviewStar(threadId: string) {
     setThreads((current) =>
       current.map((thread) =>
         thread.id === threadId ? { ...thread, starred: !thread.starred } : thread
       )
     );
+    setPreviewActionMessage("Star updated only in this browser fixture. No provider or PDS record was changed.");
   }
 
   function openReply() {
@@ -206,19 +271,13 @@ export function MailWorkspace({ appEnv }: { appEnv: AppEnv }) {
     setComposeOpen(true);
   }
 
-  function sendDraft() {
-    if (!draft.to || !draft.body.trim()) return;
-    setComposeOpen(false);
-    setDraft(emptyDraft(selectedThread));
-    markSelectedRead();
-  }
-
   return (
     <main
-      className="h-[calc(100dvh-var(--environment-banner-height,0px))] overflow-hidden bg-background text-foreground"
+      className="flex h-[calc(100dvh-var(--environment-banner-height,0px))] flex-col overflow-hidden bg-background text-foreground"
       style={{ color: "var(--foreground)" }}
     >
-      <div className="flex h-full overflow-hidden border bg-card/95 shadow-[0_10px_36px_rgba(67,54,47,0.08)] backdrop-blur">
+      <PreviewBoundary actionMessage={previewActionMessage} />
+      <div className="relative flex min-h-0 flex-1 overflow-hidden border bg-card/95 shadow-[0_10px_36px_rgba(67,54,47,0.08)] backdrop-blur">
         <aside
           className={cn(
             "absolute inset-y-0 left-0 z-20 shrink-0 border-r bg-sidebar transition-transform md:static md:z-auto md:translate-x-0",
@@ -233,12 +292,14 @@ export function MailWorkspace({ appEnv }: { appEnv: AppEnv }) {
             onSelectMailbox={(id) => {
               setSelectedMailbox(id);
               setSidebarOpen(false);
+              setMobilePane("list");
             }}
             onSelectAccount={(id) => {
               setSelectedAccount(id);
               setSidebarOpen(false);
+              setMobilePane("list");
             }}
-            onToggleTheme={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+            onToggleTheme={() => setThemeOverride(theme === "dark" ? "light" : "dark")}
             onClose={() => setSidebarOpen(false)}
           />
         </aside>
@@ -247,7 +308,13 @@ export function MailWorkspace({ appEnv }: { appEnv: AppEnv }) {
           <ColumnResizeHandle
             ariaLabel="Resize sidebar"
             onPointerDown={(event) =>
-              startColumnResize(event, sidebarWidthRem, SIDEBAR_WIDTH.min, SIDEBAR_WIDTH.max, setSidebarWidthRem)
+              startColumnResize(
+                event,
+                sidebarWidthRem,
+                SIDEBAR_WIDTH.min,
+                SIDEBAR_WIDTH.max,
+                setSidebarWidthOverride
+              )
             }
           />
           <ThreadColumn
@@ -256,20 +323,25 @@ export function MailWorkspace({ appEnv }: { appEnv: AppEnv }) {
             theme={theme}
             widthRem={threadWidthRem}
             threads={visibleThreads}
+            mobileReaderOpen={mobilePane === "reader"}
             onOpenSidebar={() => setSidebarOpen(true)}
             onQueryChange={setQuery}
             onSelectThread={(id) => {
               setSelectedThreadId(id);
-              setThreads((current) =>
-                current.map((thread) => (thread.id === id ? { ...thread, unread: false } : thread))
-              );
+              setMobilePane("reader");
             }}
-            onToggleStar={toggleStar}
+            onToggleStar={togglePreviewStar}
           />
           <ColumnResizeHandle
             ariaLabel="Resize thread list"
             onPointerDown={(event) =>
-              startColumnResize(event, threadWidthRem, THREAD_WIDTH.min, THREAD_WIDTH.max, setThreadWidthRem)
+              startColumnResize(
+                event,
+                threadWidthRem,
+                THREAD_WIDTH.min,
+                THREAD_WIDTH.max,
+                setThreadWidthOverride
+              )
             }
           />
 
@@ -279,16 +351,39 @@ export function MailWorkspace({ appEnv }: { appEnv: AppEnv }) {
             showDebugChrome={showDebugChrome}
             theme={theme}
             thread={selectedThread}
-            onArchive={markSelectedRead}
+            mobileOpen={mobilePane === "reader"}
+            onBack={() => setMobilePane("list")}
             onCloseCompose={() => setComposeOpen(false)}
             onDraftChange={setDraft}
             onReply={openReply}
-            onSend={sendDraft}
-            onToggleStar={() => selectedThread && toggleStar(selectedThread.id)}
+            onToggleStar={() => selectedThread && togglePreviewStar(selectedThread.id)}
           />
         </section>
       </div>
     </main>
+  );
+}
+
+function PreviewBoundary({ actionMessage }: { actionMessage: string }) {
+  return (
+    <section
+      aria-labelledby="mail-preview-boundary-title"
+      className="border-b border-amber-400/45 bg-amber-50 px-3 py-2 text-amber-950 dark:border-amber-500/35 dark:bg-amber-950 dark:text-amber-50"
+      role="note"
+    >
+      <div className="mx-auto flex max-w-7xl flex-wrap items-baseline gap-x-2 gap-y-1 text-xs leading-5">
+        <strong id="mail-preview-boundary-title" className="font-black">
+          Foundation preview — no provider actions
+        </strong>
+        <span id="mail-preview-boundary">
+          This inbox is fixture data. Provider sync, delivery, archive, delete, snooze, and refresh are not connected.
+          Provider mail stays protected server-side; public PDS records contain only opaque references.
+        </span>
+        <span aria-live="polite" className="font-semibold" role="status">
+          {actionMessage}
+        </span>
+      </div>
+    </section>
   );
 }
 
@@ -449,6 +544,7 @@ function ThreadColumn({
   theme,
   widthRem,
   threads,
+  mobileReaderOpen,
   onOpenSidebar,
   onQueryChange,
   onSelectThread,
@@ -459,6 +555,7 @@ function ThreadColumn({
   theme: "light" | "dark";
   widthRem: number;
   threads: MailThread[];
+  mobileReaderOpen: boolean;
   onOpenSidebar: () => void;
   onQueryChange: (query: string) => void;
   onSelectThread: (id: string) => void;
@@ -489,10 +586,17 @@ function ThreadColumn({
 
   return (
     <div
-      className="flex w-full min-w-0 flex-col border-r md:w-[var(--thread-column-width)] md:shrink-0"
+      aria-label="Message list"
+      className={cn(
+        "w-full min-w-0 flex-col border-r md:flex md:w-[var(--thread-column-width)] md:shrink-0",
+        mobileReaderOpen ? "hidden" : "flex"
+      )}
+      data-mobile-state={mobileReaderOpen ? "hidden" : "visible"}
+      role="region"
       style={{ "--thread-column-width": `${widthRem}rem` } as React.CSSProperties}
     >
       <div className="border-b bg-card/90 px-2.5 py-2 backdrop-blur">
+        <h1 className="sr-only md:hidden">Atelier Mail messages</h1>
         <div className="flex items-center gap-2">
           <Button aria-label="Open sidebar" className="md:hidden" size="icon" variant="ghost" onClick={onOpenSidebar}>
             <Menu />
@@ -512,7 +616,13 @@ function ThreadColumn({
               Cmd K
             </span>
           </div>
-          <Button aria-label="Refresh" size="icon" title="Refresh sync">
+          <Button
+            aria-describedby="mail-preview-boundary"
+            aria-label="Refresh unavailable in foundation preview"
+            disabled
+            size="icon"
+            title="Provider refresh is not connected in this foundation preview"
+          >
             <RefreshCw />
           </Button>
         </div>
@@ -607,8 +717,10 @@ function ThreadRow({
           ))}
         </div>
         <button
-          aria-label={thread.starred ? "Unstar thread" : "Star thread"}
+          aria-describedby="mail-preview-boundary"
+          aria-label={thread.starred ? "Unstar locally in preview" : "Star locally in preview"}
           className={cn("rounded-md p-1 text-muted-foreground hover:bg-muted", thread.starred && "text-primary")}
+          title="Changes only this browser fixture"
           onClick={onToggleStar}
           type="button"
         >
@@ -715,11 +827,11 @@ function ReaderPane({
   draft,
   showDebugChrome,
   theme,
-  onArchive,
+  mobileOpen,
+  onBack,
   onCloseCompose,
   onDraftChange,
   onReply,
-  onSend,
   onToggleStar,
 }: {
   thread?: MailThread;
@@ -727,16 +839,23 @@ function ReaderPane({
   draft: ComposerDraft;
   showDebugChrome: boolean;
   theme: "light" | "dark";
-  onArchive: () => void;
+  mobileOpen: boolean;
+  onBack: () => void;
   onCloseCompose: () => void;
   onDraftChange: (draft: ComposerDraft) => void;
   onReply: () => void;
-  onSend: () => void;
   onToggleStar: () => void;
 }) {
   if (!thread) {
     return (
-      <section className="hidden min-w-0 flex-1 flex-col items-center justify-center gap-3 p-8 text-center md:flex">
+      <section
+        aria-label="Message reader"
+        className={cn(
+          "min-w-0 flex-1 flex-col items-center justify-center gap-3 p-8 text-center md:flex",
+          mobileOpen ? "flex" : "hidden"
+        )}
+        data-mobile-state={mobileOpen ? "visible" : "hidden"}
+      >
         <Skeleton className="size-12" />
         <div className="text-sm font-bold">Select a thread</div>
       </section>
@@ -744,7 +863,14 @@ function ReaderPane({
   }
 
   return (
-    <section className="hidden min-w-0 flex-1 flex-col bg-background/70 md:flex">
+    <section
+      aria-label="Message reader"
+      className={cn(
+        "min-h-0 min-w-0 flex-1 flex-col bg-background/70 md:flex",
+        mobileOpen ? "flex" : "hidden"
+      )}
+      data-mobile-state={mobileOpen ? "visible" : "hidden"}
+    >
       <header className="border-b bg-card/82 px-3.5 py-2.5 backdrop-blur">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
@@ -758,26 +884,55 @@ function ReaderPane({
             </p>
           </div>
           <div className="flex items-center gap-1">
-            <Button aria-label="Back" size="icon" title="Back to list" variant="ghost">
+            <Button
+              aria-label="Back to message list"
+              className="md:hidden"
+              size="icon"
+              title="Back to message list"
+              variant="ghost"
+              onClick={onBack}
+            >
               <ChevronLeft />
             </Button>
-            <Button aria-label="Archive" size="icon" title="Archive" variant="ghost" onClick={onArchive}>
+            <Button
+              aria-describedby="mail-preview-boundary"
+              aria-label="Archive unavailable in foundation preview"
+              disabled
+              size="icon"
+              title="Provider archive is not connected in this foundation preview"
+              variant="ghost"
+            >
               <Archive />
             </Button>
-            <Button aria-label="Delete" size="icon" title="Delete" variant="ghost">
+            <Button
+              aria-describedby="mail-preview-boundary"
+              aria-label="Delete unavailable in foundation preview"
+              disabled
+              size="icon"
+              title="Provider delete is not connected in this foundation preview"
+              variant="ghost"
+            >
               <Trash2 />
             </Button>
             <Button
-              aria-label="Toggle star"
+              aria-describedby="mail-preview-boundary"
+              aria-label={thread.starred ? "Unstar locally in preview" : "Star locally in preview"}
               className={cn(thread.starred && "text-primary")}
               size="icon"
-              title="Star"
+              title="Changes only this browser fixture"
               variant="ghost"
               onClick={onToggleStar}
             >
               <Star fill={thread.starred ? "currentColor" : "none"} />
             </Button>
-            <Button aria-label="More" size="icon" title="More" variant="ghost">
+            <Button
+              aria-describedby="mail-preview-boundary"
+              aria-label="More provider actions unavailable in foundation preview"
+              disabled
+              size="icon"
+              title="Provider actions are not connected in this foundation preview"
+              variant="ghost"
+            >
               <MoreHorizontal />
             </Button>
           </div>
@@ -844,9 +999,13 @@ function ReaderPane({
                   <Command />
                   Markdown source · MIME generation activates with the provider service
                 </div>
-                <Button onClick={onSend}>
+                <Button
+                  aria-describedby="mail-preview-boundary"
+                  disabled
+                  title="Provider delivery is not connected in this foundation preview"
+                >
                   <Send data-icon="inline-start" />
-                  Send
+                  Send unavailable
                 </Button>
               </div>
             </div>
@@ -855,16 +1014,21 @@ function ReaderPane({
           <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 rounded-lg border bg-background px-3 py-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MailCheck />
-              Local preview fixture; provider sync and send are not connected yet.
+              Draft locally in this fixture; provider sync and delivery are not connected.
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" onClick={onReply}>
+              <Button title="Opens a local-only draft" variant="outline" onClick={onReply}>
                 <PenLine data-icon="inline-start" />
-                Reply
+                Draft reply locally
               </Button>
-              <Button variant="secondary">
+              <Button
+                aria-describedby="mail-preview-boundary"
+                disabled
+                title="Provider snooze is not connected in this foundation preview"
+                variant="secondary"
+              >
                 <Clock3 data-icon="inline-start" />
-                Snooze later
+                Snooze unavailable
               </Button>
             </div>
           </div>

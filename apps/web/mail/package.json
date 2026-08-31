@@ -14,6 +14,7 @@
   "dependencies": {
     "@stygian/atelier-design-system": "workspace:*",
     "@stygian/atelier-lexicons": "workspace:*",
+    "@stygian/atelier-web-ui": "workspace:*",
     "@stygian/markdown-editor": "workspace:*",
     "@tanstack/react-virtual": "^3.13.24",
     "class-variance-authority": "^0.7.1",

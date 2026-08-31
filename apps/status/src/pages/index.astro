@@ -1,18 +1,56 @@
 ---
 import "@stygian/atelier-design-system/styles.css";
+import {
+  getAtelierEnvironment,
+  isIndexableEnvironment,
+  resolveAtelierOrigin,
+} from "../../../../infra/web/release-environment.mjs";
 
 const services = ["Marketing", "Home", "Notes", "Mail", "Calendar", "Tasks", "API & OAuth", "MCP", "Documentation", "Notes sync anchor"];
-const marketingOrigin = import.meta.env.ATELIER_MARKETING_ORIGIN ?? "http://localhost:4321";
-const docsOrigin = import.meta.env.ATELIER_DOCS_ORIGIN ?? "http://localhost:4322";
+const environment = getAtelierEnvironment();
+const marketingOrigin = resolveAtelierOrigin("ATELIER_MARKETING_ORIGIN", "http://localhost:4321");
+const docsOrigin = resolveAtelierOrigin("ATELIER_DOCS_ORIGIN", "http://localhost:4322");
+const statusOrigin = resolveAtelierOrigin("ATELIER_STATUS_ORIGIN", "http://localhost:4323");
+const indexable = isIndexableEnvironment();
+const supportURL = new URL("/support/", docsOrigin);
+const privacyURL = new URL("/legal/privacy/", docsOrigin);
+const statusCopy = {
+  local: {
+    eyebrow: "LOCAL STATUS FIXTURE",
+    heading: "This is not deployment evidence.",
+    detail: "The local page demonstrates the status design. It does not query services or report availability.",
+    service: "Local target · not monitored",
+  },
+  development: {
+    eyebrow: "DEVELOPMENT STATUS DECLARATION",
+    heading: "Live monitoring is not connected.",
+    detail: "This Development build names intended surfaces but does not probe them. Deployment and endpoint checks remain separate evidence.",
+    service: "Development target · not monitored",
+  },
+  production: {
+    eyebrow: "PUBLIC FOUNDATION PREVIEW",
+    heading: "Atelier is not in public beta.",
+    detail: "Published preview surfaces are not readiness-certified, and this static page does not provide live uptime telemetry.",
+    service: "Preview target · not launch-certified",
+  },
+}[environment];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-atelier-environment={environment}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Current availability and incident history for Atelier." />
+    <meta name="description" content={statusCopy.detail} />
+    <meta name="robots" content={indexable ? "index, follow" : "noindex, nofollow, noarchive"} />
     <meta name="theme-color" content="#fffaf7" />
+    <meta property="og:title" content="Atelier Status" />
+    <meta property="og:description" content={statusCopy.detail} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={statusOrigin} />
+    <meta property="og:site_name" content="Atelier" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="canonical" href={statusOrigin} />
     <title>Atelier Status</title>
   </head>
   <body>
@@ -23,18 +61,19 @@ const docsOrigin = import.meta.env.ATELIER_DOCS_ORIGIN ?? "http://localhost:4322
     <main>
       <section class="summary" aria-labelledby="status-heading">
         <span class="status-dot" aria-hidden="true"></span>
-        <div><p>DEVELOPMENT PREVIEW</p><h1 id="status-heading">No production service yet.</h1><span>This surface is intentionally honest until monitored Development checks are connected.</span></div>
+        <div><p>{statusCopy.eyebrow}</p><h1 id="status-heading">{statusCopy.heading}</h1><span>{statusCopy.detail}</span></div>
       </section>
+      <aside class="telemetry-boundary"><b>Static declaration, not live telemetry</b><span>The page is generated at build time. A green label is intentionally absent until independent monitoring and incident history exist.</span></aside>
       <section class="services" aria-labelledby="services-heading">
-        <h2 id="services-heading">Services</h2>
-        {services.map((service) => <div><span>{service}</span><strong>Not launched</strong></div>)}
+        <h2 id="services-heading">Intended surfaces</h2>
+        {services.map((service) => <div><span>{service}</span><strong>{statusCopy.service}</strong></div>)}
       </section>
       <section class="incident">
-        <p>PAST 90 DAYS</p><h2>No production incidents</h2><span>Atelier has not entered public beta. Incident history begins when monitored Production opens.</span>
+        <p>INCIDENT HISTORY</p><h2>No monitored history yet</h2><span>This is not a claim of zero incidents. Incident reporting begins when independent Production monitoring is connected.</span>
       </section>
       <aside><b>Shared project boundary</b><span>Status runs in the same Railway project as Atelier services and may be unavailable during a correlated project-wide outage.</span></aside>
     </main>
-    <footer><span>© 2026 Stygian Tech</span><a href={docsOrigin}>Documentation</a><a href={`${docsOrigin}/support/`}>Support</a></footer>
+    <footer><span>© 2026 Stygian Tech</span><a href={docsOrigin}>Documentation</a><a href={supportURL}>Support</a><a href={privacyURL}>Privacy model</a></footer>
   </body>
 </html>
 
@@ -53,6 +92,7 @@ const docsOrigin = import.meta.env.ATELIER_DOCS_ORIGIN ?? "http://localhost:4322
   .services strong { color: var(--atelier-muted); }
   .incident { margin-top: 2rem; padding: 1.5rem; }
   aside { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 2rem; padding: 1rem; border-left: 0.25rem solid var(--atelier-coral); background: var(--atelier-coral-soft); font-size: 0.75rem; }
+  .telemetry-boundary { border-left-color: var(--atelier-butter); background: color-mix(in srgb, var(--atelier-butter) 36%, var(--atelier-paper-raised)); }
   footer { justify-content: flex-start; margin-top: 5rem; border-top: 1px solid var(--atelier-border); border-bottom: 0; color: var(--atelier-muted); font-size: 0.65rem; }
   footer span { margin-right: auto; }
   @media (max-width: 520px) { header > a:last-child { display: none; } main { margin-top: 2rem; } footer { align-items: flex-start; flex-direction: column; } footer span { margin-right: 0; } }

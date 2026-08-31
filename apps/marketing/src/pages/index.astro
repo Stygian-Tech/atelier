@@ -1,35 +1,43 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import {
+  getAtelierEnvironment,
+  resolveAtelierOrigin,
+} from "../../../../infra/web/release-environment.mjs";
 
 const origins = {
-  home: import.meta.env.ATELIER_HOME_ORIGIN ?? "http://localhost:3000",
-  notes: import.meta.env.ATELIER_NOTES_ORIGIN ?? "http://localhost:3001",
-  mail: import.meta.env.ATELIER_MAIL_ORIGIN ?? "http://localhost:3002",
-  calendar: import.meta.env.ATELIER_CALENDAR_ORIGIN ?? "http://localhost:3003",
-  tasks: import.meta.env.ATELIER_TASKS_ORIGIN ?? "http://localhost:3004",
-  docs: import.meta.env.ATELIER_DOCS_ORIGIN ?? "http://localhost:4322",
-  status: import.meta.env.ATELIER_STATUS_ORIGIN ?? "http://localhost:4323",
+  home: resolveAtelierOrigin("ATELIER_HOME_ORIGIN", "http://localhost:3000"),
+  notes: resolveAtelierOrigin("ATELIER_NOTES_ORIGIN", "http://localhost:3001"),
+  mail: resolveAtelierOrigin("ATELIER_MAIL_ORIGIN", "http://localhost:3002"),
+  calendar: resolveAtelierOrigin("ATELIER_CALENDAR_ORIGIN", "http://localhost:3003"),
+  tasks: resolveAtelierOrigin("ATELIER_TASKS_ORIGIN", "http://localhost:3004"),
+  docs: resolveAtelierOrigin("ATELIER_DOCS_ORIGIN", "http://localhost:4322"),
+  status: resolveAtelierOrigin("ATELIER_STATUS_ORIGIN", "http://localhost:4323"),
 };
+const environment = getAtelierEnvironment();
+const releaseLabel = environment === "production" ? "Public foundation preview" : environment === "development" ? "Development foundation preview" : "Local foundation preview";
+const privacyURL = new URL("/legal/privacy/", origins.docs);
+const supportURL = new URL("/support/", origins.docs);
 
 const products = [
-  { name: "Atelier", tag: "Your day, composed", description: "Today, Inbox, Projects, search, and deliberate cross-app actions in one calm workspace.", color: "coral", href: origins.home },
-  { name: "Notes", tag: "Markdown without lock-in", description: "Real local .md files, backlinks, versions, and shared editing over Automerge and Iroh.", color: "cyan", href: origins.notes },
-  { name: "Mail", tag: "Your inbox, not the provider's", description: "Gmail-first daily-driver mail with provider-neutral models and Markdown composition.", color: "butter", href: origins.mail },
-  { name: "Calendar", tag: "Open schedules, faithfully kept", description: "Lossless ICS, provider sync, feeds, and compatible community calendar projections.", color: "coral", href: origins.calendar },
-  { name: "Tasks", tag: "Shared work that stays yours", description: "Projects, dependencies, recurrence, offline edits, and owner-canonical collaboration.", color: "cyan", href: origins.tasks },
+  { name: "Atelier", tag: "Your day, composed", description: "Preview the planned Today, Inbox, Projects, search, and cross-app actions in one calm workspace.", color: "coral", href: origins.home },
+  { name: "Notes", tag: "Markdown without lock-in", description: "Try the in-memory Markdown editor and inspect the planned local-file, versioning, and collaboration model.", color: "cyan", href: origins.notes },
+  { name: "Mail", tag: "Your inbox, not the provider's", description: "Explore a fixture of the Gmail-first interface; accounts, provider sync, compose, and send are not live.", color: "butter", href: origins.mail },
+  { name: "Calendar", tag: "Open schedules, faithfully kept", description: "Inspect the planned lossless ICS and provider model; parsing, feeds, sync, and writeback are not live.", color: "coral", href: origins.calendar },
+  { name: "Tasks", tag: "Shared work that stays yours", description: "Explore a local board fixture for planned projects, recurrence, offline edits, and collaboration.", color: "cyan", href: origins.tasks },
 ];
 
 const questions = [
-  ["Is my Atelier content private?", "Not during the standard-PDS phase. First-party Notes, Tasks, Calendar, Projects, Captures, and relationships are readable public records. Atelier discloses this before every affected write. Provider mail and calendar content remains protected server-side."],
-  ["Can I leave?", "Yes. Notes remain Markdown, calendars round-trip through ICS, and ATProto records stay in your repository. Exports do not require a proprietary reader."],
-  ["Where does collaboration happen?", "Notes use a shared Rust Automerge-over-Iroh protocol with a trusted Railway anchor and opportunistic direct peers. Other products use scoped owner-mediated XRPC writes."],
-  ["What is available first?", "The coordinated public beta opens only when Home, Notes, Mail, Calendar, and Tasks all clear their product, accessibility, security, and provider gates."],
+  ["Will my Atelier content be private?", "Not during the standard-PDS phase. When writes are connected, first-party Notes, Tasks, Calendar, Projects, Captures, and relationships will be readable public records with disclosure before every affected write. Provider mail and calendar content is designed to remain protected server-side."],
+  ["Will I be able to leave?", "That is a release requirement. Notes are designed to remain Markdown, calendars to round-trip through ICS, and ATProto records to stay in your repository. These export paths are not all implemented yet."],
+  ["Where will collaboration happen?", "The Notes architecture targets a shared Rust Automerge-over-Iroh protocol with a trusted Railway anchor and opportunistic direct peers. The checked-in protocol foundation is not a live collaborative service yet."],
+  ["What can I use today?", "The published surfaces are transparent foundation previews. The Notes editor and some local interactions work in memory; accounts, persistence, provider connections, collaboration, and the public beta are not open."],
 ];
 ---
 
 <SiteLayout
   title="Atelier — Your work, in your hands"
-  description="An open, native productivity suite for notes, mail, calendars, and tasks, powered by ATProto."
+  description="A transparent foundation preview for an open productivity suite spanning notes, mail, calendars, and tasks, powered by ATProto."
 >
   <header class="site-header">
     <a class="wordmark" href="#top" aria-label="Atelier home"><span aria-hidden="true">A</span> Atelier</a>
@@ -39,21 +47,25 @@ const questions = [
       <a href="#developers">Developers</a>
       <a href={origins.docs}>Docs</a>
     </nav>
-    <a class="beta-button" href="#beta">Join the beta <span aria-hidden="true">↗</span></a>
+    <a class="beta-button" href={origins.status}>Preview status <span aria-hidden="true">↗</span></a>
   </header>
 
   <main id="main">
+    <aside class="release-disclosure" role="status">
+      <strong>{releaseLabel}</strong>
+      <span>This site documents and demonstrates the direction. It is not a product launch: signup, accounts, persistence, provider connections, collaboration, and native downloads are not available yet.</span>
+    </aside>
     <section class="hero" id="top">
       <div class="hero-copy">
-        <p class="kicker">A workspace built on open protocols</p>
+        <p class="kicker">A foundation preview built on open protocols</p>
         <h1>Your work,<br /><em>in your hands.</em></h1>
-        <p class="hero-lede">Atelier brings notes, mail, calendars, and tasks into one thoughtful suite—native on every device, portable by design, and powered by your ATProto identity.</p>
+        <p class="hero-lede">Atelier is becoming a thoughtful suite for notes, mail, calendars, and tasks—planned to be native on every device, portable by design, and powered by your ATProto identity.</p>
         <div class="hero-actions">
-          <a class="primary-button" href="#beta">Join the open beta <span aria-hidden="true">→</span></a>
+          <a class="primary-button" href="#products">Explore the previews <span aria-hidden="true">→</span></a>
           <a class="text-link" href="#principles">Why open protocols?</a>
         </div>
-        <ul class="platforms" aria-label="Supported platforms">
-          <li>Web</li><li>iPhone & iPad</li><li>macOS</li><li>Android</li>
+        <ul class="platforms" aria-label="Preview and planned platforms">
+          <li>Web preview</li><li>Planned: iPhone & iPad</li><li>Planned: macOS</li><li>Planned: Android</li>
         </ul>
       </div>
       <div class="hero-art" aria-label="A layered preview of Atelier Notes, Mail, Calendar, and Tasks">
@@ -61,9 +73,9 @@ const questions = [
           <div class="mini-chrome"><i></i><i></i><i></i><span>Project Atlas.md</span></div>
           <p class="mini-kicker">ATELIER NOTES</p>
           <h2>Ideas need<br />room to breathe.</h2>
-          <p>Markdown-first writing with shared editing that follows you from desktop to pocket.</p>
+          <p>Markdown-first writing; shared editing across devices is the release target.</p>
           <div class="scribble">Turn raw thoughts into connected work.</div>
-          <div class="presence"><b>SC</b><b>JD</b><span>2 people editing</span></div>
+          <div class="presence"><b>SC</b><b>JD</b><span>2 sample collaborators</span></div>
         </div>
         <div class="paper-card mail-preview">
           <div class="mini-chrome"><i></i><i></i><i></i><span>Unified Inbox</span></div>
@@ -82,14 +94,14 @@ const questions = [
     </section>
 
     <section class="principle-strip" aria-label="Atelier principles">
-      <span>Portable by default</span><span>Native everywhere</span><span>Built for collaboration</span><span>No dark patterns</span>
+      <span>Portable by design</span><span>Native platform targets</span><span>Collaboration protocol</span><span>No dark patterns</span>
     </section>
 
     <section class="section products" id="products">
       <div class="section-intro">
         <p class="kicker">Five focused tools, one shared foundation</p>
-        <h2>Everything you need.<br /><em>Nothing you don’t.</em></h2>
-        <p>Each product stands on its own. Together, typed relationships turn a message into a task or an event into a note without inventing a second copy of your data.</p>
+        <h2>Five focused products.<br /><em>One shared direction.</em></h2>
+        <p>Each planned product stands on its own. The shared contracts are designed to turn a message into a task or an event into a note without inventing a second copy of your data.</p>
       </div>
       <div class="product-grid">
         {products.map((product, index) => (
@@ -99,7 +111,7 @@ const questions = [
             <h3>Atelier {product.name === "Atelier" ? "" : product.name}</h3>
             <strong>{product.tag}</strong>
             <p>{product.description}</p>
-            <span class="learn-link">Explore {product.name} <span aria-hidden="true">→</span></span>
+            <span class="learn-link">Open {product.name} preview <span aria-hidden="true">→</span></span>
           </a>
         ))}
       </div>
@@ -108,8 +120,8 @@ const questions = [
     <section class="section public-data" id="principles">
       <div class="public-copy">
         <p class="kicker">Honest about the protocol</p>
-        <h2>Your PDS records are public.<br /><em>We say so before you write.</em></h2>
-        <p>Standard ATProto repositories are readable. During Atelier’s interim model, first-party work records use that public substrate with explicit disclosure and user-scoped discovery. Provider credentials, Gmail content, and private calendar mirrors never go there by default.</p>
+        <h2>Your PDS records will be public.<br /><em>We’ll say so before any write.</em></h2>
+        <p>Standard ATProto repositories are readable. Under Atelier’s interim model, connected first-party work records will use that public substrate with explicit disclosure and user-scoped discovery. The provider boundary is designed to keep credentials, Gmail content, and private calendar mirrors off the PDS by default.</p>
         <a class="text-link" href={`${origins.docs}/concepts/public-data/`}>Read the public-data model <span aria-hidden="true">→</span></a>
       </div>
       <div class="record-card">
@@ -122,7 +134,7 @@ const questions = [
   "createdAt": "2026-08-30T20:00:00Z",
   "updatedAt": "2026-08-30T20:00:00Z"
 }`}</code></pre>
-        <div class="record-warning"><b>Readable by anyone who finds the record</b><span>Permissioned Spaces migration is capability-gated and opt-in during alpha.</span></div>
+        <div class="record-warning"><b>Planned records are readable by anyone who finds them</b><span>This is an illustrative fixture. Permissioned Spaces migration remains capability-gated future work.</span></div>
       </div>
     </section>
 
@@ -130,7 +142,7 @@ const questions = [
       <div class="collab-intro">
         <p class="kicker">Collaboration without surrender</p>
         <h2>Local-first writing.<br /><em>Peer-aware sync.</em></h2>
-        <p>Your Markdown file is the source. Automerge tracks collaborative intent; Iroh carries it between authenticated devices and the trusted sync anchor.</p>
+        <p>The planned Notes architecture keeps your Markdown file as source. Automerge will track collaborative intent; Iroh transport and the trusted sync anchor are not connected yet.</p>
       </div>
       <div class="protocol-flow" aria-label="Atelier Notes collaboration protocol flow">
         <article><span>01</span><b>Markdown</b><p>Portable source on your device</p></article>
@@ -152,7 +164,7 @@ const questions = [
       <div>
         <p class="kicker">One workspace, every screen</p>
         <h2>Native where it matters.<br /><em>Web when it helps.</em></h2>
-        <p>Five universal SwiftUI apps, five Compose apps, and five focused web experiences share contracts without forcing every platform into the same interaction model.</p>
+        <p>The repository now includes foundations for five universal SwiftUI apps, five Compose apps, and five focused web previews. Native release builds and cross-platform feature parity are still future gates.</p>
       </div>
       <div class="device-stage" aria-label="Atelier across desktop, tablet, and phone">
         <div class="desktop-device"><div class="device-bar"></div><div class="device-ui"><aside>Today<br />Inbox<br />Projects</aside><main><b>Good morning.</b><span></span><span></span><span></span></main></div></div>
@@ -165,15 +177,15 @@ const questions = [
       <p class="kicker">Your exit is a feature</p>
       <h2>Open formats, all the way down.</h2>
       <div class="format-grid">
-        <article><b>.md</b><h3>Markdown</h3><p>Notes and rich bodies stay readable in ordinary tools.</p></article>
-        <article><b>.ics</b><h3>Calendar</h3><p>Round-trip schedules without discarding RFC 5545 detail.</p></article>
-        <article><b>at://</b><h3>ATProto</h3><p>Identity, records, relationships, and public publishing.</p></article>
-        <article><b>MCP</b><h3>Agent access</h3><p>Authenticated tools with approvals for sensitive actions.</p></article>
+        <article><b>.md</b><h3>Markdown</h3><p>The Notes release target keeps notes and rich bodies readable in ordinary tools.</p></article>
+        <article><b>.ics</b><h3>Calendar</h3><p>The Calendar release target round-trips schedules without discarding RFC 5545 detail.</p></article>
+        <article><b>at://</b><h3>ATProto</h3><p>Checked-in contracts cover identity, records, relationships, and public publishing.</p></article>
+        <article><b>MCP</b><h3>Agent access</h3><p>The backplane foundation fails closed; authenticated domain tools are not live yet.</p></article>
       </div>
     </section>
 
     <section class="section faq">
-      <div><p class="kicker">Questions, answered plainly</p><h2>Before you join.</h2></div>
+      <div><p class="kicker">Questions, answered plainly</p><h2>Before beta.</h2></div>
       <div class="questions">
         {questions.map(([question, answer]) => (
           <details>
@@ -186,14 +198,14 @@ const questions = [
 
     <section class="beta-cta" id="beta">
       <div>
-        <p class="kicker">A coordinated public beta</p>
-        <h2>Make space for<br /><em>your best work.</em></h2>
-        <p>Join the list for the open beta. We will only invite people when all five products clear the same accessibility, security, and reliability gates.</p>
+        <p class="kicker">The public beta is not open</p>
+        <h2>Follow the work.<br /><em>Know the boundary.</em></h2>
+        <p>There is no signup or waitlist yet. The coordinated beta opens only after all five products clear accessibility, security, provider, and reliability gates.</p>
       </div>
       <form aria-describedby="beta-capture-status" data-beta-preview>
-        <label for="email">Email signup preview</label>
-        <div><input id="email" type="email" placeholder="Signup opens after approval" disabled /><button type="button" disabled>Coming later <span aria-hidden="true">→</span></button></div>
-        <small id="beta-capture-status">Address collection is disabled until the consent-aware Postmark workflow is approved.</small>
+        <label for="email">Disabled signup illustration</label>
+        <div><input id="email" type="email" placeholder="No address is collected" disabled /><button type="button" disabled>Not open <span aria-hidden="true">→</span></button></div>
+        <small id="beta-capture-status">This control is non-functional. No address is submitted, serialized, or stored.</small>
       </form>
     </section>
   </main>
@@ -201,7 +213,7 @@ const questions = [
   <footer>
     <a class="wordmark" href="#top"><span aria-hidden="true">A</span> Atelier</a>
     <p>Open tools for thoughtful work.<br />Built by Stygian Tech.</p>
-    <nav aria-label="Footer navigation"><a href={origins.docs}>Docs</a><a href={origins.status}>Status</a><a href={`${origins.docs}/legal/privacy/`}>Privacy</a><a href={`${origins.docs}/support/`}>Support</a><a href="https://github.com/Stygian-Tech/atelier">GitHub</a></nav>
+    <nav aria-label="Footer navigation"><a href={origins.docs}>Docs</a><a href={origins.status}>Status</a><a href={privacyURL}>Privacy model</a><a href={supportURL}>Support</a><a href="https://github.com/Stygian-Tech/atelier">GitHub</a></nav>
     <small>© 2026 Stygian Tech · MIT licensed</small>
   </footer>
 </SiteLayout>
@@ -209,6 +221,8 @@ const questions = [
 <style>
   :global(html) { scroll-behavior: smooth; }
   .site-header { position: sticky; z-index: 50; top: 0; display: grid; grid-template-columns: 1fr auto 1fr; min-height: 4.7rem; align-items: center; padding: 0.75rem clamp(1rem, 5vw, 5.5rem); border-bottom: 1px solid color-mix(in srgb, var(--atelier-border) 80%, transparent); background: color-mix(in srgb, var(--atelier-paper) 90%, transparent); backdrop-filter: blur(18px); }
+  .release-disclosure { display: flex; align-items: center; justify-content: center; gap: 0.65rem 1rem; padding: 0.8rem clamp(1rem, 5vw, 5.5rem); border-bottom: 1px solid color-mix(in srgb, var(--atelier-butter) 58%, var(--atelier-border)); background: color-mix(in srgb, var(--atelier-butter) 28%, var(--atelier-paper-raised)); color: var(--atelier-muted); font-size: 0.72rem; line-height: 1.5; text-align: center; }
+  .release-disclosure strong { color: var(--atelier-ink); white-space: nowrap; }
   .wordmark { display: inline-flex; align-items: center; gap: 0.65rem; width: fit-content; font-family: ui-serif, Georgia, serif; font-size: 1.24rem; font-weight: 700; text-decoration: none; }
   .wordmark span { display: grid; width: 2.2rem; height: 2.2rem; place-items: center; border-radius: 0.72rem; background: var(--atelier-coral); color: white; font-size: 1.45rem; font-style: italic; }
   .site-header nav, footer nav { display: flex; align-items: center; gap: 1.5rem; }
@@ -354,6 +368,7 @@ const questions = [
   }
   @media (max-width: 620px) {
     .site-header { min-height: 4rem; }
+    .release-disclosure { align-items: flex-start; flex-direction: column; text-align: left; }
     .wordmark { font-size: 1rem; }
     .wordmark span { width: 1.9rem; height: 1.9rem; }
     .beta-button { padding: 0.55rem 0.7rem; font-size: 0.68rem; }

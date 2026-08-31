@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 
+import { resolveAtelierOrigin } from "../../infra/web/release-environment.mjs";
+
 export default defineConfig({
-  site: process.env.ATELIER_STATUS_ORIGIN ?? "http://localhost:4323",
+  site: resolveAtelierOrigin("ATELIER_STATUS_ORIGIN", "http://localhost:4323"),
   output: "static",
 });

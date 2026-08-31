@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+.railway/config.json
 
 node_modules/
 .next/

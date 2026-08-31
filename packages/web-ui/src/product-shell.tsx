@@ -11,14 +11,17 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { getProductOrigins } from "./public-origins";
+
 export type ProductKey = "home" | "notes" | "mail" | "calendar" | "tasks";
 
+const origins = getProductOrigins();
 const products: Array<{ key: ProductKey; label: string; href: string }> = [
-  { key: "home", label: "Home", href: process.env.NEXT_PUBLIC_HOME_URL ?? "http://localhost:3000" },
-  { key: "notes", label: "Notes", href: process.env.NEXT_PUBLIC_NOTES_URL ?? "http://localhost:3001" },
-  { key: "mail", label: "Mail", href: process.env.NEXT_PUBLIC_MAIL_URL ?? "http://localhost:3002" },
-  { key: "calendar", label: "Calendar", href: process.env.NEXT_PUBLIC_CALENDAR_URL ?? "http://localhost:3003" },
-  { key: "tasks", label: "Tasks", href: process.env.NEXT_PUBLIC_TASKS_URL ?? "http://localhost:3004" },
+  { key: "home", label: "Home", href: origins.home },
+  { key: "notes", label: "Notes", href: origins.notes },
+  { key: "mail", label: "Mail", href: origins.mail },
+  { key: "calendar", label: "Calendar", href: origins.calendar },
+  { key: "tasks", label: "Tasks", href: origins.tasks },
 ];
 
 const productIcons = {
