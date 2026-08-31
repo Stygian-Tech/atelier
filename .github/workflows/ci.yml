@@ -192,10 +192,13 @@ jobs:
         run: python3 -m unittest discover -s infra/policy/tests
       - name: Scan for high-confidence credential patterns
         run: python3 infra/policy/scan_secrets.py
-      - name: Reject activated production manifests
+      - name: Enforce reviewed release gates
         run: |
           ! grep -R '"apply"[[:space:]]*:[[:space:]]*true' infra/marque
-          ! grep -R 'ATELIER_PRODUCTION_ACTIVATION_APPROVED=1' infra/railway
+          grep -qx 'ATELIER_PRODUCTION_ACTIVATION_APPROVED=0' infra/railway/environments/development.env.example
+          grep -qx 'ATELIER_PRODUCTION_ACTIVATION_APPROVED=1' infra/railway/environments/production.env.example
+          grep -qx 'ATELIER_ANCHOR_READY=0' infra/railway/environments/development.env.example
+          grep -qx 'ATELIER_ANCHOR_READY=0' infra/railway/environments/production.env.example
       - name: Require forward-only migrations
         run: test -n "$(find infra/database/migrations -type f -name '*.sql' -print -quit)"
       - name: Apply PostgreSQL 17 migrations and prove tenant isolation
