@@ -1,4 +1,4 @@
-FROM swift:6.0-jammy AS build
+FROM swift:6.2-jammy AS build
 WORKDIR /workspace
 COPY packages/swift packages/swift
 COPY services/worker services/worker
