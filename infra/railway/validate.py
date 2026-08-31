@@ -22,6 +22,7 @@ WEB_BUILD_PROVENANCE_CONTEXT = (
     "!imports/atelier-mail/packages/lexicons/",
     "!imports/atelier-mail/packages/lexicons/package.json",
 )
+NEXT_PUBLIC_SURFACES = ("home", "notes", "mail", "calendar", "tasks")
 
 
 def fail(message: str) -> None:
@@ -138,10 +139,44 @@ def validate_service_contracts() -> None:
                 if not start_command.startswith(f"test -x {swift_path}/.build/release/"):
                     fail(f"{relative_path} must gate its unavailable release executable")
 
+        dockerfile: pathlib.Path | None = None
         if dockerfile_path := build.get("dockerfilePath"):
             dockerfile = ROOT / dockerfile_path.lstrip("/")
             if not dockerfile.is_file():
                 fail(f"{relative_path} references missing Dockerfile {dockerfile_path}")
+
+        if path.stem in NEXT_PUBLIC_SURFACES:
+            if dockerfile is None:
+                fail(f"{relative_path} must reference its Next.js Dockerfile")
+            if "startCommand" in deploy:
+                fail(
+                    f"{relative_path} must let its Dockerfile own startup so Next.js "
+                    "reads Railway's PORT environment variable directly"
+                )
+            if "$PORT" in text:
+                fail(f"{relative_path} must not pass a literal $PORT argument")
+
+            package_manifest = json.loads(
+                (ROOT / "apps" / "web" / path.stem / "package.json").read_text()
+            )
+            if package_manifest.get("scripts", {}).get("start") != "next start":
+                fail(f"apps/web/{path.stem}/package.json must start with next start")
+
+            expected_command = (
+                f'CMD ["bun", "run", "--cwd", "apps/web/{path.stem}", "start"]'
+            )
+            dockerfile_text = dockerfile.read_text()
+            commands = [
+                line.strip()
+                for line in dockerfile_text.splitlines()
+                if line.strip().startswith("CMD ")
+            ]
+            if commands != [expected_command]:
+                fail(
+                    f"{dockerfile.relative_to(ROOT)} must contain only {expected_command}"
+                )
+            if "ENV HOSTNAME=0.0.0.0" not in dockerfile_text:
+                fail(f"{dockerfile.relative_to(ROOT)} must bind Next.js to 0.0.0.0")
 
         if path.stem in readiness_services and deploy.get("healthcheckPath") != "/readyz":
             fail(f"{relative_path} must use its fail-closed /readyz rollout probe")
