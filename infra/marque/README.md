@@ -9,12 +9,18 @@ Marque supports CNAME flattening, so the Production apex can follow Railway's
 CNAME target without an illegal DNS apex CNAME. Exact targets and ownership TXT
 records are generated only after each custom domain is attached in Railway.
 
+The Development manifest contains only the eight currently deployed public
+surfaces. API and MCP records remain absent until those services pass their
+readiness gates and are actually provisioned. Railway targets and ownership
+tokens are public DNS material, not application credentials, but they must still
+be rechecked against Railway immediately before the Marque transaction.
+
 Apply workflow:
 
 1. Export and retain the complete current Marque zone.
 2. Attach the Development hostnames in Railway and copy exact targets/TXT values.
-3. Replace all placeholders, add verification records, and validate there are no
-   duplicate or conflicting names.
+3. Validate the captured records have no placeholders, duplicates, undeployed
+   services, or conflicts with the current zone.
 4. Review one full diff that preserves unrelated records and current mail/ATProto
    records.
 5. Apply the Development transaction in Marque, then verify authoritative DNS,
