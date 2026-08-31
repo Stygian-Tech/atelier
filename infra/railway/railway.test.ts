@@ -135,9 +135,10 @@ describe("Railway public-surface plan", () => {
           },
         },
       });
-      expect(surface.networking?.customDomains).toEqual({
-        [EXPECTED_DEVELOPMENT_HOSTS[surface.name]]: { port: 8080 },
-      });
+      expect(surface.networking?.customDomains).toBeUndefined();
+      expect(Object.values(literalVariables(surface))).toContain(
+        `https://${EXPECTED_DEVELOPMENT_HOSTS[surface.name]}`,
+      );
     }
   });
 
@@ -161,9 +162,10 @@ describe("Railway public-surface plan", () => {
           },
         },
       });
-      expect(surface.networking?.customDomains).toEqual({
-        [EXPECTED_PRODUCTION_HOSTS[surface.name]]: { port: 8080 },
-      });
+      expect(surface.networking?.customDomains).toBeUndefined();
+      expect(Object.values(literalVariables(surface))).toContain(
+        `https://${EXPECTED_PRODUCTION_HOSTS[surface.name]}`,
+      );
     }
   });
 

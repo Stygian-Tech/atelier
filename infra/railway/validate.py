@@ -148,6 +148,11 @@ def validate_iac_contract() -> None:
     for legacy_field in ("railwayConfigFile", "configFile"):
         if legacy_field in text:
             fail(f".railway/railway.ts must not use legacy {legacy_field}")
+    if re.search(r"\bdomains\s*:", text):
+        fail(
+            ".railway/railway.ts must not declare custom domains; "
+            "Railway project-level IaC does not support their registration"
+        )
 
     excluded_services = (
         "atelier-api",
