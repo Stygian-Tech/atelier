@@ -57,6 +57,50 @@ describe("Atelier lexicons", () => {
     }
   });
 
+  test("retains MIT provenance for the Community Calendar schemas", async () => {
+    const communityCalendarEntries = vendorManifest.schemas.filter((entry) =>
+      entry.id.startsWith("community.lexicon.calendar."),
+    );
+    expect(communityCalendarEntries).toHaveLength(2);
+    expect(communityCalendarEntries.map((entry) => ({
+      id: entry.id,
+      sourceVersion: entry.sourceVersion,
+      sourceSha256: entry.sourceSha256,
+      vendoredSha256: entry.vendoredSha256,
+    }))).toEqual([
+      {
+        id: "community.lexicon.calendar.event",
+        sourceVersion: "at://did:plc:mtr7qrqtcyseedx3jyr5o7db/com.atproto.lexicon.schema/community.lexicon.calendar.event@bafyreigv256whv46vep4xb2iqn6ag7z5abhvebd46ohuqvopxl56ptobbi",
+        sourceSha256: "fbbfa5fdbf496351567c91a35ebb68d815f564080f713c0338e11b6efcd33f7f",
+        vendoredSha256: "fbbfa5fdbf496351567c91a35ebb68d815f564080f713c0338e11b6efcd33f7f",
+      },
+      {
+        id: "community.lexicon.calendar.rsvp",
+        sourceVersion: "at://did:plc:mtr7qrqtcyseedx3jyr5o7db/com.atproto.lexicon.schema/community.lexicon.calendar.rsvp@bafyreiarei3vsjaj36yhc2thobrgzkcsdh6m5pmwy6reik24papzl32qcu",
+        sourceSha256: "d1f4d0a9b5e30c168596c650131ee6193bd95380b5ac618e196bcbe5a497de8a",
+        vendoredSha256: "d1f4d0a9b5e30c168596c650131ee6193bd95380b5ac618e196bcbe5a497de8a",
+      },
+    ]);
+    for (const entry of communityCalendarEntries) {
+      expect(entry.license).toBe("MIT");
+      expect(entry.copyright).toBe("Copyright (c) 2024 Lexicon Community");
+      expect(entry.canonicalSourceUrl).toStartWith(
+        "https://tangled.org/lexicon.community/lexicons/blob/",
+      );
+      expect(entry.canonicalSourceVersion).toMatch(/^git:[0-9a-f]{40}$/);
+      expect(entry.licenseUrl).toStartWith(
+        "https://tangled.org/lexicon.community/lexicons/blob/",
+      );
+    }
+
+    const license = await Bun.file(
+      new URL("../vendor/licenses/LEXICON-COMMUNITY-MIT.txt", import.meta.url),
+    ).text();
+    expect(license).toContain("Copyright (c) 2024 Lexicon Community");
+    expect(license).toContain("Permission is hereby granted, free of charge");
+    expect(license).toContain('THE SOFTWARE IS PROVIDED "AS IS"');
+  });
+
   test("publishes a stable compatibility digest and public record metadata", () => {
     expect(compatibility.schemaDigest).toBe(expectedSchemaDigest);
     expect(compatibility.compatibilityDigest).toBe(expectedCompatibilityDigest);
