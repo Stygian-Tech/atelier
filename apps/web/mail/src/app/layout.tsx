@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Atelier Mail",
-  description: "ATProto identity mail workspace for atelierwork.space",
+  description: "Provider-neutral mail for Atelier, powered by ATProto identity.",
 };
 
 const themeScript = `

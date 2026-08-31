@@ -1,0 +1,24 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.collaboration.checkpoint",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "description": "Durability metadata for a collaborative document. The checkpoint blob may contain readable content and is public in a standard repository.",
+      "record": {
+        "type": "object",
+        "required": ["document", "heads", "contentHash", "protocolVersion", "persistenceState", "updatedAt"],
+        "properties": {
+          "document": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
+          "checkpoint": { "type": "blob", "accept": ["application/vnd.automerge"], "maxSize": 52428800 },
+          "heads": { "type": "array", "maxLength": 256, "items": { "type": "string", "maxLength": 256 } },
+          "contentHash": { "type": "string", "maxLength": 256 },
+          "protocolVersion": { "type": "integer", "minimum": 1 },
+          "persistenceState": { "type": "string", "knownValues": ["local", "converged", "durable"] },
+          "updatedAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    }
+  }
+}

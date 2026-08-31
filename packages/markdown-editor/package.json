@@ -1,6 +1,7 @@
 {
   "name": "@stygian/markdown-editor",
   "version": "0.1.0",
+  "license": "MIT",
   "description": "A reusable React block editor backed by portable Markdown.",
   "type": "module",
   "sideEffects": [

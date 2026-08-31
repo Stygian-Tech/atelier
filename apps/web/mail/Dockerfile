@@ -1,21 +1,15 @@
-FROM oven/bun:1.3.14-alpine AS deps
-WORKDIR /app
-COPY package.json bun.lock bunfig.toml ./
-COPY apps/web/package.json apps/web/package.json
-COPY packages/lexicons/package.json packages/lexicons/package.json
-RUN bun install --frozen-lockfile
-
-FROM deps AS builder
+FROM oven/bun:1.3.14-alpine AS builder
 WORKDIR /app
 COPY . .
+RUN bun install --frozen-lockfile
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN bun run --filter './apps/web' build
+RUN bunx turbo run build --filter=@stygian/atelier-mail-web
 
 FROM oven/bun:1.3.14-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 COPY --from=builder /app ./
 EXPOSE 3000
-CMD ["bun", "run", "--filter", "./apps/web", "start"]
+CMD ["bun", "run", "--cwd", "apps/web/mail", "start"]

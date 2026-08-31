@@ -1,0 +1,10 @@
+# Production must remain false until the final provider-infrastructure approval.
+enable_resources           = false
+project_id                 = "atelier-production-project"
+environment                = "production"
+provider_cache_bucket_name = "atelier-production-provider-cache-REPLACE"
+durable_bucket_name        = "atelier-production-durable-REPLACE"
+
+workload_identity_issuer_uri        = null
+workload_identity_allowed_audiences = []
+workload_identity_subject           = null

@@ -1,0 +1,28 @@
+---
+title: Atelier documentation
+description: Product, protocol, and operations documentation for the Atelier suite.
+template: splash
+hero:
+  tagline: Five focused tools, one open foundation for thoughtful work.
+  actions:
+    - text: Understand the data model
+      link: /concepts/public-data/
+      icon: right-arrow
+      variant: primary
+    - text: View the source
+      link: https://github.com/Stygian-Tech/atelier
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+:::danger[Public PDS records are readable]
+Until Permissioned Spaces support is available and enabled, first-party Notes, Tasks, Calendar, Project, Capture, and relationship records written to a standard ATProto PDS are public. Provider credentials and provider content are not written there by default.
+:::
+
+<CardGrid>
+  <Card title="Products" icon="puzzle">Learn how Home composes Notes, Mail, Calendar, and Tasks without becoming a duplicate store.</Card>
+  <Card title="Open contracts" icon="open-book">Browse the `diy.atelier.*` Lexicons, generated clients, provider boundaries, and compatibility policy.</Card>
+  <Card title="Collaboration" icon="seti:config">Understand the versioned Automerge-over-Iroh protocol and the separate durability states.</Card>
+  <Card title="Operations" icon="setting">Run the suite locally and understand Development, Production, provider, and DNS gates.</Card>
+</CardGrid>

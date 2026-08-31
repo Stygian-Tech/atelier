@@ -1,0 +1,22 @@
+name: Development Readiness
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev]
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: Development gate only
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify this workflow cannot promote Production
+        run: |
+          test "${ATELIER_PRODUCTION_ACTIVATION_APPROVED:-0}" = "0"
+          ! grep -R '"apply"[[:space:]]*:[[:space:]]*true' infra/marque
+      - name: Explain deployment boundary
+        run: echo "Railway GitHub integration may deploy dev to Development after CI; Production and DNS remain manual."

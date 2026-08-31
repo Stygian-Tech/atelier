@@ -1,0 +1,36 @@
+name: Bug report
+description: Report a reproducible Atelier defect without including private content or credentials.
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: "Never paste OAuth tokens, provider credentials, message bodies, private calendar data, or sensitive note content."
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      options: [Atelier Home, Atelier Notes, Atelier Mail, Atelier Calendar, Atelier Tasks, Platform or API, Documentation or marketing]
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Include expected behavior, actual behavior, and safe reproduction steps.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Development or local, platform, app/browser version, and relevant feature flags.
+    validations:
+      required: true
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed secrets and private provider content from this report.
+          required: true

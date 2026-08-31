@@ -1,0 +1,12 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.auth.notes",
+  "defs": {
+    "main": {
+      "type": "permission-set",
+      "title": "Atelier Notes access",
+      "description": "Create, update, and delete notes and their collaboration checkpoints.",
+      "permissions": [{ "type": "permission", "resource": "repo", "collection": ["diy.atelier.notes.note", "diy.atelier.collaboration.checkpoint"], "action": ["create", "update", "delete"] }]
+    }
+  }
+}

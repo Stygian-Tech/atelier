@@ -1,0 +1,22 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.mail.providerRef",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "description": "An opaque reference to provider-owned mail. It intentionally contains no subject, participants, snippet, headers, or body.",
+      "record": {
+        "type": "object",
+        "required": ["provider", "opaqueId", "resourceKind", "sourceVersion", "createdAt"],
+        "properties": {
+          "provider": { "type": "string", "knownValues": ["gmail", "jmap", "imap"] },
+          "opaqueId": { "type": "string", "maxLength": 512 },
+          "resourceKind": { "type": "string", "knownValues": ["account", "mailbox", "thread", "message", "draft"] },
+          "sourceVersion": { "type": "string", "maxLength": 512 },
+          "createdAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    }
+  }
+}

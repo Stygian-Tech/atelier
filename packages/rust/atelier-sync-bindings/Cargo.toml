@@ -1,0 +1,29 @@
+[package]
+name = "atelier-sync-bindings"
+description = "Versioned native and WebAssembly packaging for Atelier's collaboration wire protocol"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+crate-type = ["rlib", "cdylib", "staticlib"]
+
+[dependencies]
+atelier-sync-protocol = { path = "../atelier-sync-protocol" }
+thiserror.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { workspace = true, features = ["wasm_js"] }
+uuid = { workspace = true, features = ["js"] }
+wasm-bindgen.workspace = true
+
+[lints.clippy]
+dbg_macro = "deny"
+todo = "deny"
+unwrap_used = "deny"
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+unexpected_cfgs = { level = "warn", check-cfg = ["cfg(coverage,coverage_nightly)"] }

@@ -9,6 +9,7 @@ node_modules/
 dist/
 coverage/
 *.tsbuildinfo
+.astro/
 
 .build/
 DerivedData/
@@ -25,3 +26,9 @@ target/
 .idea/
 .vscode/
 *.log
+
+__pycache__/
+*.py[cod]
+
+__pycache__/
+*.pyc

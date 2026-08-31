@@ -1,0 +1,10 @@
+[build]
+builder = "RAILPACK"
+# Fail closed until this workstream provides its Swift package and executable.
+buildCommand = "test -f services/worker/Package.swift && swift build --package-path services/worker -c release"
+watchPatterns = ["/services/worker/**", "/packages/swift/**", "/infra/railway/services/worker.toml", "/mise.toml"]
+
+[deploy]
+startCommand = "test -x services/worker/.build/release/atelier-worker && services/worker/.build/release/atelier-worker"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

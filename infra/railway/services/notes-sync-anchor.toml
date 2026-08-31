@@ -1,0 +1,10 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "/infra/docker/notes-sync-anchor.Dockerfile"
+watchPatterns = ["/services/notes-sync-anchor/**", "/packages/rust/**", "/infra/docker/notes-sync-anchor.Dockerfile", "/infra/railway/services/notes-sync-anchor.toml"]
+
+[deploy]
+healthcheckPath = "/readyz"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "retrievedAt": "2026-08-30",
+  "allowedUnvendoredRefs": [
+    "com.atproto.repo.strongRef",
+    "community.lexicon.location.address",
+    "community.lexicon.location.fsq",
+    "community.lexicon.location.geo",
+    "community.lexicon.location.hthree"
+  ],
+  "schemas": [
+    {
+      "id": "at.markpub.markdown",
+      "path": "schemas/vendor/at.markpub.markdown.json",
+      "sourceUrl": "https://raw.githubusercontent.com/AramZS/markpub.at/9b53a3a8f93d7c627abb64b5b6e4bf42140ce7c0/dist/lexicons/at/markpub/markdown.json",
+      "sourceVersion": "git:9b53a3a8f93d7c627abb64b5b6e4bf42140ce7c0",
+      "sourceSha256": "6cc164ee59c37681bf04eddfa484ec6ba57ca3497e8680885908134917b11ccb",
+      "vendoredSha256": "6b9a69fa9e2bf43934a3c0a1c21e375aa72d90f3025303af4f1923332670d4c5",
+      "normalization": "A single trailing LF was added; parsed JSON is otherwise unchanged.",
+      "license": "MIT"
+    },
+    {
+      "id": "at.markpub.text",
+      "path": "schemas/vendor/at.markpub.text.json",
+      "sourceUrl": "https://raw.githubusercontent.com/AramZS/markpub.at/9b53a3a8f93d7c627abb64b5b6e4bf42140ce7c0/dist/lexicons/at/markpub/text.json",
+      "sourceVersion": "git:9b53a3a8f93d7c627abb64b5b6e4bf42140ce7c0",
+      "sourceSha256": "ddce15c90bddff335b6afce524c22aa0330015a1060051a32e79ac93c1870839",
+      "vendoredSha256": "35200c1d6402e6392ecb40b315acb128add738583658cc501c9420ba49cedb17",
+      "normalization": "A single trailing LF was added; parsed JSON is otherwise unchanged.",
+      "license": "MIT"
+    },
+    {
+      "id": "community.lexicon.calendar.event",
+      "path": "schemas/vendor/community.lexicon.calendar.event.json",
+      "sourceUrl": "https://lexicon.garden/lexicon/did:plc:mtr7qrqtcyseedx3jyr5o7db/community.lexicon.calendar.event",
+      "sourceVersion": "at://did:plc:mtr7qrqtcyseedx3jyr5o7db/com.atproto.lexicon.schema/community.lexicon.calendar.event@bafyreigv256whv46vep4xb2iqn6ag7z5abhvebd46ohuqvopxl56ptobbi",
+      "sourceSha256": "fbbfa5fdbf496351567c91a35ebb68d815f564080f713c0338e11b6efcd33f7f",
+      "vendoredSha256": "fbbfa5fdbf496351567c91a35ebb68d815f564080f713c0338e11b6efcd33f7f",
+      "normalization": "None; SHA-256 covers the exact vendored JSON bytes retrieved from the publisher record rendered by Lexicon Garden.",
+      "license": "No license declared in the published Lexicon record"
+    },
+    {
+      "id": "community.lexicon.calendar.rsvp",
+      "path": "schemas/vendor/community.lexicon.calendar.rsvp.json",
+      "sourceUrl": "https://lexicon.garden/lexicon/did:plc:mtr7qrqtcyseedx3jyr5o7db/community.lexicon.calendar.rsvp",
+      "sourceVersion": "at://did:plc:mtr7qrqtcyseedx3jyr5o7db/com.atproto.lexicon.schema/community.lexicon.calendar.rsvp@bafyreiarei3vsjaj36yhc2thobrgzkcsdh6m5pmwy6reik24papzl32qcu",
+      "sourceSha256": "d1f4d0a9b5e30c168596c650131ee6193bd95380b5ac618e196bcbe5a497de8a",
+      "vendoredSha256": "d1f4d0a9b5e30c168596c650131ee6193bd95380b5ac618e196bcbe5a497de8a",
+      "normalization": "None; SHA-256 covers the exact vendored JSON bytes retrieved from the publisher record rendered by Lexicon Garden.",
+      "license": "No license declared in the published Lexicon record"
+    }
+  ]
+}

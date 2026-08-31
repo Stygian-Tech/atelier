@@ -1,0 +1,33 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule: { interval: weekly }
+    target-branch: dev
+    groups:
+      web-runtime:
+        patterns: ["next", "react", "react-dom", "astro", "@astrojs/*"]
+  - package-ecosystem: cargo
+    directory: /packages/rust
+    schedule: { interval: weekly }
+    target-branch: dev
+  - package-ecosystem: cargo
+    directory: /services/notes-sync-anchor
+    schedule: { interval: weekly }
+    target-branch: dev
+  - package-ecosystem: swift
+    directory: /services/api
+    schedule: { interval: weekly }
+    target-branch: dev
+  - package-ecosystem: swift
+    directory: /services/mcp-backplane
+    schedule: { interval: weekly }
+    target-branch: dev
+  - package-ecosystem: gradle
+    directory: /apps/android
+    schedule: { interval: weekly }
+    target-branch: dev
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+    target-branch: dev

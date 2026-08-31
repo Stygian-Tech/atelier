@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "pkceVerifier": "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
+  "pkceChallenge": "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM",
+  "accessToken": "access-token",
+  "accessTokenSha256Base64Url": "Pxa-1wifRlPl7yG_0oJNfzqq7MelmOfonFgOFgapzFI",
+  "dpopMethodInput": "post",
+  "dpopMethod": "POST",
+  "dpopTarget": "https://pds.example/xrpc/com.atproto.repo.createRecord?ignored=yes#fragment",
+  "dpopNormalizedHtu": "https://pds.example/xrpc/com.atproto.repo.createRecord",
+  "dpopNonce": "server-nonce",
+  "dpopIssuedAtEpochSeconds": 1700000000,
+  "dpopJti": "fixed-jti",
+  "xrpcService": "https://pds.example",
+  "xrpcMethod": "com.atproto.repo.getRecord",
+  "xrpcQueryName": "repo",
+  "xrpcQueryValue": "did:plc:atelier",
+  "xrpcTarget": "https://pds.example/xrpc/com.atproto.repo.getRecord?repo=did:plc:atelier"
+}

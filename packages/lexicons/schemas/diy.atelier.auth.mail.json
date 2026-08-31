@@ -1,0 +1,12 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.auth.mail",
+  "defs": {
+    "main": {
+      "type": "permission-set",
+      "title": "Atelier Mail references",
+      "description": "Create, update, and delete privacy-preserving opaque references. Provider mailbox access is separately consented and never granted by ATProto scopes.",
+      "permissions": [{ "type": "permission", "resource": "repo", "collection": ["diy.atelier.mail.providerRef"], "action": ["create", "update", "delete"] }]
+    }
+  }
+}

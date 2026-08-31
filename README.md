@@ -5,6 +5,10 @@ Atelier Mail, Atelier Calendar, and Atelier Tasks. This monorepo contains the
 web, Apple, Android, backend, protocol, collaboration, documentation, and
 deployment sources for the suite.
 
+The repository currently contains a buildable bootstrap foundation, not the
+finished MVP or a public beta. See [implementation status](docs/implementation-status.md)
+for the live boundary between landed foundations and required product work.
+
 > [!IMPORTANT]
 > Until ATProto Permissioned Spaces are supported and enabled, first-party
 > Atelier records written to a standard PDS are public and readable. The apps
@@ -33,6 +37,8 @@ bun install
 bun run verify
 bun run verify:swift
 bun run verify:rust
+bun run verify:android
+bun run verify:database
 ```
 
 Local infrastructure is defined under `infra/docker`. Provider integrations
@@ -49,4 +55,5 @@ Development success.
 ## License
 
 Atelier is available under the [MIT License](LICENSE). Imported and extracted
-source provenance is documented under `docs/provenance`.
+source provenance is documented under `docs/provenance`; third-party license
+boundaries are recorded in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

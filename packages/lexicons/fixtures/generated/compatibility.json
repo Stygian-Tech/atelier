@@ -1,0 +1,332 @@
+{
+  "compatibilityDigest": "e96842a9f9896118fc6f42b474ec5dfa3edf5095c6976063245779b42a3280b4",
+  "formatVersion": 1,
+  "permissionSets": {
+    "diy.atelier.auth.calendar": [
+      {
+        "action": [
+          "create",
+          "update",
+          "delete"
+        ],
+        "collection": [
+          "diy.atelier.calendar.event",
+          "community.lexicon.calendar.event",
+          "community.lexicon.calendar.rsvp"
+        ],
+        "resource": "repo",
+        "type": "permission"
+      }
+    ],
+    "diy.atelier.auth.mail": [
+      {
+        "action": [
+          "create",
+          "update",
+          "delete"
+        ],
+        "collection": [
+          "diy.atelier.mail.providerRef"
+        ],
+        "resource": "repo",
+        "type": "permission"
+      }
+    ],
+    "diy.atelier.auth.notes": [
+      {
+        "action": [
+          "create",
+          "update",
+          "delete"
+        ],
+        "collection": [
+          "diy.atelier.notes.note",
+          "diy.atelier.collaboration.checkpoint"
+        ],
+        "resource": "repo",
+        "type": "permission"
+      }
+    ],
+    "diy.atelier.auth.tasks": [
+      {
+        "action": [
+          "create",
+          "update",
+          "delete"
+        ],
+        "collection": [
+          "diy.atelier.tasks.task"
+        ],
+        "resource": "repo",
+        "type": "permission"
+      }
+    ],
+    "diy.atelier.auth.workspace": [
+      {
+        "action": [
+          "create",
+          "update",
+          "delete"
+        ],
+        "collection": [
+          "diy.atelier.project.project",
+          "diy.atelier.capture.item",
+          "diy.atelier.relation.edge"
+        ],
+        "resource": "repo",
+        "type": "permission"
+      }
+    ]
+  },
+  "records": {
+    "community.lexicon.calendar.event": {
+      "canonicalJSON": "{\"$type\":\"community.lexicon.calendar.event\",\"createdAt\":\"2026-01-02T03:04:05.000Z\",\"name\":\"Compatibility name\"}",
+      "publicData": true,
+      "requiredFields": [
+        "createdAt",
+        "name"
+      ],
+      "sample": {
+        "$type": "community.lexicon.calendar.event",
+        "createdAt": "2026-01-02T03:04:05.000Z",
+        "name": "Compatibility name"
+      },
+      "sampleSha256": "b78c18b644f81411a1e2e4eac6a92bc108ccad76a9f33f016f6c6b353d70e91e"
+    },
+    "community.lexicon.calendar.rsvp": {
+      "canonicalJSON": "{\"$type\":\"community.lexicon.calendar.rsvp\",\"status\":\"community.lexicon.calendar.rsvp#going\",\"subject\":{\"cid\":{\"$link\":\"bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"uri\":\"at://did:plc:ateliercompatibility/diy.atelier.project.project/compatibility\"}}",
+      "publicData": true,
+      "requiredFields": [
+        "subject",
+        "status"
+      ],
+      "sample": {
+        "$type": "community.lexicon.calendar.rsvp",
+        "status": "community.lexicon.calendar.rsvp#going",
+        "subject": {
+          "cid": {
+            "$link": "bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "uri": "at://did:plc:ateliercompatibility/diy.atelier.project.project/compatibility"
+        }
+      },
+      "sampleSha256": "4021c5641b73e8c8dd621607a6cce1c8f660a625ba2dad35fe38a4f55c3172ca"
+    },
+    "diy.atelier.calendar.event": {
+      "canonicalJSON": "{\"$type\":\"diy.atelier.calendar.event\",\"createdAt\":\"2026-01-02T03:04:05.000Z\",\"icalendar\":\"BEGIN:VCALENDAR\\r\\nVERSION:2.0\\r\\nEND:VCALENDAR\\r\\n\",\"schemaVersion\":1,\"title\":\"Compatibility title\",\"uid\":\"compatibility-event@atelier.diy\",\"updatedAt\":\"2026-01-02T03:04:05.000Z\"}",
+      "publicData": true,
+      "requiredFields": [
+        "uid",
+        "title",
+        "icalendar",
+        "createdAt",
+        "updatedAt",
+        "schemaVersion"
+      ],
+      "sample": {
+        "$type": "diy.atelier.calendar.event",
+        "createdAt": "2026-01-02T03:04:05.000Z",
+        "icalendar": "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nEND:VCALENDAR\r\n",
+        "schemaVersion": 1,
+        "title": "Compatibility title",
+        "uid": "compatibility-event@atelier.diy",
+        "updatedAt": "2026-01-02T03:04:05.000Z"
+      },
+      "sampleSha256": "3c263832049894a83e2bb79511e624ec3c89a969799bd7fefa35fa3852eb5bc1"
+    },
+    "diy.atelier.capture.item": {
+      "canonicalJSON": "{\"$type\":\"diy.atelier.capture.item\",\"createdAt\":\"2026-01-02T03:04:05.000Z\",\"markdown\":{\"text\":{\"markdown\":\"# Compatibility\\n\"}},\"schemaVersion\":1,\"state\":\"inbox\"}",
+      "publicData": true,
+      "requiredFields": [
+        "markdown",
+        "state",
+        "createdAt",
+        "schemaVersion"
+      ],
+      "sample": {
+        "$type": "diy.atelier.capture.item",
+        "createdAt": "2026-01-02T03:04:05.000Z",
+        "markdown": {
+          "text": {
+            "markdown": "# Compatibility\n"
+          }
+        },
+        "schemaVersion": 1,
+        "state": "inbox"
+      },
+      "sampleSha256": "e6c5f4ebe0fe5e98bfb56e7689c49ebfb246b27f3f44e56fc0642b02463cbc7d"
+    },
+    "diy.atelier.collaboration.checkpoint": {
+      "canonicalJSON": "{\"$type\":\"diy.atelier.collaboration.checkpoint\",\"contentHash\":\"sha256:compatibility\",\"document\":{\"cid\":{\"$link\":\"bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"uri\":\"at://did:plc:ateliercompatibility/diy.atelier.project.project/compatibility\"},\"heads\":[\"compatibility-heads\"],\"persistenceState\":\"local\",\"protocolVersion\":1,\"updatedAt\":\"2026-01-02T03:04:05.000Z\"}",
+      "publicData": true,
+      "requiredFields": [
+        "document",
+        "heads",
+        "contentHash",
+        "protocolVersion",
+        "persistenceState",
+        "updatedAt"
+      ],
+      "sample": {
+        "$type": "diy.atelier.collaboration.checkpoint",
+        "contentHash": "sha256:compatibility",
+        "document": {
+          "cid": {
+            "$link": "bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "uri": "at://did:plc:ateliercompatibility/diy.atelier.project.project/compatibility"
+        },
+        "heads": [
+          "compatibility-heads"
+        ],
+        "persistenceState": "local",
+        "protocolVersion": 1,
+        "updatedAt": "2026-01-02T03:04:05.000Z"
+      },
+      "sampleSha256": "7e6202f3399fbf0c2f3171a778badebb1e787ec3f1a299d9422b52d0967718aa"
+    },
+    "diy.atelier.mail.providerRef": {
+      "canonicalJSON": "{\"$type\":\"diy.atelier.mail.providerRef\",\"createdAt\":\"2026-01-02T03:04:05.000Z\",\"opaqueId\":\"hmac-sha256:compatibility\",\"provider\":\"gmail\",\"resourceKind\":\"account\",\"sourceVersion\":\"compatibility-v1\"}",
+      "publicData": true,
+      "requiredFields": [
+        "provider",
+        "opaqueId",
+        "resourceKind",
+        "sourceVersion",
+        "createdAt"
+      ],
+      "sample": {
+        "$type": "diy.atelier.mail.providerRef",
+        "createdAt": "2026-01-02T03:04:05.000Z",
+        "opaqueId": "hmac-sha256:compatibility",
+        "provider": "gmail",
+        "resourceKind": "account",
+        "sourceVersion": "compatibility-v1"
+      },
+      "sampleSha256": "b19bbaa6ceacc18af6468160afe0c44260eb7388ffc9ea0cb1cfc4fea6fa2dc8"
+    },
+    "diy.atelier.notes.note": {
+      "canonicalJSON": "{\"$type\":\"diy.atelier.notes.note\",\"createdAt\":\"2026-01-02T03:04:05.000Z\",\"markdown\":{\"text\":{\"markdown\":\"# Compatibility\\n\"}},\"schemaVersion\":1,\"title\":\"Compatibility title\",\"updatedAt\":\"2026-01-02T03:04:05.000Z\"}",
+      "publicData": true,
+      "requiredFields": [
+        "title",
+        "markdown",
+        "createdAt",
+        "updatedAt",
+        "schemaVersion"
+      ],
+      "sample": {
+        "$type": "diy.atelier.notes.note",
+        "createdAt": "2026-01-02T03:04:05.000Z",
+        "markdown": {
+          "text": {
+            "markdown": "# Compatibility\n"
+          }
+        },
+        "schemaVersion": 1,
+        "title": "Compatibility title",
+        "updatedAt": "2026-01-02T03:04:05.000Z"
+      },
+      "sampleSha256": "49555ab6a31ede8843d9915b26fba74405491e23c1bbb20f331b4a5b9e6df1a3"
+    },
+    "diy.atelier.project.project": {
+      "canonicalJSON": "{\"$type\":\"diy.atelier.project.project\",\"createdAt\":\"2026-01-02T03:04:05.000Z\",\"name\":\"Compatibility name\",\"schemaVersion\":1,\"status\":\"active\",\"updatedAt\":\"2026-01-02T03:04:05.000Z\"}",
+      "publicData": true,
+      "requiredFields": [
+        "name",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "schemaVersion"
+      ],
+      "sample": {
+        "$type": "diy.atelier.project.project",
+        "createdAt": "2026-01-02T03:04:05.000Z",
+        "name": "Compatibility name",
+        "schemaVersion": 1,
+        "status": "active",
+        "updatedAt": "2026-01-02T03:04:05.000Z"
+      },
+      "sampleSha256": "76d3ccd25395d32b3488831e54b5f56f2677eff8074e2614c54d975eb9837605"
+    },
+    "diy.atelier.relation.edge": {
+      "canonicalJSON": "{\"$type\":\"diy.atelier.relation.edge\",\"createdAt\":\"2026-01-02T03:04:05.000Z\",\"kind\":\"belongsTo\",\"source\":{\"cid\":{\"$link\":\"bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"uri\":\"at://did:plc:ateliercompatibility/diy.atelier.project.project/compatibility\"},\"target\":{\"cid\":{\"$link\":\"bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"uri\":\"at://did:plc:ateliercompatibility/diy.atelier.project.project/compatibility\"}}",
+      "publicData": true,
+      "requiredFields": [
+        "source",
+        "target",
+        "kind",
+        "createdAt"
+      ],
+      "sample": {
+        "$type": "diy.atelier.relation.edge",
+        "createdAt": "2026-01-02T03:04:05.000Z",
+        "kind": "belongsTo",
+        "source": {
+          "cid": {
+            "$link": "bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "uri": "at://did:plc:ateliercompatibility/diy.atelier.project.project/compatibility"
+        },
+        "target": {
+          "cid": {
+            "$link": "bafyreiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "uri": "at://did:plc:ateliercompatibility/diy.atelier.project.project/compatibility"
+        }
+      },
+      "sampleSha256": "48cd8e0eddd88ff26e01509d3cd69ce7ff8c4a2d15637e6b9d23209521f759dc"
+    },
+    "diy.atelier.tasks.task": {
+      "canonicalJSON": "{\"$type\":\"diy.atelier.tasks.task\",\"createdAt\":\"2026-01-02T03:04:05.000Z\",\"schemaVersion\":1,\"status\":\"todo\",\"title\":\"Compatibility title\",\"updatedAt\":\"2026-01-02T03:04:05.000Z\"}",
+      "publicData": true,
+      "requiredFields": [
+        "title",
+        "status",
+        "createdAt",
+        "updatedAt",
+        "schemaVersion"
+      ],
+      "sample": {
+        "$type": "diy.atelier.tasks.task",
+        "createdAt": "2026-01-02T03:04:05.000Z",
+        "schemaVersion": 1,
+        "status": "todo",
+        "title": "Compatibility title",
+        "updatedAt": "2026-01-02T03:04:05.000Z"
+      },
+      "sampleSha256": "47d5b77b3d2b65b9ca577c453cbbf007567f4fcd03c34f44c17b1a046ce6abe6"
+    }
+  },
+  "schemaDigest": "5eb102f6b0da687c6891b40308cebe83123e526eb818d5b16535ed6a2fe98483",
+  "vendoredSchemas": {
+    "at.markpub.markdown": {
+      "retrievedAt": "2026-08-30",
+      "sourceSha256": "6cc164ee59c37681bf04eddfa484ec6ba57ca3497e8680885908134917b11ccb",
+      "sourceUrl": "https://raw.githubusercontent.com/AramZS/markpub.at/9b53a3a8f93d7c627abb64b5b6e4bf42140ce7c0/dist/lexicons/at/markpub/markdown.json",
+      "sourceVersion": "git:9b53a3a8f93d7c627abb64b5b6e4bf42140ce7c0",
+      "vendoredSha256": "6b9a69fa9e2bf43934a3c0a1c21e375aa72d90f3025303af4f1923332670d4c5"
+    },
+    "at.markpub.text": {
+      "retrievedAt": "2026-08-30",
+      "sourceSha256": "ddce15c90bddff335b6afce524c22aa0330015a1060051a32e79ac93c1870839",
+      "sourceUrl": "https://raw.githubusercontent.com/AramZS/markpub.at/9b53a3a8f93d7c627abb64b5b6e4bf42140ce7c0/dist/lexicons/at/markpub/text.json",
+      "sourceVersion": "git:9b53a3a8f93d7c627abb64b5b6e4bf42140ce7c0",
+      "vendoredSha256": "35200c1d6402e6392ecb40b315acb128add738583658cc501c9420ba49cedb17"
+    },
+    "community.lexicon.calendar.event": {
+      "retrievedAt": "2026-08-30",
+      "sourceSha256": "fbbfa5fdbf496351567c91a35ebb68d815f564080f713c0338e11b6efcd33f7f",
+      "sourceUrl": "https://lexicon.garden/lexicon/did:plc:mtr7qrqtcyseedx3jyr5o7db/community.lexicon.calendar.event",
+      "sourceVersion": "at://did:plc:mtr7qrqtcyseedx3jyr5o7db/com.atproto.lexicon.schema/community.lexicon.calendar.event@bafyreigv256whv46vep4xb2iqn6ag7z5abhvebd46ohuqvopxl56ptobbi",
+      "vendoredSha256": "fbbfa5fdbf496351567c91a35ebb68d815f564080f713c0338e11b6efcd33f7f"
+    },
+    "community.lexicon.calendar.rsvp": {
+      "retrievedAt": "2026-08-30",
+      "sourceSha256": "d1f4d0a9b5e30c168596c650131ee6193bd95380b5ac618e196bcbe5a497de8a",
+      "sourceUrl": "https://lexicon.garden/lexicon/did:plc:mtr7qrqtcyseedx3jyr5o7db/community.lexicon.calendar.rsvp",
+      "sourceVersion": "at://did:plc:mtr7qrqtcyseedx3jyr5o7db/com.atproto.lexicon.schema/community.lexicon.calendar.rsvp@bafyreiarei3vsjaj36yhc2thobrgzkcsdh6m5pmwy6reik24papzl32qcu",
+      "vendoredSha256": "d1f4d0a9b5e30c168596c650131ee6193bd95380b5ac618e196bcbe5a497de8a"
+    }
+  }
+}

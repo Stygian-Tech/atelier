@@ -1,0 +1,21 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.relation.edge",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "description": "An actor-owned typed relationship between Atelier or opaque provider resources. Publicly readable in a standard AT Protocol repository.",
+      "record": {
+        "type": "object",
+        "required": ["source", "target", "kind", "createdAt"],
+        "properties": {
+          "source": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
+          "target": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
+          "kind": { "type": "string", "knownValues": ["belongsTo", "derivedFrom", "mentions", "blocks", "relatesTo"] },
+          "createdAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    }
+  }
+}
