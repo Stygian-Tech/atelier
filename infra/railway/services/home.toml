@@ -1,6 +1,6 @@
 [build]
-builder = "RAILPACK"
-buildCommand = "bun run build --filter=@stygian/atelier-home-web"
+builder = "DOCKERFILE"
+dockerfilePath = "/apps/web/home/Dockerfile"
 watchPatterns = ["/apps/web/home/**", "/packages/**", "/package.json", "/bun.lock", "/turbo.json", "/.dockerignore", "/infra/railway/services/home.toml"]
 
 [deploy]
