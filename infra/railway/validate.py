@@ -12,6 +12,7 @@ import tomllib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 RAILWAY_ROOT = ROOT / "infra" / "railway"
+RAILWAY_IAC = ROOT / ".railway" / "railway.ts"
 
 
 def fail(message: str) -> None:
@@ -131,9 +132,37 @@ def validate_service_contracts() -> None:
             fail(f"{relative_path} must use its fail-closed /readyz rollout probe")
 
 
+def validate_iac_contract() -> None:
+    if not RAILWAY_IAC.is_file():
+        fail(".railway/railway.ts is missing")
+
+    text = RAILWAY_IAC.read_text()
+    if 'from "railway/iac"' not in text:
+        fail(".railway/railway.ts must use Railway Infrastructure as Code")
+    for legacy_field in ("railwayConfigFile", "configFile"):
+        if legacy_field in text:
+            fail(f".railway/railway.ts must not use legacy {legacy_field}")
+
+    excluded_services = (
+        "atelier-api",
+        "worker",
+        "mail-sync",
+        "calendar-sync",
+        "notes-sync-anchor",
+        "mcp-backplane",
+        "postgres",
+        "redis",
+    )
+    for service_name in excluded_services:
+        quoted_names = (f'"{service_name}"', f"'{service_name}'")
+        if any(quoted_name in text for quoted_name in quoted_names):
+            fail(f".railway/railway.ts must not provision {service_name} yet")
+
+
 def main() -> int:
     validate_environment_contract()
     validate_service_contracts()
+    validate_iac_contract()
     print("Railway contracts OK")
     return 0
 

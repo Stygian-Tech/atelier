@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
+import { getProductOrigins, isIndexableProductOrigin } from "@stygian/atelier-web-ui";
 import { EnvironmentBanner } from "@/components/shared/EnvironmentBanner";
 import { getAppEnv, shouldShowEnvironmentBanner } from "@/lib/appEnv";
 import "./globals.css";
 
+const origin = getProductOrigins().mail;
+const indexable = isIndexableProductOrigin(origin);
+const title = "Atelier Mail — Foundation preview";
+const description = "A transparent fixture preview of Atelier Mail; provider sync, delivery, and mutations are not connected yet.";
+
 export const metadata: Metadata = {
-  title: "Atelier Mail",
-  description: "Provider-neutral mail for Atelier, powered by ATProto identity.",
+  metadataBase: new URL(origin),
+  applicationName: "Atelier Mail",
+  title,
+  description,
+  alternates: { canonical: "/" },
+  robots: { index: indexable, follow: indexable },
+  openGraph: { title, description, url: "/", siteName: "Atelier Mail", type: "website", locale: "en_US" },
+  twitter: { card: "summary", title, description },
 };
 
 const themeScript = `

@@ -20,18 +20,21 @@
     "lint": "turbo run lint",
     "policy:licenses": "python3 infra/policy/check_licenses.py",
     "policy:secrets": "python3 infra/policy/scan_secrets.py",
-    "test": "turbo run test",
+    "test": "turbo run test && bun run test:railway",
+    "test:railway": "bun test infra/railway/railway.test.ts",
     "typecheck": "turbo run typecheck",
     "validate:railway": "python3 infra/railway/validate.py",
-    "verify": "bun run check:generated && bun run validate:railway && bun run policy:licenses && bun run policy:secrets && bun run coverage:domains && bun run verify:static && turbo run typecheck lint test build",
+    "verify": "bun run check:generated && bun run validate:railway && bun run policy:licenses && bun run policy:secrets && bun run coverage:domains && bun run verify:static && bun run typecheck && bun run lint && bun run build && bun run test && bun run verify:web-artifacts",
     "verify:android": "cd apps/android && ./gradlew --no-daemon --stacktrace testDebugUnitTest :app-atelier:assembleDebug :app-notes:assembleDebug :app-mail:assembleDebug :app-calendar:assembleDebug :app-tasks:assembleDebug",
     "verify:database": "infra/database/tests/run-postgres17.sh",
     "verify:rust": "cargo fmt --manifest-path packages/rust/Cargo.toml --all --check && cargo fmt --manifest-path services/notes-sync-anchor/Cargo.toml --all --check && cargo clippy --manifest-path packages/rust/Cargo.toml --workspace --all-targets --locked -- -D warnings && cargo clippy --manifest-path services/notes-sync-anchor/Cargo.toml --all-targets --locked -- -D warnings && cargo test --manifest-path packages/rust/Cargo.toml --workspace --all-targets --locked && cargo test --manifest-path services/notes-sync-anchor/Cargo.toml --all-targets --locked",
-    "verify:static": "bun test infra/static-server/server.test.ts apps/marketing/test/privacy-boundary.test.ts",
+    "verify:static": "bun test infra/static-server/server.test.ts infra/web/release-environment.test.ts infra/web/release-artifacts.test.ts apps/marketing/test/privacy-boundary.test.ts",
+    "verify:web-artifacts": "bun run infra/web/release-artifacts.ts",
     "verify:swift": "env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path packages/swift && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/api && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/mcp-backplane && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/worker && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/mail-sync && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/calendar-sync && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path apps/apple/Packages/AtelierShared"
   },
   "devDependencies": {
     "@types/node": "20.19.43",
+    "railway": "3.11.0",
     "turbo": "^2.5.6"
   },
   "overrides": {

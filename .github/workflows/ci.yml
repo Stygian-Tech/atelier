@@ -17,6 +17,25 @@ jobs:
   web-and-contracts:
     name: Web, contracts, docs
     runs-on: ubuntu-latest
+    env:
+      ATELIER_ENV: development
+      ATELIER_PUBLIC_ORIGIN: https://testing.atelier.diy
+      ATELIER_API_ORIGIN: https://api.testing.atelier.diy
+      ATELIER_MCP_ORIGIN: https://mcp.testing.atelier.diy
+      ATELIER_MARKETING_ORIGIN: https://testing.atelier.diy
+      ATELIER_DOCS_ORIGIN: https://docs.testing.atelier.diy
+      ATELIER_STATUS_ORIGIN: https://status.testing.atelier.diy
+      ATELIER_HOME_ORIGIN: https://home.testing.atelier.diy
+      ATELIER_NOTES_ORIGIN: https://notes.testing.atelier.diy
+      ATELIER_MAIL_ORIGIN: https://mail.testing.atelier.diy
+      ATELIER_CALENDAR_ORIGIN: https://calendar.testing.atelier.diy
+      ATELIER_TASKS_ORIGIN: https://tasks.testing.atelier.diy
+      NEXT_PUBLIC_APP_ENV: dev
+      NEXT_PUBLIC_HOME_URL: https://home.testing.atelier.diy
+      NEXT_PUBLIC_NOTES_URL: https://notes.testing.atelier.diy
+      NEXT_PUBLIC_MAIL_URL: https://mail.testing.atelier.diy
+      NEXT_PUBLIC_CALENDAR_URL: https://calendar.testing.atelier.diy
+      NEXT_PUBLIC_TASKS_URL: https://tasks.testing.atelier.diy
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -31,8 +50,33 @@ jobs:
       - name: Enforce domain contract coverage
         run: bun run coverage:domains
       - name: Test static-serving and privacy boundaries
-        run: bun test infra/static-server/server.test.ts apps/marketing/test/privacy-boundary.test.ts
+        run: bun run verify:static
       - run: bun run build
+      - name: Reject localhost in Development release artifacts
+        run: bun run verify:web-artifacts
+      - name: Build and scan exact Production web artifacts
+        env:
+          ATELIER_ENV: production
+          ATELIER_PUBLIC_ORIGIN: https://atelier.diy
+          ATELIER_API_ORIGIN: https://api.atelier.diy
+          ATELIER_MCP_ORIGIN: https://mcp.atelier.diy
+          ATELIER_MARKETING_ORIGIN: https://atelier.diy
+          ATELIER_DOCS_ORIGIN: https://docs.atelier.diy
+          ATELIER_STATUS_ORIGIN: https://status.atelier.diy
+          ATELIER_HOME_ORIGIN: https://home.atelier.diy
+          ATELIER_NOTES_ORIGIN: https://notes.atelier.diy
+          ATELIER_MAIL_ORIGIN: https://mail.atelier.diy
+          ATELIER_CALENDAR_ORIGIN: https://calendar.atelier.diy
+          ATELIER_TASKS_ORIGIN: https://tasks.atelier.diy
+          NEXT_PUBLIC_APP_ENV: production
+          NEXT_PUBLIC_HOME_URL: https://home.atelier.diy
+          NEXT_PUBLIC_NOTES_URL: https://notes.atelier.diy
+          NEXT_PUBLIC_MAIL_URL: https://mail.atelier.diy
+          NEXT_PUBLIC_CALENDAR_URL: https://calendar.atelier.diy
+          NEXT_PUBLIC_TASKS_URL: https://tasks.atelier.diy
+        run: |
+          bunx turbo run build --force
+          bun run verify:web-artifacts
 
   swift-linux:
     name: Swift services
@@ -202,5 +246,21 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: false
+          build-args: |
+            ATELIER_ENV=development
+            ATELIER_MARKETING_ORIGIN=https://testing.atelier.diy
+            ATELIER_DOCS_ORIGIN=https://docs.testing.atelier.diy
+            ATELIER_STATUS_ORIGIN=https://status.testing.atelier.diy
+            ATELIER_HOME_ORIGIN=https://home.testing.atelier.diy
+            ATELIER_NOTES_ORIGIN=https://notes.testing.atelier.diy
+            ATELIER_MAIL_ORIGIN=https://mail.testing.atelier.diy
+            ATELIER_CALENDAR_ORIGIN=https://calendar.testing.atelier.diy
+            ATELIER_TASKS_ORIGIN=https://tasks.testing.atelier.diy
+            NEXT_PUBLIC_APP_ENV=dev
+            NEXT_PUBLIC_HOME_URL=https://home.testing.atelier.diy
+            NEXT_PUBLIC_NOTES_URL=https://notes.testing.atelier.diy
+            NEXT_PUBLIC_MAIL_URL=https://mail.testing.atelier.diy
+            NEXT_PUBLIC_CALENDAR_URL=https://calendar.testing.atelier.diy
+            NEXT_PUBLIC_TASKS_URL=https://tasks.testing.atelier.diy
           cache-from: type=gha,scope=${{ matrix.name }}
           cache-to: type=gha,mode=max,scope=${{ matrix.name }}

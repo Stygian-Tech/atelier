@@ -1,10 +1,13 @@
 FROM oven/bun:1.3.14-alpine AS builder
 WORKDIR /app
-ARG ATELIER_DOCS_ORIGIN=http://localhost:4322
+ARG ATELIER_ENV=deployment-unconfigured
+ARG ATELIER_DOCS_ORIGIN
+ENV ATELIER_ENV=$ATELIER_ENV
 ENV ATELIER_DOCS_ORIGIN=$ATELIER_DOCS_ORIGIN
 COPY . .
 RUN bun install --frozen-lockfile
 RUN bunx turbo run build --filter=@stygian/atelier-docs
+RUN bun run infra/web/release-artifacts.ts --root apps/docs/dist
 
 FROM oven/bun:1.3.14-alpine AS runner
 WORKDIR /app

@@ -2,12 +2,17 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 ---
 
-<SiteLayout title="Thank you — Atelier" description="Atelier open beta interest received.">
+<SiteLayout
+  title="Beta signup is not open — Atelier"
+  description="Atelier is a foundation preview; beta signup and address collection are not open."
+  indexable={false}
+  structuredData={false}
+>
   <main class="thanks">
     <a class="atelier-brand" href="/"><span class="atelier-brand-mark">A</span> Atelier</a>
-    <p class="atelier-eyebrow">Beta interest received</p>
-    <h1>Thanks for making room.</h1>
-    <p>This static preview does not submit your address yet. The production form will use a server-side, consent-aware Postmark workflow after approval.</p>
+    <p class="atelier-eyebrow">Foundation preview</p>
+    <h1>Beta signup is not open.</h1>
+    <p>No interest was submitted and no address was collected. This route exists only to make the current release boundary explicit.</p>
     <a class="atelier-button" href="/">Back to Atelier</a>
   </main>
 </SiteLayout>
