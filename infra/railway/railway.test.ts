@@ -45,12 +45,15 @@ const EXPECTED_PRODUCTION_HOSTS: Record<string, string> = {
   tasks: "tasks.atelier.diy",
 };
 
-const RAILPACK_ARTIFACT_ROOTS: Record<string, string> = {
-  home: "apps/web/home",
-  notes: "apps/web/notes",
-  mail: "apps/web/mail",
-  calendar: "apps/web/calendar",
-  tasks: "apps/web/tasks",
+const EXPECTED_DOCKERFILES: Record<string, string> = {
+  marketing: "/apps/marketing/Dockerfile",
+  docs: "/apps/docs/Dockerfile",
+  status: "/apps/status/Dockerfile",
+  home: "/apps/web/home/Dockerfile",
+  notes: "/apps/web/notes/Dockerfile",
+  mail: "/apps/web/mail/Dockerfile",
+  calendar: "/apps/web/calendar/Dockerfile",
+  tasks: "/apps/web/tasks/Dockerfile",
 };
 
 async function render(environment: string): Promise<ServiceNode[]> {
@@ -88,7 +91,7 @@ function literalVariables(serviceNode: ServiceNode): Record<string, string> {
 }
 
 describe("Railway public-surface plan", () => {
-  test("keeps only Railpack's required provenance manifests in the build context", async () => {
+  test("keeps only the web builds' required provenance manifests in the build context", async () => {
     const entries = (await Bun.file(".dockerignore").text())
       .split("\n")
       .map((line) => line.trim())
@@ -137,6 +140,19 @@ describe("Railway public-surface plan", () => {
     }
   });
 
+  test("isolates every public build in its checked-in Dockerfile", async () => {
+    for (const surface of await render("development")) {
+      const legacy = await legacyContract(surface.name);
+
+      expect(surface.build?.builder).toBe("DOCKERFILE");
+      expect(surface.build?.dockerfilePath).toBe(EXPECTED_DOCKERFILES[surface.name]);
+      expect(surface.build?.buildCommand).toBeUndefined();
+      expect(legacy.build.builder).toBe("DOCKERFILE");
+      expect(legacy.build.dockerfilePath).toBe(EXPECTED_DOCKERFILES[surface.name]);
+      expect(legacy.build.buildCommand).toBeUndefined();
+    }
+  });
+
   test("uses the exact Development source, build, runtime, and safety limits", async () => {
     const services = await render("development");
 
@@ -149,11 +165,6 @@ describe("Railway public-surface plan", () => {
         "/.railway/railway.ts",
         ...(ownContract ? [ownContract] : []),
       ];
-      const artifactRoot = RAILPACK_ARTIFACT_ROOTS[surface.name];
-      const expectedBuildCommand = artifactRoot
-        ? `${legacy.build.buildCommand} && bun run infra/web/release-artifacts.ts --root ${artifactRoot}/.next/server/app --root ${artifactRoot}/.next/static`
-        : legacy.build.buildCommand;
-
       expect(surface.source).toMatchObject({
         type: "github",
         repo: "Stygian-Tech/atelier",
@@ -162,7 +173,6 @@ describe("Railway public-surface plan", () => {
       expect(surface.configFile).toBeUndefined();
       expect(surface.build).toEqual({
         ...legacy.build,
-        ...(expectedBuildCommand ? { buildCommand: expectedBuildCommand } : {}),
         watchPatterns: expectedWatchPatterns,
       });
       expect(surface.deploy).toEqual({

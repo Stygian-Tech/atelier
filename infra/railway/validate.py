@@ -13,7 +13,7 @@ import tomllib
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 RAILWAY_ROOT = ROOT / "infra" / "railway"
 RAILWAY_IAC = ROOT / ".railway" / "railway.ts"
-RAILPACK_PROVENANCE_CONTEXT = (
+WEB_BUILD_PROVENANCE_CONTEXT = (
     "!imports/atelier-mail/",
     "!imports/atelier-mail/bun.lock",
     "!imports/atelier-mail/bunfig.toml",
@@ -179,7 +179,7 @@ def validate_iac_contract() -> None:
             fail(f".railway/railway.ts must not provision {service_name} yet")
 
 
-def validate_railpack_build_context() -> None:
+def validate_web_build_context() -> None:
     dockerignore_path = ROOT / ".dockerignore"
     entries = [
         line.strip()
@@ -188,29 +188,29 @@ def validate_railpack_build_context() -> None:
     ]
     if "imports" in entries:
         fail(
-            ".dockerignore must not exclude the imports parent; Railpack needs "
+            ".dockerignore must not exclude the imports parent; web container builds need "
             "the preserved Atelier Mail package manifests"
         )
     if "imports/**" not in entries:
         fail(".dockerignore must exclude imported source by default with imports/**")
 
     actual_exceptions = tuple(entry for entry in entries if entry.startswith("!imports/"))
-    if actual_exceptions != RAILPACK_PROVENANCE_CONTEXT:
+    if actual_exceptions != WEB_BUILD_PROVENANCE_CONTEXT:
         fail(
             ".dockerignore must expose only the exact Atelier Mail manifests "
-            f"required by Railpack: expected={RAILPACK_PROVENANCE_CONTEXT}, "
+            f"required by web container builds: expected={WEB_BUILD_PROVENANCE_CONTEXT}, "
             f"actual={actual_exceptions}"
         )
     ignore_index = entries.index("imports/**")
     if any(entries.index(exception) < ignore_index for exception in actual_exceptions):
-        fail(".dockerignore Railpack manifest exceptions must follow imports/**")
+        fail(".dockerignore web-build manifest exceptions must follow imports/**")
 
 
 def main() -> int:
     validate_environment_contract()
     validate_service_contracts()
     validate_iac_contract()
-    validate_railpack_build_context()
+    validate_web_build_context()
     print("Railway contracts OK")
     return 0
 
