@@ -12,11 +12,12 @@ records are generated only after each custom domain is attached in Railway.
 The Development and Production manifests contain only the eight currently
 deployed public surfaces. API and MCP records remain absent until those services
 pass their readiness gates and are actually provisioned. The eight-surface
-Production foundation preview was explicitly authorized on 2026-08-31; that
-approval does not extend to the unfinished services or provider callback
-cutovers. Railway targets and ownership tokens are public DNS material, not
-application credentials, but they must still be rechecked against Railway
-immediately before each Marque transaction.
+Production foundation preview was explicitly authorized and applied through one
+reviewed Marque transaction on 2026-08-31. Certificate verification remains a
+separate Railway gate. This approval does not extend to the unfinished services
+or provider callback cutovers. Railway targets and ownership tokens are public
+DNS material, not application credentials, but they must still be rechecked
+against Railway immediately before each Marque transaction.
 
 Apply workflow:
 
