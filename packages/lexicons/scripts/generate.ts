@@ -42,10 +42,14 @@ type VendorEntry = {
   path: string;
   sourceUrl: string;
   sourceVersion: string;
+  canonicalSourceUrl?: string;
+  canonicalSourceVersion?: string;
   sourceSha256: string;
   vendoredSha256: string;
   normalization: string;
   license: string;
+  licenseUrl?: string;
+  copyright?: string;
 };
 
 type VendorManifest = {

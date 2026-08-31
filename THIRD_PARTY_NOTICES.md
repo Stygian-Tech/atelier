@@ -19,12 +19,14 @@ ATProtoPrimitiveKit repository.
 
 ## Community Calendar Lexicons
 
-The publisher records for `community.lexicon.calendar.event` and
-`community.lexicon.calendar.rsvp` do not declare a license. Their checked-in
-copies are compatibility inputs pinned by publisher DID, record CID, and
-SHA-256 digest. They are not represented as MIT-covered.
+`community.lexicon.calendar.event` and `community.lexicon.calendar.rsvp` are
+published and maintained by [Lexicon Community](https://lexicon.community/),
+which licenses every schema in its canonical
+[Lexicon repository](https://tangled.org/lexicon.community/lexicons) under MIT,
+copyright 2024 Lexicon Community. Atelier's copies are compatibility inputs
+pinned by publisher DID, record CID, canonical source commit, and SHA-256
+digest. Exact provenance is recorded in
+`packages/lexicons/vendor/manifest.json`.
 
-Public redistribution of those copies is blocked until Stygian Tech either
-obtains compatible permission or replaces the vendoring approach with one that
-does not redistribute the publisher's bytes. This boundary is tracked in
-Linear as `ATE-17`.
+The complete upstream copyright and permission notice is included at
+`packages/lexicons/vendor/licenses/LEXICON-COMMUNITY-MIT.txt`.
