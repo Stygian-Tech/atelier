@@ -35,8 +35,10 @@ order.
 ## Environment gates
 
 - `dev` may deploy to Development after its referenced infrastructure exists.
-- Production remains manual. `ATELIER_PRODUCTION_ACTIVATION_APPROVED=0` is not
-  an application security control; it is a visible release guard.
+- Production remains a manual plan/apply. The checked-in
+  `ATELIER_PRODUCTION_ACTIVATION_APPROVED=1` records the explicit 2026-08-30
+  approval; it is a visible release guard, not an application security control
+  and not a waiver of any service readiness or credential gate.
 - Provider credentials, KMS access, Sentry/Postmark tokens, and OAuth keys live
   only in Railway's secret store or workload identity. Never resolve the
   placeholders in the checked-in examples.
