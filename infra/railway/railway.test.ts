@@ -120,6 +120,23 @@ describe("Railway public-surface plan", () => {
     expect(services).toHaveLength(8);
   });
 
+  test("rebuilds every surface when the Docker context contract changes", async () => {
+    for (const surface of await render("development")) {
+      const legacy = await legacyContract(surface.name);
+
+      expect(
+        (surface.build?.watchPatterns ?? []).filter(
+          (pattern) => pattern === "/.dockerignore",
+        ),
+      ).toHaveLength(1);
+      expect(
+        (legacy.build.watchPatterns ?? []).filter(
+          (pattern) => pattern === "/.dockerignore",
+        ),
+      ).toHaveLength(1);
+    }
+  });
+
   test("uses the exact Development source, build, runtime, and safety limits", async () => {
     const services = await render("development");
 
