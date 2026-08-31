@@ -52,10 +52,10 @@ Production deployment, provider callback, store build, or DNS record is active.
 service dependencies exist and readiness probes pass. Production, production
 DNS, OAuth/provider webhook cutovers, source-repository archival, final store
 artwork, signing, and store uploads all require separate explicit approval.
-Public GitHub publication also remains blocked on resolving redistribution
-terms for the vendored Community Calendar Lexicon records; their publisher
-records currently declare no license, and Atelier does not treat those bytes as
-MIT-covered.
+The former Community Calendar redistribution blocker is resolved: Lexicon
+Community's canonical repository explicitly licenses its schemas under MIT,
+and Atelier now carries the complete upstream notice plus immutable source,
+publisher, CID, and digest provenance for the vendored event and RSVP records.
 
 The coordinated beta gate remains all-or-nothing across Atelier, Notes, Mail,
 Calendar, and Tasks. Passing a build or a health check for one surface is not a

@@ -34,20 +34,28 @@
       "path": "schemas/vendor/community.lexicon.calendar.event.json",
       "sourceUrl": "https://lexicon.garden/lexicon/did:plc:mtr7qrqtcyseedx3jyr5o7db/community.lexicon.calendar.event",
       "sourceVersion": "at://did:plc:mtr7qrqtcyseedx3jyr5o7db/com.atproto.lexicon.schema/community.lexicon.calendar.event@bafyreigv256whv46vep4xb2iqn6ag7z5abhvebd46ohuqvopxl56ptobbi",
+      "canonicalSourceUrl": "https://tangled.org/lexicon.community/lexicons/blob/ddcaad28aa7850aa15618f79d8c41460b6df6736/community/lexicon/calendar/event.json",
+      "canonicalSourceVersion": "git:ddcaad28aa7850aa15618f79d8c41460b6df6736",
       "sourceSha256": "fbbfa5fdbf496351567c91a35ebb68d815f564080f713c0338e11b6efcd33f7f",
       "vendoredSha256": "fbbfa5fdbf496351567c91a35ebb68d815f564080f713c0338e11b6efcd33f7f",
       "normalization": "None; SHA-256 covers the exact vendored JSON bytes retrieved from the publisher record rendered by Lexicon Garden.",
-      "license": "No license declared in the published Lexicon record"
+      "license": "MIT",
+      "licenseUrl": "https://tangled.org/lexicon.community/lexicons/blob/ddcaad28aa7850aa15618f79d8c41460b6df6736/LICENSE",
+      "copyright": "Copyright (c) 2024 Lexicon Community"
     },
     {
       "id": "community.lexicon.calendar.rsvp",
       "path": "schemas/vendor/community.lexicon.calendar.rsvp.json",
       "sourceUrl": "https://lexicon.garden/lexicon/did:plc:mtr7qrqtcyseedx3jyr5o7db/community.lexicon.calendar.rsvp",
       "sourceVersion": "at://did:plc:mtr7qrqtcyseedx3jyr5o7db/com.atproto.lexicon.schema/community.lexicon.calendar.rsvp@bafyreiarei3vsjaj36yhc2thobrgzkcsdh6m5pmwy6reik24papzl32qcu",
+      "canonicalSourceUrl": "https://tangled.org/lexicon.community/lexicons/blob/3740ff13906b1f91573b1ebee79d498a7bc4cc0f/community/lexicon/calendar/rsvp.json",
+      "canonicalSourceVersion": "git:3740ff13906b1f91573b1ebee79d498a7bc4cc0f",
       "sourceSha256": "d1f4d0a9b5e30c168596c650131ee6193bd95380b5ac618e196bcbe5a497de8a",
       "vendoredSha256": "d1f4d0a9b5e30c168596c650131ee6193bd95380b5ac618e196bcbe5a497de8a",
       "normalization": "None; SHA-256 covers the exact vendored JSON bytes retrieved from the publisher record rendered by Lexicon Garden.",
-      "license": "No license declared in the published Lexicon record"
+      "license": "MIT",
+      "licenseUrl": "https://tangled.org/lexicon.community/lexicons/blob/3740ff13906b1f91573b1ebee79d498a7bc4cc0f/LICENSE",
+      "copyright": "Copyright (c) 2024 Lexicon Community"
     }
   ]
 }
