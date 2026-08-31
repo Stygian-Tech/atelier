@@ -58,6 +58,12 @@ const EXPECTED_DOCKERFILES: Record<string, string> = {
 
 const NEXT_SURFACES = ["home", "notes", "mail", "calendar", "tasks"] as const;
 
+type MarqueRecord = {
+  name: string;
+  type: string;
+  value: string;
+};
+
 async function render(environment: string): Promise<ServiceNode[]> {
   const context = createRailwayContext({
     command: "plan",
@@ -188,6 +194,52 @@ describe("Railway public-surface plan", () => {
         `CMD ["bun", "run", "--cwd", "apps/web/${surfaceName}", "start"]`,
       ]);
       expect(legacyText).not.toContain("$PORT");
+    }
+  });
+
+  test("keeps Development DNS scoped to deployed Railway surfaces", async () => {
+    const manifest = (await Bun.file("infra/marque/testing.json").json()) as {
+      apply: boolean;
+      environment: string;
+      provider: string;
+      records: MarqueRecord[];
+      reviewStatus: string;
+      verificationRecords: MarqueRecord[];
+      zone: string;
+    };
+    const expectedNames = Object.values(EXPECTED_DEVELOPMENT_HOSTS)
+      .map((hostname) => hostname.replace(/\.atelier\.diy$/, ""))
+      .sort();
+    const recordNames = manifest.records.map((record) => record.name).sort();
+    const verificationNames = manifest.verificationRecords
+      .map((record) => record.name)
+      .sort();
+
+    expect(manifest).toMatchObject({
+      apply: false,
+      environment: "development",
+      provider: "marque",
+      reviewStatus: "railway-targets-captured-awaiting-marque-zone-review",
+      zone: "atelier.diy",
+    });
+    expect(recordNames).toEqual(expectedNames);
+    expect(new Set(recordNames).size).toBe(recordNames.length);
+    expect(recordNames).not.toContain("api.testing");
+    expect(recordNames).not.toContain("mcp.testing");
+    expect(JSON.stringify(manifest)).not.toContain("REPLACE_");
+
+    for (const record of manifest.records) {
+      expect(record.type).toBe("CNAME");
+      expect(record.value).toMatch(/^[a-z0-9]+\.up\.railway\.app\.$/);
+    }
+
+    expect(verificationNames).toEqual(
+      expectedNames.map((name) => `_railway-verify.${name}`).sort(),
+    );
+    expect(new Set(verificationNames).size).toBe(verificationNames.length);
+    for (const record of manifest.verificationRecords) {
+      expect(record.type).toBe("TXT");
+      expect(record.value).toMatch(/^railway-verify=[0-9a-f]{64}$/);
     }
   });
 
