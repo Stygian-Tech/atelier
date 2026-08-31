@@ -253,6 +253,7 @@ describe("Railway public-surface plan", () => {
       records: MarqueRecord[];
       requiresExplicitProductionApproval: boolean;
       reviewStatus: string;
+      ttlSeconds: number;
       verificationRecords: MarqueRecord[];
       zone: string;
     };
@@ -274,6 +275,7 @@ describe("Railway public-surface plan", () => {
       requiresExplicitProductionApproval: true,
       reviewStatus:
         "railway-targets-captured-production-approved-awaiting-marque-zone-review",
+      ttlSeconds: 300,
       zone: "atelier.diy",
     });
     expect(recordNames).toEqual(expectedNames);
