@@ -28,6 +28,11 @@ loops are absent. Do not deploy a service merely because its container builds;
 provision Development only after its documented readiness dependencies and
 credential approval exist.
 
+The public Dockerfiles are also the runtime source of truth. Their Railway
+deploy contracts intentionally omit `startCommand`; this allows Next.js to
+consume Railway's `PORT` environment variable itself and prevents literal
+shell-style `$PORT` arguments from reaching `next start`.
+
 See [/.railway/README.md](../../.railway/README.md) for the pinned plan/apply
 workflow, resource ceilings, source branches, domain inspection, and rollout
 order. Railway project-level IaC cannot register custom domains; attach them

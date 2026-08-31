@@ -150,17 +150,6 @@ export const PUBLIC_SURFACE_BUILDS = {
   },
 } as const satisfies Record<PublicSurface, BuildConfig>;
 
-export const PUBLIC_SURFACE_START_COMMANDS = {
-  marketing: undefined,
-  docs: undefined,
-  status: undefined,
-  home: "bun run --cwd apps/web/home start --hostname 0.0.0.0 --port $PORT",
-  notes: "bun run --cwd apps/web/notes start --hostname 0.0.0.0 --port $PORT",
-  mail: "bun run --cwd apps/web/mail start --hostname 0.0.0.0 --port $PORT",
-  calendar: "bun run --cwd apps/web/calendar start --hostname 0.0.0.0 --port $PORT",
-  tasks: "bun run --cwd apps/web/tasks start --hostname 0.0.0.0 --port $PORT",
-} as const satisfies Record<PublicSurface, string | undefined>;
-
 const HOSTS: Record<AtelierEnvironment, Record<PublicSurface, string>> = {
   development: {
     marketing: "testing.atelier.diy",
@@ -256,9 +245,8 @@ function environmentFromName(name: string | undefined): AtelierEnvironment {
   throw new Error(`Unsupported Railway environment: ${name ?? "<missing>"}`);
 }
 
-function deployConfiguration(environment: AtelierEnvironment, startCommand?: string): DeployConfig {
+function deployConfiguration(environment: AtelierEnvironment): DeployConfig {
   return {
-    startCommand,
     healthcheckPath: "/",
     healthcheckTimeout: 300,
     sleepApplication: environment === "development",
@@ -283,7 +271,7 @@ export default defineRailway((context) => {
     service(surface, {
       source: github(GITHUB_REPOSITORY, { branch }),
       build: PUBLIC_SURFACE_BUILDS[surface],
-      deploy: deployConfiguration(environment, PUBLIC_SURFACE_START_COMMANDS[surface]),
+      deploy: deployConfiguration(environment),
       replicas,
       env: serviceEnvironment(environment, surface),
     }),

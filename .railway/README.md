@@ -12,6 +12,12 @@ surfaces:
   images remain isolated from the root multi-language `mise.toml`, so a web
   build never installs the Swift, Java, or Rust toolchains.
 
+Each image owns its runtime command. In particular, do not add a Railway
+`startCommand` containing `$PORT`: Railway does not shell-expand that value.
+The five Next.js package scripts run `next start`, which reads Railway's
+runtime `PORT` environment variable directly, while their images set
+`HOSTNAME=0.0.0.0`.
+
 The API, worker, provider sync processes, Notes anchor, MCP backplane,
 PostgreSQL, and Redis are intentionally absent until their readiness and
 credential gates are complete.
