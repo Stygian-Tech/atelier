@@ -79,9 +79,8 @@ export const PUBLIC_SURFACE_BUILDS = {
     ],
   },
   home: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-home-web && bun run infra/web/release-artifacts.ts --root apps/web/home/.next/server/app --root apps/web/home/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/home/Dockerfile",
     watchPatterns: [
       "/apps/web/home/**",
       "/packages/**",
@@ -94,9 +93,8 @@ export const PUBLIC_SURFACE_BUILDS = {
     ],
   },
   notes: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-notes-web && bun run infra/web/release-artifacts.ts --root apps/web/notes/.next/server/app --root apps/web/notes/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/notes/Dockerfile",
     watchPatterns: [
       "/apps/web/notes/**",
       "/packages/**",
@@ -109,9 +107,8 @@ export const PUBLIC_SURFACE_BUILDS = {
     ],
   },
   mail: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-mail-web && bun run infra/web/release-artifacts.ts --root apps/web/mail/.next/server/app --root apps/web/mail/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/mail/Dockerfile",
     watchPatterns: [
       "/apps/web/mail/**",
       "/packages/**",
@@ -124,9 +121,8 @@ export const PUBLIC_SURFACE_BUILDS = {
     ],
   },
   calendar: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-calendar-web && bun run infra/web/release-artifacts.ts --root apps/web/calendar/.next/server/app --root apps/web/calendar/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/calendar/Dockerfile",
     watchPatterns: [
       "/apps/web/calendar/**",
       "/packages/**",
@@ -139,9 +135,8 @@ export const PUBLIC_SURFACE_BUILDS = {
     ],
   },
   tasks: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-tasks-web && bun run infra/web/release-artifacts.ts --root apps/web/tasks/.next/server/app --root apps/web/tasks/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/tasks/Dockerfile",
     watchPatterns: [
       "/apps/web/tasks/**",
       "/packages/**",

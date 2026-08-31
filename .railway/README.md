@@ -8,8 +8,9 @@ Railway Config File path for an Atelier service.
 The authoring file intentionally contains only the eight deployable public
 surfaces:
 
-- marketing, docs, and status through their checked-in Dockerfiles;
-- Home, Notes, Mail, Calendar, and Tasks through Railpack.
+- all eight surfaces through their checked-in Dockerfiles. The five Next.js
+  images remain isolated from the root multi-language `mise.toml`, so a web
+  build never installs the Swift, Java, or Rust toolchains.
 
 The API, worker, provider sync processes, Notes anchor, MCP backplane,
 PostgreSQL, and Redis are intentionally absent until their readiness and
