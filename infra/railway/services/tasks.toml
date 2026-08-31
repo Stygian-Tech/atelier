@@ -4,7 +4,6 @@ dockerfilePath = "/apps/web/tasks/Dockerfile"
 watchPatterns = ["/apps/web/tasks/**", "/packages/**", "/package.json", "/bun.lock", "/turbo.json", "/.dockerignore", "/infra/railway/services/tasks.toml"]
 
 [deploy]
-startCommand = "bun run --cwd apps/web/tasks start --hostname 0.0.0.0 --port $PORT"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

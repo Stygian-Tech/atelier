@@ -56,6 +56,8 @@ const EXPECTED_DOCKERFILES: Record<string, string> = {
   tasks: "/apps/web/tasks/Dockerfile",
 };
 
+const NEXT_SURFACES = ["home", "notes", "mail", "calendar", "tasks"] as const;
+
 async function render(environment: string): Promise<ServiceNode[]> {
   const context = createRailwayContext({
     command: "plan",
@@ -150,6 +152,42 @@ describe("Railway public-surface plan", () => {
       expect(legacy.build.builder).toBe("DOCKERFILE");
       expect(legacy.build.dockerfilePath).toBe(EXPECTED_DOCKERFILES[surface.name]);
       expect(legacy.build.buildCommand).toBeUndefined();
+    }
+  });
+
+  test("delegates runtime startup to each image without interpolating Railway PORT", async () => {
+    const services = await render("development");
+
+    for (const surface of services) {
+      const legacy = await legacyContract(surface.name);
+      expect(surface.deploy?.startCommand).toBeUndefined();
+      expect(legacy.deploy.startCommand).toBeUndefined();
+    }
+
+    expect(await Bun.file(".railway/railway.ts").text()).not.toContain("$PORT");
+
+    for (const surfaceName of NEXT_SURFACES) {
+      const dockerfile = await Bun.file(
+        `apps/web/${surfaceName}/Dockerfile`,
+      ).text();
+      const packageManifest = await Bun.file(
+        `apps/web/${surfaceName}/package.json`,
+      ).json();
+      const legacyText = await Bun.file(
+        `infra/railway/services/${surfaceName}.toml`,
+      ).text();
+
+      expect(packageManifest.scripts.start).toBe("next start");
+      expect(dockerfile).toContain("ENV HOSTNAME=0.0.0.0");
+      expect(
+        dockerfile
+          .split("\n")
+          .map((line) => line.trim())
+          .filter((line) => line.startsWith("CMD ")),
+      ).toEqual([
+        `CMD ["bun", "run", "--cwd", "apps/web/${surfaceName}", "start"]`,
+      ]);
+      expect(legacyText).not.toContain("$PORT");
     }
   });
 
