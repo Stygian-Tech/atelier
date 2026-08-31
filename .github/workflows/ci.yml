@@ -68,8 +68,9 @@ jobs:
       - run: cargo clippy --manifest-path services/notes-sync-anchor/Cargo.toml --all-targets --locked -- -D warnings
       - run: cargo test --manifest-path packages/rust/Cargo.toml --workspace --all-targets --locked
       - run: cargo test --manifest-path services/notes-sync-anchor/Cargo.toml --all-targets --locked
-      - uses: dtolnay/rust-toolchain@nightly-2026-08-29
+      - uses: dtolnay/rust-toolchain@nightly
         with:
+          toolchain: nightly-2026-08-29
           components: llvm-tools-preview
       - name: Install pinned Rust coverage adapter
         run: cargo install cargo-llvm-cov --version 0.9.0 --locked
