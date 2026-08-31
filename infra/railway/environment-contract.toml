@@ -1,0 +1,267 @@
+version = 1
+
+[[variable]]
+name = "ATELIER_ENV"
+classification = "public"
+required = true
+services = ["all"]
+development = "development"
+production = "production"
+
+[[variable]]
+name = "ATELIER_PUBLIC_ORIGIN"
+classification = "public"
+required = true
+services = ["all-apps-and-services"]
+development = "https://testing.atelier.diy"
+production = "https://atelier.diy"
+
+[[variable]]
+name = "ATELIER_API_ORIGIN"
+classification = "public"
+required = true
+services = ["home", "notes", "mail", "calendar", "tasks", "mcp-backplane"]
+development = "https://api.testing.atelier.diy"
+production = "https://api.atelier.diy"
+
+[[variable]]
+name = "ATELIER_MCP_ORIGIN"
+classification = "public"
+required = true
+services = ["home", "notes", "mail", "calendar", "tasks"]
+development = "https://mcp.testing.atelier.diy"
+production = "https://mcp.atelier.diy"
+
+[[variable]]
+name = "DATABASE_URL"
+classification = "secret-reference"
+required = true
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync", "mcp-backplane"]
+
+[[variable]]
+name = "REDIS_URL"
+classification = "secret-reference"
+required = true
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync", "notes-sync-anchor", "mcp-backplane"]
+
+[[variable]]
+name = "ATPROTO_OAUTH_CLIENT_ID"
+classification = "public"
+required = true
+services = ["atelier-api", "home", "notes", "mail", "calendar", "tasks", "mcp-backplane"]
+
+[[variable]]
+name = "ATELIER_MARKETING_ORIGIN"
+classification = "public-build-time"
+required = true
+services = ["marketing", "docs", "status"]
+development = "https://testing.atelier.diy"
+production = "https://atelier.diy"
+
+[[variable]]
+name = "ATELIER_DOCS_ORIGIN"
+classification = "public-build-time"
+required = true
+services = ["marketing", "docs", "status"]
+development = "https://docs.testing.atelier.diy"
+production = "https://docs.atelier.diy"
+
+[[variable]]
+name = "ATELIER_STATUS_ORIGIN"
+classification = "public-build-time"
+required = true
+services = ["marketing", "docs", "status"]
+development = "https://status.testing.atelier.diy"
+production = "https://status.atelier.diy"
+
+[[variable]]
+name = "ATELIER_HOME_ORIGIN"
+classification = "public-build-time"
+required = true
+services = ["marketing", "docs", "status"]
+development = "https://home.testing.atelier.diy"
+production = "https://home.atelier.diy"
+
+[[variable]]
+name = "ATELIER_NOTES_ORIGIN"
+classification = "public-build-time"
+required = true
+services = ["marketing", "docs", "status"]
+development = "https://notes.testing.atelier.diy"
+production = "https://notes.atelier.diy"
+
+[[variable]]
+name = "ATELIER_MAIL_ORIGIN"
+classification = "public-build-time"
+required = true
+services = ["marketing", "docs", "status"]
+development = "https://mail.testing.atelier.diy"
+production = "https://mail.atelier.diy"
+
+[[variable]]
+name = "ATELIER_CALENDAR_ORIGIN"
+classification = "public-build-time"
+required = true
+services = ["marketing", "docs", "status"]
+development = "https://calendar.testing.atelier.diy"
+production = "https://calendar.atelier.diy"
+
+[[variable]]
+name = "ATELIER_TASKS_ORIGIN"
+classification = "public-build-time"
+required = true
+services = ["marketing", "docs", "status"]
+development = "https://tasks.testing.atelier.diy"
+production = "https://tasks.atelier.diy"
+
+[[variable]]
+name = "NEXT_PUBLIC_APP_ENV"
+classification = "public-build-time"
+required = true
+services = ["mail"]
+development = "dev"
+production = "production"
+
+[[variable]]
+name = "NEXT_PUBLIC_HOME_URL"
+classification = "public-build-time"
+required = true
+services = ["home", "notes", "mail", "calendar", "tasks"]
+development = "https://home.testing.atelier.diy"
+production = "https://home.atelier.diy"
+
+[[variable]]
+name = "NEXT_PUBLIC_NOTES_URL"
+classification = "public-build-time"
+required = true
+services = ["home", "notes", "mail", "calendar", "tasks"]
+development = "https://notes.testing.atelier.diy"
+production = "https://notes.atelier.diy"
+
+[[variable]]
+name = "NEXT_PUBLIC_MAIL_URL"
+classification = "public-build-time"
+required = true
+services = ["home", "notes", "mail", "calendar", "tasks"]
+development = "https://mail.testing.atelier.diy"
+production = "https://mail.atelier.diy"
+
+[[variable]]
+name = "NEXT_PUBLIC_CALENDAR_URL"
+classification = "public-build-time"
+required = true
+services = ["home", "notes", "mail", "calendar", "tasks"]
+development = "https://calendar.testing.atelier.diy"
+production = "https://calendar.atelier.diy"
+
+[[variable]]
+name = "NEXT_PUBLIC_TASKS_URL"
+classification = "public-build-time"
+required = true
+services = ["home", "notes", "mail", "calendar", "tasks"]
+development = "https://tasks.testing.atelier.diy"
+production = "https://tasks.atelier.diy"
+
+[[variable]]
+name = "ATPROTO_OAUTH_PRIVATE_KEY"
+classification = "secret"
+required = true
+services = ["atelier-api", "mcp-backplane"]
+
+[[variable]]
+name = "ATELIER_PROVIDER_ID_HMAC_KEY"
+classification = "secret"
+required = true
+services = ["atelier-api", "mail-sync", "calendar-sync"]
+
+[[variable]]
+name = "GOOGLE_CLOUD_PROJECT"
+classification = "public"
+required = true
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync"]
+
+[[variable]]
+name = "GOOGLE_KMS_KEY_RESOURCE"
+classification = "public-resource-name"
+required = true
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync"]
+
+[[variable]]
+name = "GOOGLE_PROVIDER_CACHE_BUCKET"
+classification = "public-resource-name"
+required = true
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync"]
+
+[[variable]]
+name = "GOOGLE_DURABLE_BUCKET"
+classification = "public-resource-name"
+required = true
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync"]
+
+[[variable]]
+name = "GMAIL_PUBSUB_TOPIC"
+classification = "public-resource-name"
+required = true
+services = ["mail-sync"]
+
+[[variable]]
+name = "GOOGLE_WORKLOAD_IDENTITY_PROVIDER"
+classification = "public-resource-name"
+required = true
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync"]
+
+[[variable]]
+name = "OTEL_EXPORTER_OTLP_ENDPOINT"
+classification = "public"
+required = true
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync", "notes-sync-anchor", "mcp-backplane"]
+
+[[variable]]
+name = "OTEL_EXPORTER_OTLP_HEADERS"
+classification = "secret"
+required = false
+services = ["atelier-api", "worker", "mail-sync", "calendar-sync", "notes-sync-anchor", "mcp-backplane"]
+
+[[variable]]
+name = "SENTRY_DSN"
+classification = "secret"
+required = true
+services = ["all-apps-and-services"]
+
+[[variable]]
+name = "POSTMARK_SERVER_TOKEN"
+classification = "secret"
+required = true
+services = ["atelier-api", "worker"]
+
+[[variable]]
+name = "ATELIER_ANCHOR_READY"
+classification = "operational-gate"
+required = true
+services = ["notes-sync-anchor"]
+development = "0"
+production = "0"
+
+[[variable]]
+name = "ATELIER_PRODUCTION_ACTIVATION_APPROVED"
+classification = "operational-gate"
+required = false
+services = ["production-release"]
+development = "0"
+production = "0"
+
+[[variable]]
+name = "ATELIER_ANCHOR_PERSISTENCE_MODE"
+classification = "public"
+required = true
+services = ["notes-sync-anchor"]
+development = "unconfigured"
+production = "unconfigured"
+
+[[variable]]
+name = "ATELIER_ANCHOR_TRANSPORT_MODE"
+classification = "public"
+required = true
+services = ["notes-sync-anchor"]
+development = "interface-only"
+production = "interface-only"

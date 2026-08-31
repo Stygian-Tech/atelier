@@ -1,0 +1,71 @@
+version = 1
+default = "deny-content"
+
+[identity]
+stable_hash = "hmac-sha256"
+rotation = "per-environment"
+allowed_cleartext = ["service.name", "service.version", "deployment.environment"]
+hash_before_export = ["atproto.did", "provider.account_id", "document.id", "project.id"]
+
+[headers]
+allow = ["content-type", "user-agent", "x-request-id", "traceparent"]
+drop = [
+  "authorization",
+  "cookie",
+  "set-cookie",
+  "dpop",
+  "proxy-authorization",
+  "x-api-key",
+  "x-goog-api-key",
+]
+
+[query]
+capture_names_only = true
+drop_values = true
+
+[bodies]
+capture = false
+forbidden_fields = [
+  "markdown",
+  "html",
+  "text",
+  "subject",
+  "snippet",
+  "participants",
+  "attendees",
+  "location",
+  "attachment",
+  "automerge",
+  "syncMessage",
+  "invitation",
+  "nonce",
+  "oauthCode",
+  "accessToken",
+  "refreshToken",
+  "privateKey",
+]
+
+[database]
+capture_statement = false
+allow_operation_name = true
+allow_table_name = true
+
+[errors]
+capture_type = true
+capture_message = "classified"
+capture_stack = true
+capture_locals = false
+max_message_bytes = 512
+
+[sentry]
+send_default_pii = false
+attach_stacktrace = true
+max_breadcrumbs = 50
+request_body = "never"
+before_send_hook_required = true
+before_breadcrumb_hook_required = true
+
+[retention]
+application_audit_days = 90
+telemetry_days = 30
+development_telemetry_days = 14

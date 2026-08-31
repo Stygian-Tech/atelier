@@ -1,0 +1,11 @@
+enable_resources           = false
+project_id                 = "atelier-development-project"
+environment                = "development"
+provider_cache_bucket_name = "atelier-development-provider-cache-REPLACE"
+durable_bucket_name        = "atelier-development-durable-REPLACE"
+
+# Enable only after confirming the runtime exposes a suitable workload OIDC
+# token. Railway account-login OIDC is not assumed to be workload identity.
+workload_identity_issuer_uri        = null
+workload_identity_allowed_audiences = []
+workload_identity_subject           = null

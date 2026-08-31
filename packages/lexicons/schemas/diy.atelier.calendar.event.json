@@ -1,0 +1,25 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.calendar.event",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "description": "Lossless Atelier-owned calendar event data. Publicly readable in a standard AT Protocol repository; community calendar projections use separate linked records.",
+      "record": {
+        "type": "object",
+        "required": ["uid", "title", "icalendar", "createdAt", "updatedAt", "schemaVersion"],
+        "properties": {
+          "uid": { "type": "string", "maxLength": 1024 },
+          "title": { "type": "string", "maxLength": 512 },
+          "icalendar": { "type": "string", "maxLength": 1000000 },
+          "sequence": { "type": "integer", "minimum": 0 },
+          "communityProjection": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
+          "schemaVersion": { "type": "integer", "minimum": 1 },
+          "createdAt": { "type": "string", "format": "datetime" },
+          "updatedAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    }
+  }
+}

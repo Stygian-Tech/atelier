@@ -1,3 +1,5 @@
+@import "@stygian/atelier-design-system/styles.css";
+@import "@stygian/markdown-editor/styles";
 @import "tailwindcss";
 
 @theme inline {
@@ -200,6 +202,18 @@ button svg {
   min-height: 8.5rem !important;
   font-size: 0.8125rem !important;
   line-height: 1.25rem !important;
+}
+
+.mail-markdown-composer {
+  min-height: 10rem;
+  padding: 0.75rem;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-md);
+  background: var(--card);
+}
+
+.mail-markdown-composer [data-testid="markdown-block-editor"] {
+  min-height: 8rem;
 }
 
 .mail-composer-meta {

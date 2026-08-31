@@ -1,0 +1,8 @@
+{
+  "$type": "diy.atelier.mail.providerRef",
+  "provider": "gmail",
+  "opaqueId": "v1_hmac_sha256:8a8be11f6f30",
+  "resourceKind": "thread",
+  "sourceVersion": "history:1001",
+  "createdAt": "2026-08-30T12:00:00.000Z"
+}

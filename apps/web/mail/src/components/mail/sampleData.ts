@@ -4,7 +4,7 @@ export const accounts: MailAccount[] = [
   {
     id: "gmail-primary",
     name: "Atelier Ops",
-    address: "ops@atelierwork.space",
+    address: "ops@atelier.diy",
     provider: "gmail",
     accent: "#f05d5e",
     unread: 12,
@@ -12,7 +12,7 @@ export const accounts: MailAccount[] = [
   {
     id: "jmap-studio",
     name: "Studio",
-    address: "studio@atelierwork.space",
+    address: "studio@atelier.diy",
     provider: "jmap",
     accent: "#22b8cf",
     unread: 4,
@@ -20,7 +20,7 @@ export const accounts: MailAccount[] = [
   {
     id: "imap-archive",
     name: "Archive",
-    address: "archive@atelierwork.space",
+    address: "archive@atelier.diy",
     provider: "imap",
     accent: "#e6b800",
     unread: 0,
@@ -43,16 +43,16 @@ export const threads: MailThread[] = [
     email: "mira@example.com",
     avatarInitials: "MC",
     avatarTone: "coral",
-    subject: "Permissioned KV model for linked mail threads",
-    snippet: "I like the split: schemas as contracts, private records in Atelier KV until the protocol design settles.",
+    subject: "Opaque PDS references for linked mail threads",
+    snippet: "Provider content stays server-side; public PDS records carry only opaque, HMAC-derived references.",
     time: "9:42 AM",
     unread: true,
     starred: true,
     flagged: false,
-    labels: ["Architecture", "KV"],
+    labels: ["Architecture", "PDS"],
     body: [
-      "I like the split: schemas as contracts, private records in Atelier KV until the protocol design settles.",
-      "The key detail is making the migration adapter boring. If the future Permissioned Data API lands cleanly, we should be able to map owner DID, namespace, key, schema version, and encrypted payload without changing product code.",
+      "Provider content stays server-side; public PDS records carry only opaque, HMAC-derived references.",
+      "The key detail is keeping source identity, version, and relationship hooks stable without publishing subjects, participants, snippets, titles, locations, or bodies.",
       "Also: please keep linked-thread records free of message snippets. A target URI plus optional user-authored note is enough."
     ],
   },

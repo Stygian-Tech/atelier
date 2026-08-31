@@ -1,0 +1,64 @@
+---
+import "@stygian/atelier-design-system/styles.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Atelier",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web, iOS, iPadOS, macOS, Android",
+  description,
+  url: canonical.toString(),
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fffaf7" />
+    <meta name="color-scheme" content="light dark" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Atelier" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2218%22 fill=%22%23ff6542%22/><text x=%2232%22 y=%2243%22 text-anchor=%22middle%22 font-size=%2243%22 font-style=%22italic%22 font-family=%22Georgia%22 fill=%22white%22>A</text></svg>" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  .skip-link {
+    position: fixed;
+    z-index: 100;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    transform: translateY(-160%);
+    border-radius: 0.6rem;
+    background: var(--atelier-ink);
+    color: var(--atelier-paper);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+</style>

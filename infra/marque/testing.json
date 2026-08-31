@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "provider": "marque",
+  "zone": "atelier.diy",
+  "environment": "development",
+  "apply": false,
+  "reviewStatus": "template-reviewed-needs-railway-targets",
+  "ttlSeconds": 300,
+  "requirements": [
+    "Attach every testing hostname to its Railway Development service first",
+    "Replace every REPLACE_* value with the exact Railway-provided target",
+    "Add every Railway-provided ownership TXT record to verificationRecords",
+    "Diff against the full current Marque zone and preserve unrelated records",
+    "Obtain approval for the single Development DNS transaction"
+  ],
+  "records": [
+    { "name": "testing", "type": "CNAME", "value": "REPLACE_MARKETING.up.railway.app." },
+    { "name": "home.testing", "type": "CNAME", "value": "REPLACE_HOME.up.railway.app." },
+    { "name": "notes.testing", "type": "CNAME", "value": "REPLACE_NOTES.up.railway.app." },
+    { "name": "mail.testing", "type": "CNAME", "value": "REPLACE_MAIL.up.railway.app." },
+    { "name": "calendar.testing", "type": "CNAME", "value": "REPLACE_CALENDAR.up.railway.app." },
+    { "name": "tasks.testing", "type": "CNAME", "value": "REPLACE_TASKS.up.railway.app." },
+    { "name": "api.testing", "type": "CNAME", "value": "REPLACE_API.up.railway.app." },
+    { "name": "mcp.testing", "type": "CNAME", "value": "REPLACE_MCP.up.railway.app." },
+    { "name": "docs.testing", "type": "CNAME", "value": "REPLACE_DOCS.up.railway.app." },
+    { "name": "status.testing", "type": "CNAME", "value": "REPLACE_STATUS.up.railway.app." }
+  ],
+  "verificationRecords": []
+}

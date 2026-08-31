@@ -1,0 +1,32 @@
+{
+  "originHash" : "ef7ca81bdc78f752b17d0d4d7343a24d50077ee1d60aa550fa9d6137e8a1faf2",
+  "pins" : [
+    {
+      "identity" : "atproto-primitive-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Stygian-Tech/atproto-primitive-kit.git",
+      "state" : {
+        "revision" : "1105fb3c008a1048c40b9d1b71cc2cc8e51319b0"
+      }
+    },
+    {
+      "identity" : "swift-asn1",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-asn1.git",
+      "state" : {
+        "revision" : "a9a5efd40eaf558a2bcd48d64b1d1646be686008",
+        "version" : "1.7.1"
+      }
+    },
+    {
+      "identity" : "swift-crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-crypto.git",
+      "state" : {
+        "revision" : "95ba0316a9b733e92bb6b071255ff46263bbe7dc",
+        "version" : "3.15.1"
+      }
+    }
+  ],
+  "version" : 3
+}

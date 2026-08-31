@@ -1,0 +1,12 @@
+<resources>
+    <string name="durably_saved">Durably saved</string>
+    <string name="local_only">Local only</string>
+    <string name="new_local_draft">New local draft</string>
+    <string name="public_pds_explanation">Anything you publish to an AT Protocol repository can be read and mirrored. This foundation currently saves only to a named local mock repository.</string>
+    <string name="save_locally">Save locally</string>
+    <string name="select_an_item">Select an item or create a local draft.</string>
+    <string name="standard_pds_records_are_public">Standard PDS records are public</string>
+    <string name="sync_needs_attention">Sync needs attention</string>
+    <string name="syncing">Syncing</string>
+    <string name="waiting_to_sync">Waiting to sync</string>
+</resources>

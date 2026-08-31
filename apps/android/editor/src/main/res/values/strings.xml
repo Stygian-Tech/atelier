@@ -1,0 +1,5 @@
+<resources>
+    <string name="canonical_markdown_source">Canonical Markdown source</string>
+    <string name="markdown">Markdown</string>
+    <string name="markdown_editor">Markdown editor</string>
+</resources>

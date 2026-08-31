@@ -1,0 +1,38 @@
+name: atelier-local
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: atelier
+      POSTGRES_USER: atelier
+      POSTGRES_PASSWORD: atelier-local-only
+    ports:
+      - "127.0.0.1:54329:5432"
+    volumes:
+      - atelier-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atelier -d atelier"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [atelier]
+
+  redis:
+    image: redis:8-alpine
+    command: ["redis-server", "--appendonly", "no", "--save", ""]
+    ports:
+      - "127.0.0.1:6389:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [atelier]
+
+volumes:
+  atelier-postgres:
+
+networks:
+  atelier:
+    driver: bridge

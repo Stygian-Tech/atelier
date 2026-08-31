@@ -1,0 +1,55 @@
+# Defense-in-depth collector example. SDKs must redact before export; collector
+# processors cover common semantic-convention attributes if a client regresses.
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 256
+    spike_limit_mib: 64
+  batch:
+    timeout: 5s
+    send_batch_size: 512
+  attributes/redact:
+    actions:
+      - key: http.request.header.authorization
+        action: delete
+      - key: http.request.header.cookie
+        action: delete
+      - key: http.response.header.set-cookie
+        action: delete
+      - key: http.request.body
+        action: delete
+      - key: http.response.body
+        action: delete
+      - key: db.statement
+        action: delete
+      - key: enduser.id
+        action: delete
+      - key: user.email
+        action: delete
+      - key: exception.message
+        action: delete
+
+exporters:
+  otlp/upstream:
+    endpoint: ${env:OTEL_UPSTREAM_ENDPOINT}
+    headers:
+      authorization: ${env:OTEL_UPSTREAM_AUTHORIZATION}
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, attributes/redact, batch]
+      exporters: [otlp/upstream]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [otlp/upstream]

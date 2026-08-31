@@ -17,8 +17,16 @@ test("renders the signed-in mail workspace as the first screen", () => {
 
   expect(screen.getByText("Atelier Mail")).toBeTruthy();
   expect(screen.getByText("Unified Inbox")).toBeTruthy();
-  expect(screen.getByText("Permissioned KV model for linked mail threads")).toBeTruthy();
+  expect(screen.getByText("Opaque PDS references for linked mail threads")).toBeTruthy();
   expect(screen.getByText("Smart Filters")).toBeTruthy();
+});
+
+test("labels provider-backed content as a local preview", () => {
+  render(<MailWorkspace appEnv="local" />);
+
+  fireEvent.click(screen.getByRole("button", { name: "Close compose" }));
+
+  expect(screen.getByText("Local preview fixture; provider sync and send are not connected yet.")).toBeTruthy();
 });
 
 test("starts from a saved dark mode preference", async () => {

@@ -1,0 +1,34 @@
+:root {
+  --sl-color-accent-low: #ffe4dc;
+  --sl-color-accent: #d94a2d;
+  --sl-color-accent-high: #4b170d;
+  --sl-color-white: #242120;
+  --sl-color-gray-1: #3d3836;
+  --sl-color-gray-2: #5d5652;
+  --sl-color-gray-3: #716966;
+  --sl-color-gray-4: #c5b7b0;
+  --sl-color-gray-5: #eadeda;
+  --sl-color-gray-6: #f8f1ed;
+  --sl-color-black: #fffaf7;
+  --sl-font: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --sl-color-accent-low: #351a14;
+  --sl-color-accent: #ff7656;
+  --sl-color-accent-high: #ffe4dc;
+  --sl-color-white: #f8f0eb;
+  --sl-color-black: #0b0908;
+}
+
+.hero h1 {
+  font-family: ui-serif, Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+
+.starlight-aside--danger {
+  --sl-color-asides-text-accent: #d94a2d;
+  border-color: #ff6542;
+  background: #fff1ec;
+}

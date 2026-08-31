@@ -13,16 +13,28 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "check:generated": "bun run --cwd packages/contracts check:generated",
+    "coverage:domains": "python3 infra/policy/check_bun_coverage.py",
     "dev": "turbo run dev --parallel",
     "format:check": "turbo run format:check",
     "lint": "turbo run lint",
+    "policy:licenses": "python3 infra/policy/check_licenses.py",
+    "policy:secrets": "python3 infra/policy/scan_secrets.py",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "verify": "turbo run typecheck lint test build",
-    "verify:rust": "cargo test --manifest-path packages/rust/Cargo.toml --workspace --all-targets",
-    "verify:swift": "env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path packages/swift"
+    "validate:railway": "python3 infra/railway/validate.py",
+    "verify": "bun run check:generated && bun run validate:railway && bun run policy:licenses && bun run policy:secrets && bun run coverage:domains && bun run verify:static && turbo run typecheck lint test build",
+    "verify:android": "cd apps/android && ./gradlew --no-daemon --stacktrace testDebugUnitTest :app-atelier:assembleDebug :app-notes:assembleDebug :app-mail:assembleDebug :app-calendar:assembleDebug :app-tasks:assembleDebug",
+    "verify:database": "infra/database/tests/run-postgres17.sh",
+    "verify:rust": "cargo fmt --manifest-path packages/rust/Cargo.toml --all --check && cargo fmt --manifest-path services/notes-sync-anchor/Cargo.toml --all --check && cargo clippy --manifest-path packages/rust/Cargo.toml --workspace --all-targets --locked -- -D warnings && cargo clippy --manifest-path services/notes-sync-anchor/Cargo.toml --all-targets --locked -- -D warnings && cargo test --manifest-path packages/rust/Cargo.toml --workspace --all-targets --locked && cargo test --manifest-path services/notes-sync-anchor/Cargo.toml --all-targets --locked",
+    "verify:static": "bun test infra/static-server/server.test.ts apps/marketing/test/privacy-boundary.test.ts",
+    "verify:swift": "env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path packages/swift && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/api && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/mcp-backplane && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/worker && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/mail-sync && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/calendar-sync && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path apps/apple/Packages/AtelierShared"
   },
   "devDependencies": {
+    "@types/node": "20.19.43",
     "turbo": "^2.5.6"
+  },
+  "overrides": {
+    "@types/node": "20.19.43"
   }
 }
