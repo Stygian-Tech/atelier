@@ -282,7 +282,6 @@ export default defineRailway((context) => {
       build: PUBLIC_SURFACE_BUILDS[surface],
       deploy: deployConfiguration(environment, PUBLIC_SURFACE_START_COMMANDS[surface]),
       replicas,
-      domains: [HOSTS[environment][surface]],
       env: serviceEnvironment(environment, surface),
     }),
   );

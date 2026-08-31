@@ -30,7 +30,9 @@ credential approval exist.
 
 See [/.railway/README.md](../../.railway/README.md) for the pinned plan/apply
 workflow, resource ceilings, source branches, domain inspection, and rollout
-order.
+order. Railway project-level IaC cannot register custom domains; attach them
+with the reviewed `railway domain` workflow only after generated-domain health
+is proven, then copy Railway's exact DNS records into Marque.
 
 ## Environment gates
 
