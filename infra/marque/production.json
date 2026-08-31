@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "provider": "marque",
+  "zone": "atelier.diy",
+  "environment": "production",
+  "apply": false,
+  "requiresExplicitProductionApproval": true,
+  "reviewStatus": "template-reviewed-production-disabled",
+  "ttlSeconds": 300,
+  "requirements": [
+    "Do not replace values or apply this manifest during Development rollout",
+    "Complete all coordinated public-beta gates and obtain final Production approval",
+    "Attach every hostname to its Railway Production service first",
+    "Use Marque CNAME flattening for the apex record",
+    "Add every Railway-provided ownership TXT record to verificationRecords",
+    "Diff against the full current Marque zone and preserve unrelated records",
+    "Raise TTL only after certificate, health, OAuth, webhook, and rollback verification"
+  ],
+  "records": [
+    { "name": "@", "type": "CNAME", "flatten": true, "value": "REPLACE_MARKETING.up.railway.app." },
+    { "name": "home", "type": "CNAME", "value": "REPLACE_HOME.up.railway.app." },
+    { "name": "notes", "type": "CNAME", "value": "REPLACE_NOTES.up.railway.app." },
+    { "name": "mail", "type": "CNAME", "value": "REPLACE_MAIL.up.railway.app." },
+    { "name": "calendar", "type": "CNAME", "value": "REPLACE_CALENDAR.up.railway.app." },
+    { "name": "tasks", "type": "CNAME", "value": "REPLACE_TASKS.up.railway.app." },
+    { "name": "api", "type": "CNAME", "value": "REPLACE_API.up.railway.app." },
+    { "name": "mcp", "type": "CNAME", "value": "REPLACE_MCP.up.railway.app." },
+    { "name": "docs", "type": "CNAME", "value": "REPLACE_DOCS.up.railway.app." },
+    { "name": "status", "type": "CNAME", "value": "REPLACE_STATUS.up.railway.app." }
+  ],
+  "verificationRecords": []
+}

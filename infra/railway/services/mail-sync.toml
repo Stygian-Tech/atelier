@@ -1,0 +1,10 @@
+[build]
+builder = "RAILPACK"
+# Fail closed until this workstream provides its Swift package and executable.
+buildCommand = "test -f services/mail-sync/Package.swift && swift build --package-path services/mail-sync -c release"
+watchPatterns = ["/services/mail-sync/**", "/packages/swift/**", "/infra/railway/services/mail-sync.toml", "/mise.toml"]
+
+[deploy]
+startCommand = "test -x services/mail-sync/.build/release/atelier-mail-sync && services/mail-sync/.build/release/atelier-mail-sync"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

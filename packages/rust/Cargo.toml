@@ -1,0 +1,42 @@
+[workspace]
+resolver = "2"
+members = [
+  "atelier-sync-bindings",
+  "atelier-sync-protocol",
+  "atelier-sync-transport",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/Stygian-Tech/atelier"
+rust-version = "1.91"
+
+[workspace.dependencies]
+async-trait = "0.1.89"
+automerge = "0.11.0"
+axum = "0.8.4"
+base64 = "0.22.1"
+hex = "0.4.3"
+getrandom = "0.4.3"
+iroh = "1.1.0"
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.143"
+sha2 = "0.10.9"
+thiserror = "2.0.16"
+tokio = { version = "1.47.1", features = ["macros", "net", "rt-multi-thread", "signal", "sync"] }
+tower-http = { version = "0.6.6", features = ["request-id", "trace"] }
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter", "fmt", "json"] }
+uuid = { version = "1.18.1", features = ["serde", "v4"] }
+wasm-bindgen = "0.2.127"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+unexpected_cfgs = { level = "warn", check-cfg = ["cfg(coverage,coverage_nightly)"] }
+
+[workspace.lints.clippy]
+dbg_macro = "deny"
+todo = "deny"
+unwrap_used = "deny"

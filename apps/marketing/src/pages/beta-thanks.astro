@@ -1,0 +1,19 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+---
+
+<SiteLayout title="Thank you — Atelier" description="Atelier open beta interest received.">
+  <main class="thanks">
+    <a class="atelier-brand" href="/"><span class="atelier-brand-mark">A</span> Atelier</a>
+    <p class="atelier-eyebrow">Beta interest received</p>
+    <h1>Thanks for making room.</h1>
+    <p>This static preview does not submit your address yet. The production form will use a server-side, consent-aware Postmark workflow after approval.</p>
+    <a class="atelier-button" href="/">Back to Atelier</a>
+  </main>
+</SiteLayout>
+
+<style>
+  .thanks { display: grid; width: min(42rem, calc(100% - 2rem)); min-height: 100dvh; align-content: center; justify-items: start; margin: 0 auto; }
+  h1 { margin: 0 0 1rem; font-family: ui-serif, Georgia, serif; font-size: clamp(3rem, 9vw, 6rem); font-weight: 500; letter-spacing: -0.06em; line-height: 0.9; }
+  p:not(.atelier-eyebrow) { max-width: 36rem; color: var(--atelier-muted); line-height: 1.7; }
+</style>

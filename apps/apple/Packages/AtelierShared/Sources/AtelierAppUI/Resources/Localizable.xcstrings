@@ -1,0 +1,29 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Anything you publish to an AT Protocol repository can be read and mirrored. This foundation currently saves only to a named local mock repository." : {},
+    "Choose a local item or create a draft." : {},
+    "Create a local draft to begin." : {},
+    "Creates a draft for this preview session." : {},
+    "Durably saved" : {},
+    "Loading local items" : {},
+    "Local only" : {},
+    "New local draft" : {},
+    "No external account or provider is connected by this foundation build." : {},
+    "No Local Items" : {},
+    "Persistence status: Durably saved" : {},
+    "Persistence status: Local only" : {},
+    "Persistence status: Sync needs attention" : {},
+    "Persistence status: Syncing" : {},
+    "Persistence status: Waiting to sync" : {},
+    "Save locally" : {},
+    "Saves this draft for this preview session without publishing it." : {},
+    "Select an Item" : {},
+    "Show this section" : {},
+    "Standard PDS records are public" : {},
+    "Sync needs attention" : {},
+    "Syncing" : {},
+    "Waiting to sync" : {}
+  },
+  "version" : "1.0"
+}

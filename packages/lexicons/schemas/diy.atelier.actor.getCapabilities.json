@@ -1,0 +1,32 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.actor.getCapabilities",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Describe this Atelier deployment without implying that contract-only providers are configured.",
+      "output": {
+        "encoding": "application/json",
+        "schema": { "type": "ref", "ref": "#output" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "required": ["service", "mode", "publicPdsDisclosure", "providers"],
+      "properties": {
+        "service": { "type": "string" },
+        "mode": { "type": "string", "knownValues": ["foundation", "configured"] },
+        "publicPdsDisclosure": { "type": "string" },
+        "providers": { "type": "array", "items": { "type": "ref", "ref": "#provider" } }
+      }
+    },
+    "provider": {
+      "type": "object",
+      "required": ["name", "availability"],
+      "properties": {
+        "name": { "type": "string" },
+        "availability": { "type": "string", "knownValues": ["contractOnly", "configured"] }
+      }
+    }
+  }
+}

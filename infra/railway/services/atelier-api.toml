@@ -1,0 +1,11 @@
+[build]
+builder = "RAILPACK"
+buildCommand = "swift build --package-path services/api -c release"
+watchPatterns = ["/services/api/**", "/packages/swift/**", "/infra/database/migrations/**", "/infra/railway/services/atelier-api.toml", "/mise.toml"]
+
+[deploy]
+startCommand = "services/api/.build/release/atelier-api"
+healthcheckPath = "/readyz"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10

@@ -1,0 +1,586 @@
+:root {
+  --atelier-paper: #fffaf7;
+  --atelier-paper-raised: #ffffff;
+  --atelier-paper-soft: #f8f1ed;
+  --atelier-ink: #242120;
+  --atelier-muted: #716966;
+  --atelier-coral: #ff6542;
+  --atelier-coral-soft: #ffe4dc;
+  --atelier-cyan: #1fb8ca;
+  --atelier-cyan-soft: #e8fbff;
+  --atelier-butter: #fff0a8;
+  --atelier-border: #eadeda;
+  --atelier-danger: #c53f3f;
+  --atelier-success: #2f7a56;
+  --atelier-shadow: 0 18px 55px rgb(76 54 44 / 0.11);
+  --atelier-shadow-soft: 0 8px 28px rgb(76 54 44 / 0.08);
+  --atelier-radius-sm: 0.625rem;
+  --atelier-radius: 1rem;
+  --atelier-radius-lg: 1.5rem;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --atelier-paper: #0b0908;
+    --atelier-paper-raised: #12100f;
+    --atelier-paper-soft: #1a1614;
+    --atelier-ink: #f8f0eb;
+    --atelier-muted: #b4a7a0;
+    --atelier-coral: #ff7656;
+    --atelier-coral-soft: #351a14;
+    --atelier-cyan: #45ccdc;
+    --atelier-cyan-soft: #102f34;
+    --atelier-butter: #4b3c12;
+    --atelier-border: #302823;
+    --atelier-danger: #ff7777;
+    --atelier-success: #76c99a;
+    --atelier-shadow: 0 18px 55px rgb(0 0 0 / 0.35);
+    --atelier-shadow-soft: 0 8px 28px rgb(0 0 0 / 0.26);
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--atelier-paper);
+  color: var(--atelier-ink);
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--atelier-butter) 52%, transparent), transparent 28rem),
+    radial-gradient(circle at 96% 5%, color-mix(in srgb, var(--atelier-cyan-soft) 82%, transparent), transparent 25rem),
+    var(--atelier-paper);
+  color: var(--atelier-ink);
+}
+
+button,
+input,
+textarea,
+select {
+  color: inherit;
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--atelier-cyan) 72%, white);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--atelier-butter);
+  color: #242120;
+}
+
+.atelier-app {
+  min-height: 100dvh;
+}
+
+.atelier-topbar {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  min-height: 4.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem clamp(1rem, 3vw, 2.5rem);
+  border-bottom: 1px solid color-mix(in srgb, var(--atelier-border) 86%, transparent);
+  background: color-mix(in srgb, var(--atelier-paper) 88%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.atelier-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: inherit;
+  font-size: 1.03rem;
+  font-weight: 850;
+  letter-spacing: -0.025em;
+  text-decoration: none;
+}
+
+.atelier-brand-mark {
+  display: grid;
+  width: 2.05rem;
+  height: 2.05rem;
+  place-items: center;
+  border-radius: 0.7rem;
+  background: var(--atelier-coral);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.38);
+  color: white;
+  font-family: ui-serif, Georgia, serif;
+  font-size: 1.32rem;
+  font-style: italic;
+  font-weight: 800;
+}
+
+.atelier-product-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.atelier-product-nav a {
+  padding: 0.52rem 0.72rem;
+  border-radius: 0.7rem;
+  color: var(--atelier-muted);
+  font-size: 0.83rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.atelier-product-nav a:hover,
+.atelier-product-nav a[aria-current="page"] {
+  background: var(--atelier-paper-soft);
+  color: var(--atelier-ink);
+}
+
+.atelier-command {
+  display: inline-flex;
+  min-width: min(22rem, 34vw);
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.62rem 0.82rem;
+  border: 1px solid var(--atelier-border);
+  border-radius: 0.75rem;
+  background: var(--atelier-paper-raised);
+  box-shadow: var(--atelier-shadow-soft);
+  color: var(--atelier-muted);
+  font-size: 0.83rem;
+}
+
+.atelier-command kbd {
+  margin-left: auto;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--atelier-border);
+  border-radius: 0.35rem;
+  background: var(--atelier-paper-soft);
+  font-size: 0.68rem;
+}
+
+.atelier-avatar {
+  display: grid;
+  width: 2.1rem;
+  height: 2.1rem;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--atelier-cyan), var(--atelier-butter));
+  color: #17383c;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.atelier-page {
+  width: min(100%, 96rem);
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+
+.atelier-page-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.atelier-eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--atelier-coral);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.atelier-page h1,
+.atelier-page h2,
+.atelier-page h3,
+.atelier-page p {
+  margin-top: 0;
+}
+
+.atelier-page h1 {
+  margin-bottom: 0.35rem;
+  font-family: ui-serif, Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.atelier-page-heading p {
+  max-width: 46rem;
+  margin-bottom: 0;
+  color: var(--atelier-muted);
+  line-height: 1.55;
+}
+
+.atelier-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.atelier-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.atelier-workspace {
+  display: grid;
+  min-height: calc(100dvh - 7.5rem);
+  grid-template-columns: 15rem minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--atelier-border);
+  border-radius: var(--atelier-radius-lg);
+  background: color-mix(in srgb, var(--atelier-paper-raised) 92%, transparent);
+  box-shadow: var(--atelier-shadow);
+}
+
+.atelier-sidebar {
+  padding: 1rem;
+  border-right: 1px solid var(--atelier-border);
+  background: color-mix(in srgb, var(--atelier-paper-soft) 70%, var(--atelier-paper-raised));
+}
+
+.atelier-sidebar-label {
+  margin: 1.1rem 0 0.4rem;
+  color: var(--atelier-muted);
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.atelier-sidebar-link,
+.atelier-row-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.58rem 0.65rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: transparent;
+  color: var(--atelier-muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.atelier-sidebar-link:hover,
+.atelier-sidebar-link[data-active="true"],
+.atelier-row-button:hover {
+  background: var(--atelier-coral-soft);
+  color: var(--atelier-ink);
+}
+
+.atelier-main-panel {
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.atelier-card {
+  position: relative;
+  padding: 1.15rem;
+  overflow: hidden;
+  border: 1px solid var(--atelier-border);
+  border-radius: var(--atelier-radius);
+  background: var(--atelier-paper-raised);
+  box-shadow: var(--atelier-shadow-soft);
+}
+
+.atelier-card h2 {
+  margin-bottom: 0.25rem;
+  font-family: ui-serif, Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.atelier-card p {
+  color: var(--atelier-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.atelier-card-accent::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.25rem;
+  background: var(--card-accent, var(--atelier-coral));
+  content: "";
+}
+
+.atelier-button {
+  display: inline-flex;
+  min-height: 2.55rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.62rem 0.95rem;
+  border: 1px solid transparent;
+  border-radius: 0.72rem;
+  background: var(--atelier-coral);
+  color: white;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.atelier-button:hover {
+  filter: saturate(1.08) brightness(0.97);
+}
+
+.atelier-button-secondary {
+  border-color: var(--atelier-border);
+  background: var(--atelier-paper-raised);
+  color: var(--atelier-ink);
+}
+
+.atelier-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.52rem;
+  border-radius: 999px;
+  background: var(--atelier-paper-soft);
+  color: var(--atelier-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.atelier-chip-coral {
+  background: var(--atelier-coral-soft);
+  color: var(--atelier-coral);
+}
+
+.atelier-chip-cyan {
+  background: var(--atelier-cyan-soft);
+  color: color-mix(in srgb, var(--atelier-cyan) 76%, black);
+}
+
+.atelier-public-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.78rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--atelier-coral) 32%, var(--atelier-border));
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--atelier-coral-soft) 64%, var(--atelier-paper-raised));
+  color: var(--atelier-ink);
+  font-size: 0.76rem;
+  line-height: 1.42;
+}
+
+.atelier-public-notice strong {
+  display: block;
+  margin-bottom: 0.12rem;
+}
+
+.atelier-split {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.75fr) minmax(0, 1.55fr);
+  gap: 1rem;
+}
+
+.atelier-list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.atelier-list-item {
+  padding: 0.8rem;
+  border: 1px solid var(--atelier-border);
+  border-radius: 0.75rem;
+  background: var(--atelier-paper-raised);
+}
+
+.atelier-list-item strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.85rem;
+}
+
+.atelier-list-item span,
+.atelier-meta {
+  color: var(--atelier-muted);
+  font-size: 0.72rem;
+}
+
+.atelier-editor {
+  min-height: 26rem;
+  padding: clamp(1.1rem, 3vw, 2.3rem);
+  border: 1px solid var(--atelier-border);
+  border-radius: var(--atelier-radius);
+  background: var(--atelier-paper-raised);
+  box-shadow: var(--atelier-shadow-soft);
+}
+
+.atelier-editor .markdown-block-editor {
+  min-height: 18rem;
+}
+
+.atelier-week {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(8rem, 1fr));
+  gap: 0.5rem;
+  overflow-x: auto;
+}
+
+.atelier-day {
+  min-height: 24rem;
+  padding: 0.7rem;
+  border-left: 1px solid var(--atelier-border);
+}
+
+.atelier-day:first-child {
+  border-left: 0;
+}
+
+.atelier-event {
+  margin-top: 0.55rem;
+  padding: 0.62rem;
+  border-radius: 0.65rem;
+  background: var(--event-color, var(--atelier-cyan-soft));
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.atelier-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(14rem, 1fr));
+  gap: 0.8rem;
+  overflow-x: auto;
+}
+
+.atelier-board-column {
+  min-height: 23rem;
+  padding: 0.8rem;
+  border-radius: 0.9rem;
+  background: var(--atelier-paper-soft);
+}
+
+.atelier-task {
+  margin-top: 0.65rem;
+  padding: 0.75rem;
+  border: 1px solid var(--atelier-border);
+  border-radius: 0.72rem;
+  background: var(--atelier-paper-raised);
+  box-shadow: 0 3px 12px rgb(76 54 44 / 0.06);
+}
+
+.atelier-task label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.atelier-task input {
+  accent-color: var(--atelier-coral);
+}
+
+.atelier-empty {
+  display: grid;
+  min-height: 14rem;
+  place-items: center;
+  color: var(--atelier-muted);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .atelier-command,
+  .atelier-product-nav {
+    display: none;
+  }
+
+  .atelier-grid-3,
+  .atelier-split {
+    grid-template-columns: 1fr;
+  }
+
+  .atelier-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .atelier-sidebar {
+    display: flex;
+    gap: 0.3rem;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--atelier-border);
+  }
+
+  .atelier-sidebar-label {
+    display: none;
+  }
+
+  .atelier-sidebar-link {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .atelier-page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .atelier-page h1 {
+    font-size: 2.35rem;
+  }
+
+  .atelier-main-panel,
+  .atelier-page {
+    padding: 0.85rem;
+  }
+
+  .atelier-workspace {
+    min-height: calc(100dvh - 6rem);
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -1,0 +1,22 @@
+[package]
+name = "atelier-sync-transport"
+description = "Transport interfaces for the Atelier Notes sync protocol"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[features]
+default = []
+iroh-endpoint = ["dep:iroh"]
+
+[dependencies]
+async-trait.workspace = true
+atelier-sync-protocol = { path = "../atelier-sync-protocol" }
+iroh = { workspace = true, optional = true }
+thiserror.workspace = true
+tokio.workspace = true
+
+[lints]
+workspace = true

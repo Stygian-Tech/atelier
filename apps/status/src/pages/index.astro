@@ -1,0 +1,59 @@
+---
+import "@stygian/atelier-design-system/styles.css";
+
+const services = ["Marketing", "Home", "Notes", "Mail", "Calendar", "Tasks", "API & OAuth", "MCP", "Documentation", "Notes sync anchor"];
+const marketingOrigin = import.meta.env.ATELIER_MARKETING_ORIGIN ?? "http://localhost:4321";
+const docsOrigin = import.meta.env.ATELIER_DOCS_ORIGIN ?? "http://localhost:4322";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Current availability and incident history for Atelier." />
+    <meta name="theme-color" content="#fffaf7" />
+    <title>Atelier Status</title>
+  </head>
+  <body>
+    <header>
+      <a class="atelier-brand" href={marketingOrigin}><span class="atelier-brand-mark">A</span> Atelier Status</a>
+      <a href={marketingOrigin}>Atelier ↗</a>
+    </header>
+    <main>
+      <section class="summary" aria-labelledby="status-heading">
+        <span class="status-dot" aria-hidden="true"></span>
+        <div><p>DEVELOPMENT PREVIEW</p><h1 id="status-heading">No production service yet.</h1><span>This surface is intentionally honest until monitored Development checks are connected.</span></div>
+      </section>
+      <section class="services" aria-labelledby="services-heading">
+        <h2 id="services-heading">Services</h2>
+        {services.map((service) => <div><span>{service}</span><strong>Not launched</strong></div>)}
+      </section>
+      <section class="incident">
+        <p>PAST 90 DAYS</p><h2>No production incidents</h2><span>Atelier has not entered public beta. Incident history begins when monitored Production opens.</span>
+      </section>
+      <aside><b>Shared project boundary</b><span>Status runs in the same Railway project as Atelier services and may be unavailable during a correlated project-wide outage.</span></aside>
+    </main>
+    <footer><span>© 2026 Stygian Tech</span><a href={docsOrigin}>Documentation</a><a href={`${docsOrigin}/support/`}>Support</a></footer>
+  </body>
+</html>
+
+<style>
+  header, footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem clamp(1rem, 6vw, 5rem); border-bottom: 1px solid var(--atelier-border); }
+  header > a:last-child, footer a { color: var(--atelier-muted); font-size: 0.72rem; font-weight: 800; }
+  main { width: min(52rem, calc(100% - 2rem)); margin: 4rem auto; }
+  .summary { display: flex; align-items: flex-start; gap: 1rem; padding: 1.5rem; border: 1px solid var(--atelier-border); border-radius: 1rem; background: var(--atelier-paper-raised); box-shadow: var(--atelier-shadow-soft); }
+  .status-dot { width: 0.9rem; height: 0.9rem; margin-top: 0.2rem; border-radius: 50%; background: var(--atelier-butter); box-shadow: 0 0 0 0.35rem color-mix(in srgb, var(--atelier-butter) 42%, transparent); }
+  p { margin: 0 0 0.35rem; color: var(--atelier-coral); font-size: 0.6rem; font-weight: 900; letter-spacing: 0.12em; }
+  h1 { margin: 0 0 0.4rem; font-family: ui-serif, Georgia, serif; font-size: clamp(2rem, 7vw, 3.5rem); font-weight: 500; letter-spacing: -0.05em; }
+  .summary span, .incident span, aside span { color: var(--atelier-muted); font-size: 0.78rem; line-height: 1.6; }
+  .services { margin-top: 2rem; padding: 1.5rem; border: 1px solid var(--atelier-border); border-radius: 1rem; background: var(--atelier-paper-raised); }
+  .services h2, .incident h2 { margin-top: 0; font-family: ui-serif, Georgia, serif; }
+  .services div { display: flex; justify-content: space-between; padding: 0.8rem 0; border-top: 1px solid var(--atelier-border); font-size: 0.78rem; }
+  .services strong { color: var(--atelier-muted); }
+  .incident { margin-top: 2rem; padding: 1.5rem; }
+  aside { display: flex; flex-direction: column; gap: 0.25rem; margin-top: 2rem; padding: 1rem; border-left: 0.25rem solid var(--atelier-coral); background: var(--atelier-coral-soft); font-size: 0.75rem; }
+  footer { justify-content: flex-start; margin-top: 5rem; border-top: 1px solid var(--atelier-border); border-bottom: 0; color: var(--atelier-muted); font-size: 0.65rem; }
+  footer span { margin-right: auto; }
+  @media (max-width: 520px) { header > a:last-child { display: none; } main { margin-top: 2rem; } footer { align-items: flex-start; flex-direction: column; } footer span { margin-right: 0; } }
+</style>

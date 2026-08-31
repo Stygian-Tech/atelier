@@ -1,0 +1,31 @@
+{
+  "name": "@stygian/atelier-notes-web",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings 0",
+    "test": "bun test --pass-with-no-tests",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@stygian/atelier-design-system": "workspace:*",
+    "@stygian/atelier-web-ui": "workspace:*",
+    "@stygian/markdown-editor": "workspace:*",
+    "lucide-react": "^0.468.0",
+    "next": "16.2.6",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "typescript": "^5.9.3"
+  }
+}

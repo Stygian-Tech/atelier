@@ -1,0 +1,31 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.tasks.task",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "description": "A user-owned task. This record is publicly readable while stored in a standard AT Protocol repository.",
+      "record": {
+        "type": "object",
+        "required": ["title", "status", "createdAt", "updatedAt", "schemaVersion"],
+        "properties": {
+          "title": { "type": "string", "maxLength": 512 },
+          "description": { "type": "ref", "ref": "at.markpub.markdown" },
+          "status": { "type": "string", "knownValues": ["todo", "inProgress", "completed", "cancelled"] },
+          "priority": { "type": "integer", "minimum": 0, "maximum": 4 },
+          "project": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
+          "parent": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
+          "dependencies": { "type": "array", "maxLength": 128, "items": { "type": "ref", "ref": "com.atproto.repo.strongRef" } },
+          "dueAt": { "type": "string", "format": "datetime" },
+          "recurrenceRule": { "type": "string", "maxLength": 2048 },
+          "assigneeDids": { "type": "array", "maxLength": 32, "items": { "type": "string", "format": "did" } },
+          "tags": { "type": "array", "maxLength": 64, "items": { "type": "string", "maxLength": 128 } },
+          "schemaVersion": { "type": "integer", "minimum": 1 },
+          "createdAt": { "type": "string", "format": "datetime" },
+          "updatedAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    }
+  }
+}

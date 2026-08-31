@@ -1,0 +1,12 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.auth.workspace",
+  "defs": {
+    "main": {
+      "type": "permission-set",
+      "title": "Atelier workspace access",
+      "description": "Create, update, and delete projects, captures, and typed relationships.",
+      "permissions": [{ "type": "permission", "resource": "repo", "collection": ["diy.atelier.project.project", "diy.atelier.capture.item", "diy.atelier.relation.edge"], "action": ["create", "update", "delete"] }]
+    }
+  }
+}

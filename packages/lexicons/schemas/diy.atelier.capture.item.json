@@ -1,0 +1,22 @@
+{
+  "lexicon": 1,
+  "id": "diy.atelier.capture.item",
+  "defs": {
+    "main": {
+      "type": "record",
+      "key": "tid",
+      "description": "A typed inbox capture awaiting explicit conversion. Publicly readable in a standard AT Protocol repository.",
+      "record": {
+        "type": "object",
+        "required": ["markdown", "state", "createdAt", "schemaVersion"],
+        "properties": {
+          "markdown": { "type": "ref", "ref": "at.markpub.markdown" },
+          "state": { "type": "string", "knownValues": ["inbox", "converted", "dismissed"] },
+          "convertedTo": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
+          "schemaVersion": { "type": "integer", "minimum": 1 },
+          "createdAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    }
+  }
+}

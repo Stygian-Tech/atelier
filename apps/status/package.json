@@ -1,0 +1,22 @@
+{
+  "name": "@stygian/atelier-status",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port 4323",
+    "build": "astro check && astro build",
+    "preview": "astro preview --port 4323",
+    "start": "astro preview --host 0.0.0.0 --port $PORT",
+    "lint": "astro check",
+    "test": "astro check",
+    "typecheck": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@stygian/atelier-design-system": "workspace:*",
+    "astro": "^5.17.1",
+    "typescript": "^5.9.3"
+  }
+}

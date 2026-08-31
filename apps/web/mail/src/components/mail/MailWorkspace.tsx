@@ -28,12 +28,12 @@ import {
 } from "lucide-react";
 import * as React from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { MarkdownBlockEditor } from "@stygian/markdown-editor";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Textarea } from "@/components/ui/textarea";
 import { shouldShowDebugChrome, type AppEnv } from "@/lib/appEnv";
 import { cn } from "@/lib/utils";
 import { accounts, threads as initialThreads } from "./sampleData";
@@ -318,7 +318,7 @@ function SidebarContent({
           </div>
           <div className="min-w-0">
             <div className="truncate text-xs font-black leading-4">Atelier Mail</div>
-            <div className="truncate text-[0.625rem] font-medium leading-3 text-muted-foreground">sam.atelierwork.space</div>
+            <div className="truncate text-[0.625rem] font-medium leading-3 text-muted-foreground">sam.atelier.diy</div>
           </div>
         </div>
         <div className="flex items-center gap-1">
@@ -530,7 +530,7 @@ function ThreadColumn({
             </div>
             <div className="text-sm font-bold">Nothing matched that view</div>
             <p className="max-w-xs text-xs leading-5 text-muted-foreground">
-              The sync index is ready, but this filter is quiet. Try all accounts or clear search.
+              No local preview fixture matched this filter. Try all accounts or clear search.
             </p>
           </div>
         ) : (
@@ -679,7 +679,7 @@ const tagStyles: Record<string, { icon: React.ComponentType<React.SVGProps<SVGSV
     icon: Braces,
     className: "border-primary/25 bg-primary/10 text-primary",
   },
-  KV: {
+  PDS: {
     icon: Database,
     className: "border-accent/40 bg-accent/30 text-accent-foreground",
   },
@@ -833,18 +833,16 @@ function ReaderPane({
                 value={draft.subject}
                 onChange={(event) => onDraftChange({ ...draft, subject: event.target.value })}
               />
-              <Textarea
-                aria-label="Message"
-                className="mail-card-surface mail-composer-message"
-                style={fieldSurfaceStyle(theme)}
-                placeholder="Write in rich text now; Markdown mode comes next."
-                value={draft.body}
-                onChange={(event) => onDraftChange({ ...draft, body: event.target.value })}
-              />
+              <div className="mail-markdown-composer" aria-label="Message editor" style={fieldSurfaceStyle(theme)}>
+                <MarkdownBlockEditor
+                  value={draft.body}
+                  onChange={(body) => onDraftChange({ ...draft, body })}
+                />
+              </div>
               <div className="flex items-center justify-between gap-3">
                 <div className="mail-composer-meta flex items-center gap-2 text-muted-foreground">
                   <Command />
-                  HTML compose now, Markdown-to-HTML next
+                  Markdown source · MIME generation activates with the provider service
                 </div>
                 <Button onClick={onSend}>
                   <Send data-icon="inline-start" />
@@ -857,7 +855,7 @@ function ReaderPane({
           <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 rounded-lg border bg-background px-3 py-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MailCheck />
-              Thread cached locally; provider secrets stay envelope-encrypted.
+              Local preview fixture; provider sync and send are not connected yet.
             </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" onClick={onReply}>
