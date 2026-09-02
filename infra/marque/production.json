@@ -5,11 +5,13 @@
   "environment": "production",
   "apply": false,
   "requiresExplicitProductionApproval": true,
-  "reviewStatus": "template-reviewed-production-disabled",
+  "productionApprovalGrantedOn": "2026-08-31",
+  "productionDnsAppliedOn": "2026-08-31",
+  "reviewStatus": "production-dns-applied-railway-tls-pending",
   "ttlSeconds": 300,
   "requirements": [
-    "Do not replace values or apply this manifest during Development rollout",
-    "Complete all coordinated public-beta gates and obtain final Production approval",
+    "Retain this file as a non-executable review artifact even after Production activation",
+    "Scope the 2026-08-31 Production approval to the eight public foundation-preview surfaces",
     "Attach every hostname to its Railway Production service first",
     "Use Marque CNAME flattening for the apex record",
     "Add every Railway-provided ownership TXT record to verificationRecords",
@@ -17,16 +19,55 @@
     "Raise TTL only after certificate, health, OAuth, webhook, and rollback verification"
   ],
   "records": [
-    { "name": "@", "type": "CNAME", "flatten": true, "value": "REPLACE_MARKETING.up.railway.app." },
-    { "name": "home", "type": "CNAME", "value": "REPLACE_HOME.up.railway.app." },
-    { "name": "notes", "type": "CNAME", "value": "REPLACE_NOTES.up.railway.app." },
-    { "name": "mail", "type": "CNAME", "value": "REPLACE_MAIL.up.railway.app." },
-    { "name": "calendar", "type": "CNAME", "value": "REPLACE_CALENDAR.up.railway.app." },
-    { "name": "tasks", "type": "CNAME", "value": "REPLACE_TASKS.up.railway.app." },
-    { "name": "api", "type": "CNAME", "value": "REPLACE_API.up.railway.app." },
-    { "name": "mcp", "type": "CNAME", "value": "REPLACE_MCP.up.railway.app." },
-    { "name": "docs", "type": "CNAME", "value": "REPLACE_DOCS.up.railway.app." },
-    { "name": "status", "type": "CNAME", "value": "REPLACE_STATUS.up.railway.app." }
+    { "name": "@", "type": "CNAME", "flatten": true, "value": "1rf0kv4j.up.railway.app." },
+    { "name": "home", "type": "CNAME", "value": "e6xolw0b.up.railway.app." },
+    { "name": "notes", "type": "CNAME", "value": "ijodncst.up.railway.app." },
+    { "name": "mail", "type": "CNAME", "value": "cp1juyty.up.railway.app." },
+    { "name": "calendar", "type": "CNAME", "value": "slmwc3ui.up.railway.app." },
+    { "name": "tasks", "type": "CNAME", "value": "bjnfj9x4.up.railway.app." },
+    { "name": "docs", "type": "CNAME", "value": "06qc7rxd.up.railway.app." },
+    { "name": "status", "type": "CNAME", "value": "zdouknpg.up.railway.app." }
   ],
-  "verificationRecords": []
+  "verificationRecords": [
+    {
+      "name": "_railway-verify",
+      "type": "TXT",
+      "value": "railway-verify=369db19bcf007444f8ca6941e77a35649160ec69aa0268110d5d2b94a7c78de5"
+    },
+    {
+      "name": "_railway-verify.home",
+      "type": "TXT",
+      "value": "railway-verify=c414e5aaa8ae94669d3f1ad8a7c482a75d6cdb22cf0d870dfea44a50d2b68f36"
+    },
+    {
+      "name": "_railway-verify.notes",
+      "type": "TXT",
+      "value": "railway-verify=3caf5e59896785c99158ee00eef6ea21f3b5b9386ca52eb0b14f3ddabdc65918"
+    },
+    {
+      "name": "_railway-verify.mail",
+      "type": "TXT",
+      "value": "railway-verify=8e872fb5605120e0e5f9a5b4f656d46a97f08620db482b023ed8b86e430a5c8f"
+    },
+    {
+      "name": "_railway-verify.calendar",
+      "type": "TXT",
+      "value": "railway-verify=56560fa8f55b3bf31f96bb0c4cde7e8c3129260aed28449324b0390b3e3f4eb4"
+    },
+    {
+      "name": "_railway-verify.tasks",
+      "type": "TXT",
+      "value": "railway-verify=5c8cd24a9904eb9c66db31517314203d44a9bcc9689b906db7ed4852502d7717"
+    },
+    {
+      "name": "_railway-verify.docs",
+      "type": "TXT",
+      "value": "railway-verify=e4158d89df4afe9cc390749e078cde8e94b115a185ba837ddcf49242c366d5bc"
+    },
+    {
+      "name": "_railway-verify.status",
+      "type": "TXT",
+      "value": "railway-verify=5069f7b05df108daf732a6ea13d1f362fb9c77d8aa86f0a69bf76ccc051467f5"
+    }
+  ]
 }

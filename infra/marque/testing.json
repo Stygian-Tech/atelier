@@ -4,26 +4,65 @@
   "zone": "atelier.diy",
   "environment": "development",
   "apply": false,
-  "reviewStatus": "template-reviewed-needs-railway-targets",
+  "reviewStatus": "railway-targets-captured-awaiting-marque-zone-review",
   "ttlSeconds": 300,
   "requirements": [
-    "Attach every testing hostname to its Railway Development service first",
-    "Replace every REPLACE_* value with the exact Railway-provided target",
-    "Add every Railway-provided ownership TXT record to verificationRecords",
+    "Export and retain the complete current Marque zone before changing records",
+    "Reconfirm every Railway target and ownership token immediately before staging",
     "Diff against the full current Marque zone and preserve unrelated records",
-    "Obtain approval for the single Development DNS transaction"
+    "Apply these records as one Development transaction",
+    "Verify authoritative DNS, Railway certificates, and HTTPS before raising TTL"
   ],
   "records": [
-    { "name": "testing", "type": "CNAME", "value": "REPLACE_MARKETING.up.railway.app." },
-    { "name": "home.testing", "type": "CNAME", "value": "REPLACE_HOME.up.railway.app." },
-    { "name": "notes.testing", "type": "CNAME", "value": "REPLACE_NOTES.up.railway.app." },
-    { "name": "mail.testing", "type": "CNAME", "value": "REPLACE_MAIL.up.railway.app." },
-    { "name": "calendar.testing", "type": "CNAME", "value": "REPLACE_CALENDAR.up.railway.app." },
-    { "name": "tasks.testing", "type": "CNAME", "value": "REPLACE_TASKS.up.railway.app." },
-    { "name": "api.testing", "type": "CNAME", "value": "REPLACE_API.up.railway.app." },
-    { "name": "mcp.testing", "type": "CNAME", "value": "REPLACE_MCP.up.railway.app." },
-    { "name": "docs.testing", "type": "CNAME", "value": "REPLACE_DOCS.up.railway.app." },
-    { "name": "status.testing", "type": "CNAME", "value": "REPLACE_STATUS.up.railway.app." }
+    { "name": "testing", "type": "CNAME", "value": "okj159px.up.railway.app." },
+    { "name": "home.testing", "type": "CNAME", "value": "u94xp0rx.up.railway.app." },
+    { "name": "notes.testing", "type": "CNAME", "value": "7av30we0.up.railway.app." },
+    { "name": "mail.testing", "type": "CNAME", "value": "tglrua7z.up.railway.app." },
+    { "name": "calendar.testing", "type": "CNAME", "value": "cy5h6cmn.up.railway.app." },
+    { "name": "tasks.testing", "type": "CNAME", "value": "hvm88jkc.up.railway.app." },
+    { "name": "docs.testing", "type": "CNAME", "value": "32d9kirw.up.railway.app." },
+    { "name": "status.testing", "type": "CNAME", "value": "o5jub94j.up.railway.app." }
   ],
-  "verificationRecords": []
+  "verificationRecords": [
+    {
+      "name": "_railway-verify.testing",
+      "type": "TXT",
+      "value": "railway-verify=36003504cd98ea29ea06bbee3d28c64c54c1d5bb4f456ee3b37769b67b0e1b70"
+    },
+    {
+      "name": "_railway-verify.home.testing",
+      "type": "TXT",
+      "value": "railway-verify=510cdb20a8bf0c6e3a5bdac8978178ca02a08262f792f1a5621e94145c234489"
+    },
+    {
+      "name": "_railway-verify.notes.testing",
+      "type": "TXT",
+      "value": "railway-verify=c7540085a6e8cff4c1693e2d4cec1e166ec7781a43784037e95fb1f3af0ac3a6"
+    },
+    {
+      "name": "_railway-verify.mail.testing",
+      "type": "TXT",
+      "value": "railway-verify=c3d724bd566ba61e8cad4216b32fdd8e3ae6b7e46e245e100588a9f8f515fa3d"
+    },
+    {
+      "name": "_railway-verify.calendar.testing",
+      "type": "TXT",
+      "value": "railway-verify=fd9db97ad2d559c1b00fdf9b14776a9f97c66963f953f0dcfe80c74ef5795a43"
+    },
+    {
+      "name": "_railway-verify.tasks.testing",
+      "type": "TXT",
+      "value": "railway-verify=581b4c9ebb8981988fe408e38d65f536877e3a97cf203b09bfd10bdc4201141d"
+    },
+    {
+      "name": "_railway-verify.docs.testing",
+      "type": "TXT",
+      "value": "railway-verify=235ffe8293b2e7abd04d68295d36f435275acabf600422b676b7e1439d5518d2"
+    },
+    {
+      "name": "_railway-verify.status.testing",
+      "type": "TXT",
+      "value": "railway-verify=2bcba709d76e8954305d69702cabc70e3b484d756e3674a2355bac554c829692"
+    }
+  ]
 }

@@ -1,10 +1,9 @@
 [build]
-builder = "RAILPACK"
-buildCommand = "bun run build --filter=@stygian/atelier-calendar-web"
-watchPatterns = ["/apps/web/calendar/**", "/packages/**", "/package.json", "/bun.lock", "/turbo.json", "/infra/railway/services/calendar.toml"]
+builder = "DOCKERFILE"
+dockerfilePath = "/apps/web/calendar/Dockerfile"
+watchPatterns = ["/apps/web/calendar/**", "/packages/**", "/package.json", "/bun.lock", "/turbo.json", "/.dockerignore", "/infra/railway/services/calendar.toml"]
 
 [deploy]
-startCommand = "bun run --cwd apps/web/calendar start --hostname 0.0.0.0 --port $PORT"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

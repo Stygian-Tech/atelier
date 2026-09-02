@@ -5,7 +5,7 @@ and tablet. All apps require API 29 or newer.
 
 ## Build and test
 
-Use the checked-in Gradle 8.12 wrapper with JDK 17 or 21 and an Android SDK
+Use the checked-in Gradle wrapper with JDK 17 or 21 and an Android SDK
 containing API 35:
 
 ```sh
@@ -29,6 +29,9 @@ The deterministic CI verification command is:
 
 Gradle, Android Gradle Plugin, Kotlin, Compose, and application dependency
 versions are pinned in the wrapper and version catalog.
+AGP provides built-in Kotlin support; do not apply the legacy Kotlin Android
+plugin. The root build explicitly aligns its Kotlin compiler with the version
+used by the Compose compiler plugin.
 
 The visible content is supplied by `MockLocalWorkspaceRepository`. It is
 explicitly local-only and does not claim that ATProto, provider, persistence,
