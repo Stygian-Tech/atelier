@@ -37,7 +37,7 @@ jobs:
       NEXT_PUBLIC_CALENDAR_URL: https://calendar.testing.atelier.diy
       NEXT_PUBLIC_TASKS_URL: https://tasks.testing.atelier.diy
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.3.14
@@ -82,7 +82,7 @@ jobs:
     name: Swift services
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: swift-actions/setup-swift@v2
         with:
           swift-version: "6.2"
@@ -97,8 +97,8 @@ jobs:
     name: Rust collaboration
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.91.0
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@1.98.0
         with:
           components: clippy,rustfmt
       - uses: Swatinem/rust-cache@v2
@@ -137,12 +137,15 @@ jobs:
     name: Android
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "21"
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          # Keep caching on the MIT-licensed implementation.
+          cache-provider: basic
       - run: >-
           ./gradlew
           --no-daemon
@@ -159,7 +162,7 @@ jobs:
     name: Apple shared packages
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: swift test --package-path apps/apple/Packages/AtelierShared
 
   apple-apps:
@@ -171,7 +174,7 @@ jobs:
         scheme: [Atelier, Atelier Notes, Atelier Mail, Atelier Calendar, Atelier Tasks]
         destination: ["generic/platform=iOS Simulator", "generic/platform=macOS"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: brew install xcodegen
       - run: xcodegen generate
         working-directory: apps/apple
@@ -187,7 +190,7 @@ jobs:
     name: Database and repository policy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Test repository policy gates
         run: python3 -m unittest discover -s infra/policy/tests
       - name: Scan for high-confidence credential patterns
@@ -242,9 +245,9 @@ jobs:
           - name: mcp-backplane
             dockerfile: services/mcp-backplane/Dockerfile
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
         with:
           context: .
           file: ${{ matrix.dockerfile }}

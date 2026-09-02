@@ -16,16 +16,16 @@
     "@stygian/atelier-web-ui": "workspace:*",
     "@stygian/markdown-editor": "workspace:*",
     "lucide-react": "^0.468.0",
-    "next": "16.2.6",
-    "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "next": "16.3.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^26",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "16.3.3",
     "typescript": "^5.9.3"
   }
 }
