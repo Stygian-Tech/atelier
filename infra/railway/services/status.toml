@@ -1,7 +1,7 @@
 [build]
 builder = "DOCKERFILE"
 dockerfilePath = "/apps/status/Dockerfile"
-watchPatterns = ["/apps/status/**", "/packages/design-system/**", "/infra/static-server/**", "/package.json", "/bun.lock", "/turbo.json", "/infra/railway/services/status.toml"]
+watchPatterns = ["/apps/status/**", "/packages/design-system/**", "/infra/static-server/**", "/package.json", "/bun.lock", "/turbo.json", "/.dockerignore", "/infra/railway/services/status.toml"]
 
 [deploy]
 healthcheckPath = "/"

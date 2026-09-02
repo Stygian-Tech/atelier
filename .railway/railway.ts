@@ -44,6 +44,7 @@ export const PUBLIC_SURFACE_BUILDS = {
       "/package.json",
       "/bun.lock",
       "/turbo.json",
+      "/.dockerignore",
       "/.railway/railway.ts",
       "/infra/railway/services/marketing.toml",
     ],
@@ -57,6 +58,7 @@ export const PUBLIC_SURFACE_BUILDS = {
       "/package.json",
       "/bun.lock",
       "/turbo.json",
+      "/.dockerignore",
       "/.railway/railway.ts",
       "/infra/railway/services/docs.toml",
     ],
@@ -71,92 +73,82 @@ export const PUBLIC_SURFACE_BUILDS = {
       "/package.json",
       "/bun.lock",
       "/turbo.json",
+      "/.dockerignore",
       "/.railway/railway.ts",
       "/infra/railway/services/status.toml",
     ],
   },
   home: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-home-web && bun run infra/web/release-artifacts.ts --root apps/web/home/.next/server/app --root apps/web/home/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/home/Dockerfile",
     watchPatterns: [
       "/apps/web/home/**",
       "/packages/**",
       "/package.json",
       "/bun.lock",
       "/turbo.json",
+      "/.dockerignore",
       "/.railway/railway.ts",
       "/infra/railway/services/home.toml",
     ],
   },
   notes: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-notes-web && bun run infra/web/release-artifacts.ts --root apps/web/notes/.next/server/app --root apps/web/notes/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/notes/Dockerfile",
     watchPatterns: [
       "/apps/web/notes/**",
       "/packages/**",
       "/package.json",
       "/bun.lock",
       "/turbo.json",
+      "/.dockerignore",
       "/.railway/railway.ts",
       "/infra/railway/services/notes.toml",
     ],
   },
   mail: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-mail-web && bun run infra/web/release-artifacts.ts --root apps/web/mail/.next/server/app --root apps/web/mail/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/mail/Dockerfile",
     watchPatterns: [
       "/apps/web/mail/**",
       "/packages/**",
       "/package.json",
       "/bun.lock",
       "/turbo.json",
+      "/.dockerignore",
       "/.railway/railway.ts",
       "/infra/railway/services/mail.toml",
     ],
   },
   calendar: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-calendar-web && bun run infra/web/release-artifacts.ts --root apps/web/calendar/.next/server/app --root apps/web/calendar/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/calendar/Dockerfile",
     watchPatterns: [
       "/apps/web/calendar/**",
       "/packages/**",
       "/package.json",
       "/bun.lock",
       "/turbo.json",
+      "/.dockerignore",
       "/.railway/railway.ts",
       "/infra/railway/services/calendar.toml",
     ],
   },
   tasks: {
-    builder: "RAILPACK",
-    buildCommand:
-      "bun run build --filter=@stygian/atelier-tasks-web && bun run infra/web/release-artifacts.ts --root apps/web/tasks/.next/server/app --root apps/web/tasks/.next/static",
+    builder: "DOCKERFILE",
+    dockerfilePath: "/apps/web/tasks/Dockerfile",
     watchPatterns: [
       "/apps/web/tasks/**",
       "/packages/**",
       "/package.json",
       "/bun.lock",
       "/turbo.json",
+      "/.dockerignore",
       "/.railway/railway.ts",
       "/infra/railway/services/tasks.toml",
     ],
   },
 } as const satisfies Record<PublicSurface, BuildConfig>;
-
-export const PUBLIC_SURFACE_START_COMMANDS = {
-  marketing: undefined,
-  docs: undefined,
-  status: undefined,
-  home: "bun run --cwd apps/web/home start --hostname 0.0.0.0 --port $PORT",
-  notes: "bun run --cwd apps/web/notes start --hostname 0.0.0.0 --port $PORT",
-  mail: "bun run --cwd apps/web/mail start --hostname 0.0.0.0 --port $PORT",
-  calendar: "bun run --cwd apps/web/calendar start --hostname 0.0.0.0 --port $PORT",
-  tasks: "bun run --cwd apps/web/tasks start --hostname 0.0.0.0 --port $PORT",
-} as const satisfies Record<PublicSurface, string | undefined>;
 
 const HOSTS: Record<AtelierEnvironment, Record<PublicSurface, string>> = {
   development: {
@@ -253,9 +245,8 @@ function environmentFromName(name: string | undefined): AtelierEnvironment {
   throw new Error(`Unsupported Railway environment: ${name ?? "<missing>"}`);
 }
 
-function deployConfiguration(environment: AtelierEnvironment, startCommand?: string): DeployConfig {
+function deployConfiguration(environment: AtelierEnvironment): DeployConfig {
   return {
-    startCommand,
     healthcheckPath: "/",
     healthcheckTimeout: 300,
     sleepApplication: environment === "development",
@@ -280,9 +271,8 @@ export default defineRailway((context) => {
     service(surface, {
       source: github(GITHUB_REPOSITORY, { branch }),
       build: PUBLIC_SURFACE_BUILDS[surface],
-      deploy: deployConfiguration(environment, PUBLIC_SURFACE_START_COMMANDS[surface]),
+      deploy: deployConfiguration(environment),
       replicas,
-      domains: [HOSTS[environment][surface]],
       env: serviceEnvironment(environment, surface),
     }),
   );

@@ -12,7 +12,14 @@
 **/DerivedData
 coverage
 docs/design
-imports
+imports/**
+!imports/atelier-mail/
+!imports/atelier-mail/bun.lock
+!imports/atelier-mail/bunfig.toml
+!imports/atelier-mail/package.json
+!imports/atelier-mail/packages/
+!imports/atelier-mail/packages/lexicons/
+!imports/atelier-mail/packages/lexicons/package.json
 *.log
 .env*
 !.env.example
