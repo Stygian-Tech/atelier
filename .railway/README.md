@@ -8,8 +8,15 @@ Railway Config File path for an Atelier service.
 The authoring file intentionally contains only the eight deployable public
 surfaces:
 
-- marketing, docs, and status through their checked-in Dockerfiles;
-- Home, Notes, Mail, Calendar, and Tasks through Railpack.
+- all eight surfaces through their checked-in Dockerfiles. The five Next.js
+  images remain isolated from the root multi-language `mise.toml`, so a web
+  build never installs the Swift, Java, or Rust toolchains.
+
+Each image owns its runtime command. In particular, do not add a Railway
+`startCommand` containing `$PORT`: Railway does not shell-expand that value.
+The five Next.js package scripts run `next start`, which reads Railway's
+runtime `PORT` environment variable directly, while their images set
+`HOSTNAME=0.0.0.0`.
 
 The API, worker, provider sync processes, Notes anchor, MCP backplane,
 PostgreSQL, and Redis are intentionally absent until their readiness and
@@ -19,10 +26,11 @@ credential gates are complete.
 
 - `development` follows `dev`, runs one `us-west2` replica per surface, enables
   app sleep, and caps each replica at 0.5 vCPU and 512 MiB.
-- `production` follows `main`, defines the production domains, and runs one
-  non-sleeping replica per surface only after its separately reviewed manual
-  plan is applied. The checked-in replica count records the explicit 2026-08-30
-  Production authorization; merging `main` alone does not apply infrastructure.
+- `production` follows `main`, builds with the production origin contract, and
+  runs one non-sleeping replica per surface only after its separately reviewed
+  manual plan is applied. The checked-in replica count records the explicit
+  2026-08-30 Production authorization; merging `main` alone does not apply
+  infrastructure.
 - Both environments fail closed if the linked Railway environment has any
   other name.
 
@@ -53,16 +61,19 @@ authenticated Railway account can create repository deployment triggers.
 
 ## Domains and Marque
 
-The IaC file reserves custom domains, but generated `*.up.railway.app` domains
-are managed separately by Railway. After an individual service is healthy,
-create and inspect its generated domain:
+Railway project-level IaC cannot register custom domains. Domain attachment is
+therefore a separate, reviewed post-apply step rather than part of
+`railway.ts`. After an individual service is healthy, create and inspect its
+generated `*.up.railway.app` domain, then register the approved custom domain:
 
 ```sh
 railway domain --project "$ATELIER_RAILWAY_PROJECT_ID" --environment Development --service marketing --json
+railway domain testing.atelier.diy --port 8080 --project "$ATELIER_RAILWAY_PROJECT_ID" --environment Development --service marketing --json
 railway domain status testing.atelier.diy --project "$ATELIER_RAILWAY_PROJECT_ID" --environment Development --service marketing --json
 ```
 
 Repeat in this order: marketing, docs, status, home, notes, tasks, calendar,
-then mail. Use the exact DNS target returned by Railway when preparing the
-Marque transaction. Export and review the existing `atelier.diy` zone first;
-do not infer targets or activate records from the hostnames in this file.
+then mail. Capture the exact DNS records returned by the custom-domain command
+when preparing the Marque transaction. Export and review the existing
+`atelier.diy` zone first; do not infer targets or activate records from the
+hostnames in this file.
