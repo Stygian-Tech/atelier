@@ -26,7 +26,12 @@ docker run \
 
 ready=0
 for _ in $(seq 1 60); do
-  if docker exec "${container_name}" pg_isready --username "${database_user}" --dbname "${database_name}" >/dev/null 2>&1; then
+  # pg_isready reports that the server accepts connections even while the
+  # requested database is still being created by the image entrypoint. Probe
+  # the exact database so migrations cannot race initialization.
+  if docker exec "${container_name}" \
+    psql --username "${database_user}" --dbname "${database_name}" --no-psqlrc \
+      --tuples-only --no-align --command "SELECT 1" >/dev/null 2>&1; then
     ready=1
     break
   fi

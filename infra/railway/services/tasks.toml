@@ -1,10 +1,9 @@
 [build]
-builder = "RAILPACK"
-buildCommand = "bun run build --filter=@stygian/atelier-tasks-web"
-watchPatterns = ["/apps/web/tasks/**", "/packages/**", "/package.json", "/bun.lock", "/turbo.json", "/infra/railway/services/tasks.toml"]
+builder = "DOCKERFILE"
+dockerfilePath = "/apps/web/tasks/Dockerfile"
+watchPatterns = ["/apps/web/tasks/**", "/packages/**", "/package.json", "/bun.lock", "/turbo.json", "/.dockerignore", "/infra/railway/services/tasks.toml"]
 
 [deploy]
-startCommand = "bun run --cwd apps/web/tasks start --hostname 0.0.0.0 --port $PORT"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
