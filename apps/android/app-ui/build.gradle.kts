@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "diy.atelier.appui"
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig { minSdk = 29 }
     buildFeatures { compose = true }
     compileOptions {

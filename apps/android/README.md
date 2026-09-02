@@ -6,7 +6,7 @@ and tablet. All apps require API 29 or newer.
 ## Build and test
 
 Use the checked-in Gradle wrapper with JDK 17 or 21 and an Android SDK
-containing API 35:
+containing API 37:
 
 ```sh
 cd apps/android
@@ -32,6 +32,9 @@ versions are pinned in the wrapper and version catalog.
 AGP provides built-in Kotlin support; do not apply the legacy Kotlin Android
 plugin. The root build explicitly aligns its Kotlin compiler with the version
 used by the Compose compiler plugin.
+The Compose BOM requires compile SDK 37. Minimum SDK 29 and target SDK 35 remain
+unchanged, so this build-time requirement does not opt apps into newer Android
+runtime behavior or remove supported devices.
 
 The visible content is supplied by `MockLocalWorkspaceRepository`. It is
 explicitly local-only and does not claim that ATProto, provider, persistence,

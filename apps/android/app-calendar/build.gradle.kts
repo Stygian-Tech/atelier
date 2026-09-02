@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "diy.atelier.calendar"
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         applicationId = "diy.atelier.calendar"
         minSdk = 29

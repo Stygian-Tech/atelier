@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "diy.atelier.persistence"
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig { minSdk = 29 }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

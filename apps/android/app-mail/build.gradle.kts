@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "diy.atelier.mail"
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         applicationId = "diy.atelier.mail"
         minSdk = 29

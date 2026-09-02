@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "diy.atelier.notes"
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         applicationId = "diy.atelier.notes"
         minSdk = 29

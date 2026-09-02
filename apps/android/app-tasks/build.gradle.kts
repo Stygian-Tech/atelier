@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "diy.atelier.tasks"
-    compileSdk = 35
+    compileSdk = 37
     defaultConfig {
         applicationId = "diy.atelier.tasks"
         minSdk = 29

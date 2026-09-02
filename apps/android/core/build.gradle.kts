@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "diy.atelier.core"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig { minSdk = 29 }
     compileOptions {

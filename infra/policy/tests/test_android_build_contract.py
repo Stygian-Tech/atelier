@@ -17,6 +17,7 @@ class AndroidBuildContractTests(unittest.TestCase):
         for name, path in modules.items():
             with self.subTest(module=name):
                 contents = path.read_text()
+                self.assertEqual(re.findall(r"\bcompileSdk\s*=\s*(\d+)", contents), ["37"])
                 self.assertEqual(re.findall(r"\bminSdk\s*=\s*(\d+)", contents), ["29"])
                 expected_targets = ["35"] if name in APPLICATIONS else []
                 self.assertEqual(re.findall(r"\btargetSdk\s*=\s*(\d+)", contents), expected_targets)
