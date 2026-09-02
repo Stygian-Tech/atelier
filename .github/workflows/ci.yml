@@ -143,6 +143,9 @@ jobs:
           distribution: temurin
           java-version: "21"
       - uses: gradle/actions/setup-gradle@v6
+        with:
+          # Keep caching on the MIT-licensed implementation.
+          cache-provider: basic
       - run: >-
           ./gradlew
           --no-daemon
