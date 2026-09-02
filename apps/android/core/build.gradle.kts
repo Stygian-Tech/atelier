@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -12,8 +11,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    sourceSets.getByName("test").resources.srcDir(
-        rootProject.file("../../packages/contracts/fixtures"),
+}
+
+// Use the public AGP 9 DSL to avoid the legacy source-set accessor's invalid cast.
+extensions.configure<com.android.build.api.dsl.LibraryExtension> {
+    sourceSets.getByName("test").resources.directories.add(
+        rootProject.file("../../packages/contracts/fixtures").path,
     )
 }
 
