@@ -87,7 +87,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Import official Swift signing keys
-        run: curl --fail --silent --show-error --location https://www.swift.org/keys/all-keys.asc | gpg --batch --import
+        shell: bash
+        run: curl --fail --silent --show-error --location --compressed https://www.swift.org/keys/all-keys.asc | gpg --batch --import
       - uses: swift-actions/setup-swift@v3
         with:
           swift-version: "6.2"
