@@ -58,7 +58,7 @@ impl NotesDocument {
         let stored_id = inner
             .get(ROOT, DOCUMENT_ID_KEY)
             .map_err(automerge_error)?
-            .and_then(|(value, _)| value.to_str().map(str::to_owned))
+            .and_then(|(value, _)| value.as_str().map(str::to_owned))
             .ok_or(ProtocolError::InvalidCheckpoint)?;
         if stored_id != checkpoint.document_id.to_string() {
             return Err(ProtocolError::InvalidCheckpoint);
