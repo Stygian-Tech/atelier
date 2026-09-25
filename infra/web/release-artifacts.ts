@@ -70,7 +70,8 @@ export async function findLocalhostArtifacts(roots: string[]): Promise<Localhost
       }
     }
   }
-  return violations;
+  // Filesystem enumeration and caller root order must not change diagnostics.
+  return violations.sort((left, right) => left.file < right.file ? -1 : left.file > right.file ? 1 : 0);
 }
 
 function requestedRoots(args: string[]) {

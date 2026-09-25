@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 
 import { findLocalhostArtifacts } from "./release-artifacts";
 
@@ -33,6 +33,32 @@ describe("release artifact origin scan", () => {
         origins: ["http://127.0.0.1:4321"],
       },
     ]);
+  });
+
+  test("reports a stable file order across nested artifacts and reversed roots", async () => {
+    const root = await mkdtemp(join(tmpdir(), "atelier-web-artifact-order-"));
+    const firstRoot = join(root, "a");
+    const lastRoot = join(root, "z");
+    try {
+      await mkdir(join(firstRoot, "nested"), { recursive: true });
+      await mkdir(lastRoot);
+      const paths = [
+        join(lastRoot, "last.html"),
+        join(firstRoot, "nested", "z.js"),
+        join(firstRoot, "nested", "a.css"),
+        join(firstRoot, "first.html"),
+      ] as const;
+      for (const path of paths) await writeFile(path, "http://localhost:3000");
+      const expected = [paths[3], paths[2], paths[1], paths[0]].map((path) => ({
+        file: relative(process.cwd(), path),
+        origins: ["http://localhost:3000"],
+      }));
+
+      expect(await findLocalhostArtifacts([lastRoot, firstRoot])).toEqual(expected);
+      expect(await findLocalhostArtifacts([firstRoot, lastRoot])).toEqual(expected);
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
   });
 
   test("accepts a clean production-like output directory", async () => {
