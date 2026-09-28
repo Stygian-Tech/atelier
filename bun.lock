@@ -5,7 +5,7 @@
     "": {
       "name": "atelier",
       "devDependencies": {
-        "@types/node": "26.4.0",
+        "@types/node": "26.6.2",
         "railway": "3.11.0",
         "turbo": "^2.11.3",
       },

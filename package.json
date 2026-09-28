@@ -33,7 +33,7 @@
     "verify:swift": "env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path packages/swift && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/api && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/mcp-backplane && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/worker && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/mail-sync && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path services/calendar-sync && env DEVELOPER_DIR=/Applications/Xcode-beta.app/Contents/Developer swift test --package-path apps/apple/Packages/AtelierShared"
   },
   "devDependencies": {
-    "@types/node": "26.4.0",
+    "@types/node": "26.6.2",
     "railway": "3.11.0",
     "turbo": "^2.11.3"
   },
