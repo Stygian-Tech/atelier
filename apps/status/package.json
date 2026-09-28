@@ -17,6 +17,6 @@
     "@astrojs/check": "^0.9.4",
     "@stygian/atelier-design-system": "workspace:*",
     "astro": "^7.3.4",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   }
 }
