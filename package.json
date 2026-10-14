@@ -35,7 +35,7 @@
   "devDependencies": {
     "@types/node": "26.6.2",
     "railway": "3.11.0",
-    "turbo": "^2.11.3"
+    "turbo": "^2.11.7"
   },
   "overrides": {
     "@types/node": "26.6.2"
