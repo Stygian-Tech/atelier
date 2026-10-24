@@ -23,7 +23,10 @@ afterAll(async () => {
 
 describe("release artifact origin scan", () => {
   test("reports localhost only in user-facing text artifacts", async () => {
-    expect(await findLocalhostArtifacts([fixtureRoot])).toEqual([
+    const violations = await findLocalhostArtifacts([fixtureRoot]);
+    // Filesystem enumeration order differs across release platforms.
+    expect(violations).toHaveLength(2);
+    expect(violations).toEqual(expect.arrayContaining([
       {
         file: expect.stringContaining("nested/route.rsc"),
         origins: ["http://localhost:3000"],
@@ -32,7 +35,7 @@ describe("release artifact origin scan", () => {
         file: expect.stringContaining("nested/styles.css"),
         origins: ["http://127.0.0.1:4321"],
       },
-    ]);
+    ]));
   });
 
   test("accepts a clean production-like output directory", async () => {
