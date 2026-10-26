@@ -15,7 +15,7 @@
     "@stygian/atelier-design-system": "workspace:*",
     "@stygian/atelier-web-ui": "workspace:*",
     "@stygian/markdown-editor": "workspace:*",
-    "lucide-react": "^1.48.0",
+    "lucide-react": "^1.61.0",
     "next": "16.4.2",
     "react": "19.3.1",
     "react-dom": "19.3.1"

@@ -51,7 +51,7 @@
         "@stygian/atelier-design-system": "workspace:*",
         "@stygian/atelier-web-ui": "workspace:*",
         "@stygian/markdown-editor": "workspace:*",
-        "lucide-react": "^1.48.0",
+        "lucide-react": "^1.61.0",
         "next": "16.4.2",
         "react": "19.3.1",
         "react-dom": "19.3.1",
@@ -73,7 +73,7 @@
         "@stygian/atelier-design-system": "workspace:*",
         "@stygian/atelier-web-ui": "workspace:*",
         "@stygian/markdown-editor": "workspace:*",
-        "lucide-react": "^1.48.0",
+        "lucide-react": "^1.61.0",
         "next": "16.4.2",
         "react": "19.3.1",
         "react-dom": "19.3.1",
@@ -99,7 +99,7 @@
         "@tanstack/react-virtual": "^3.14.13",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
-        "lucide-react": "^1.48.0",
+        "lucide-react": "^1.61.0",
         "next": "16.4.2",
         "react": "19.3.1",
         "react-dom": "19.3.1",
@@ -129,7 +129,7 @@
         "@stygian/atelier-design-system": "workspace:*",
         "@stygian/atelier-web-ui": "workspace:*",
         "@stygian/markdown-editor": "workspace:*",
-        "lucide-react": "^1.48.0",
+        "lucide-react": "^1.61.0",
         "next": "16.4.2",
         "react": "19.3.1",
         "react-dom": "19.3.1",
@@ -151,7 +151,7 @@
         "@stygian/atelier-design-system": "workspace:*",
         "@stygian/atelier-web-ui": "workspace:*",
         "@stygian/markdown-editor": "workspace:*",
-        "lucide-react": "^1.48.0",
+        "lucide-react": "^1.61.0",
         "next": "16.4.2",
         "react": "19.3.1",
         "react-dom": "19.3.1",
@@ -194,7 +194,7 @@
       "version": "0.1.0",
       "dependencies": {
         "clsx": "2.1.1",
-        "lucide-react": "1.48.0",
+        "lucide-react": "1.61.0",
         "prism-react-renderer": "2.4.1",
         "tailwind-merge": "3.7.0",
       },
@@ -224,7 +224,7 @@
       "version": "0.1.0",
       "dependencies": {
         "@stygian/markdown-editor": "workspace:*",
-        "lucide-react": "^1.48.0",
+        "lucide-react": "^1.61.0",
         "react": "19.3.1",
         "react-dom": "19.3.1",
       },
@@ -1380,7 +1380,7 @@
 
     "lru-cache": ["lru-cache@11.5.3", "", {}, "sha512-U4N8FgzmWxc8k1VH8Kr6lQg18U7Fjvby6wXHVRX/ZZ7IwWbRMgrRbP0Wrb5q5NVinryp4SQampHKdvtecItxUg=="],
 
-    "lucide-react": ["lucide-react@1.48.0", "", { "peerDependencies": { "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0" } }, "sha512-R0CIKY/fXiC6y9xRBADgsK+VW2p/pcTJOMhLZf1T+uG+vJUvyUR02nGOgmIIC7MPkiNK4Ox8QDnbqF8rJYWPZQ=="],
+    "lucide-react": ["lucide-react@1.61.0", "", { "peerDependencies": { "@types/react": "*", "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0" }, "optionalPeers": ["@types/react"] }, "sha512-v2SQPPPNjnr+BlhL9Spuzmo5yR+hLkftfuE4E3jaxdNPgSH0hJKPcLJBP7yAta87jQNPsSERS59PJjCJ/CorBA=="],
 
     "lz-string": ["lz-string@1.5.0", "", { "bin": { "lz-string": "bin/bin.js" } }, "sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ=="],
 
@@ -2056,8 +2056,6 @@
 
     "@astrojs/mdx/@astrojs/internal-helpers/smol-toml": ["smol-toml@1.8.0", "", {}, "sha512-kCZr2V3ch9i00x8zXRhjUNVcjG9ijES5dDudkXvUVCT5QlJNQWElSJdZqyPemffHoLNUYwOcou0Fy+ojN0uHSQ=="],
 
-
-
     "@expressive-code/plugin-shiki/shiki/@shikijs/core": ["@shikijs/core@4.4.3", "", { "dependencies": { "@shikijs/primitive": "4.4.3", "@shikijs/types": "4.4.3", "@shikijs/vscode-textmate": "^10.0.2", "@types/hast": "^3.0.5", "hast-util-to-html": "^9.0.5" } }, "sha512-QCR4q2ZO/ILJEuwiBMel4wdcTDb1JGwfjKTxPDF6x8ixOaluPrVqIn06C99AcRPhmYlBR56d/Fb+GN58GzExpg=="],
 
     "@expressive-code/plugin-shiki/shiki/@shikijs/engine-javascript": ["@shikijs/engine-javascript@4.4.3", "", { "dependencies": { "@shikijs/types": "4.4.3", "@shikijs/vscode-textmate": "^10.0.2", "oniguruma-to-es": "^4.3.6" } }, "sha512-FbOjFJp9VLdo1Wevs10BBtVxiTWwNLqZh5Gkhjgda/ioL15YOgeSl9n+6XMa3qRlPQzfhFNe641SrynFHYG0nQ=="],
@@ -2242,10 +2240,7 @@
 
     "@astrojs/mdx/@astrojs/internal-helpers/shiki/@shikijs/types": ["@shikijs/types@4.4.3", "", { "dependencies": { "@shikijs/vscode-textmate": "^10.0.2", "@types/hast": "^3.0.5" } }, "sha512-UEJxmRR++MAGR6hugn0vgVS2W/6lWAts84FFSrnlH9sP0LNol7E5+NQ792pH8liWUhyMyjhTgSUH3k7iD7tc5g=="],
 
-
     "@expressive-code/plugin-shiki/shiki/@shikijs/core/@shikijs/primitive": ["@shikijs/primitive@4.4.3", "", { "dependencies": { "@shikijs/types": "4.4.3", "@shikijs/vscode-textmate": "^10.0.2", "@types/hast": "^3.0.5" } }, "sha512-m0wBeLDQDeIxRdUmrCPdQqfuUamDwRL5isCfYbguKD6NiaKpVbsv+3J81DyIKgNW5h4WAIIr8T4EkgQrBBxvaQ=="],
-
-
 
     "eslint-plugin-import/minimatch/brace-expansion/balanced-match": ["balanced-match@1.0.2", "", {}, "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw=="],
 
@@ -2256,8 +2251,5 @@
     "@astrojs/markdown-satteri/@astrojs/internal-helpers/shiki/@shikijs/core/@shikijs/primitive": ["@shikijs/primitive@4.4.3", "", { "dependencies": { "@shikijs/types": "4.4.3", "@shikijs/vscode-textmate": "^10.0.2", "@types/hast": "^3.0.5" } }, "sha512-m0wBeLDQDeIxRdUmrCPdQqfuUamDwRL5isCfYbguKD6NiaKpVbsv+3J81DyIKgNW5h4WAIIr8T4EkgQrBBxvaQ=="],
 
     "@astrojs/mdx/@astrojs/internal-helpers/shiki/@shikijs/core/@shikijs/primitive": ["@shikijs/primitive@4.4.3", "", { "dependencies": { "@shikijs/types": "4.4.3", "@shikijs/vscode-textmate": "^10.0.2", "@types/hast": "^3.0.5" } }, "sha512-m0wBeLDQDeIxRdUmrCPdQqfuUamDwRL5isCfYbguKD6NiaKpVbsv+3J81DyIKgNW5h4WAIIr8T4EkgQrBBxvaQ=="],
-
-
-
   }
 }
