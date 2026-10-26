@@ -22,6 +22,19 @@ Object.defineProperty(dom.window.HTMLElement.prototype, "offsetWidth", {
     return 1024;
   },
 });
+// TanStack Virtual reads client dimensions for its viewport; jsdom has no layout.
+Object.defineProperty(dom.window.HTMLElement.prototype, "clientHeight", {
+  configurable: true,
+  get() {
+    return this.hasAttribute("data-index") ? 84 : 800;
+  },
+});
+Object.defineProperty(dom.window.HTMLElement.prototype, "clientWidth", {
+  configurable: true,
+  get() {
+    return 1024;
+  },
+});
 globalThis.ResizeObserver = class ResizeObserver {
   observe() {}
   unobserve() {}
